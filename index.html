@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>运营 × AI 协作 · 工作项目全局架构</title>
+<style>
+  :root {
+    --primary: #1a73e8;
+    --primary-light: #e8f0fe;
+    --accent: #ea4335;
+    --accent-green: #34a853;
+    --accent-orange: #fbbc04;
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #202124;
+    --text-secondary: #5f6368;
+    --border: #dadce0;
+    --gradient-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-green: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --gradient-orange: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-teal: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); color: white; padding: 32px 40px; border-radius: 20px; margin-bottom: 28px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(102,126,234,0.3) 0%, transparent 70%); }
+  .hero h1 { font-size: 2em; font-weight: 700; margin-bottom: 4px; position: relative; }
+  .hero .subtitle { font-size: 1.05em; opacity: 0.85; margin-bottom: 12px; position: relative; }
+  .hero .meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.85em; opacity: 0.7; position: relative; }
+  .hero .meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Stats Row */
+  .stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 36px; }
+  .stat-card { background: var(--card-bg); border-radius: 12px; padding: 16px 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid var(--primary); transition: transform 0.2s; }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-card .number { font-size: 1.8em; font-weight: 800; color: var(--primary); }
+  .stat-card .label { font-size: 0.78em; color: var(--text-secondary); margin-top: 2px; }
+  .stat-card:nth-child(2) { border-top-color: var(--accent-green); }
+  .stat-card:nth-child(2) .number { color: var(--accent-green); }
+  .stat-card:nth-child(3) { border-top-color: var(--accent-orange); }
+  .stat-card:nth-child(3) .number { color: #f57c00; }
+  .stat-card:nth-child(4) { border-top-color: var(--accent); }
+  .stat-card:nth-child(4) .number { color: var(--accent); }
+  .stat-card:nth-child(5) { border-top-color: #9c27b0; }
+  .stat-card:nth-child(5) .number { color: #9c27b0; }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .section-num { background: var(--gradient-blue); color: white; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1em; flex-shrink: 0; }
+  .section-title { font-size: 1.5em; font-weight: 700; }
+
+  /* Cards */
+  .card { background: var(--card-bg); border-radius: 14px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  .card h3 { font-size: 1.15em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card p, .card li { font-size: 0.92em; color: var(--text-secondary); }
+  .card ul { padding-left: 20px; }
+  .card ul li { margin-bottom: 6px; }
+
+  /* Two-column */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Architecture Diagram */
+  .arch-box { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 14px; padding: 28px; margin-bottom: 20px; }
+  .arch-layer { margin-bottom: 16px; }
+  .arch-layer-title { font-weight: 700; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 8px; }
+  .arch-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .arch-item { background: white; border-radius: 8px; padding: 6px 14px; font-size: 0.82em; border-left: 3px solid var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .arch-item.green { border-left-color: var(--accent-green); }
+  .arch-item.orange { border-left-color: #f57c00; }
+  .arch-item.purple { border-left-color: #9c27b0; }
+  .arch-item.red { border-left-color: var(--accent); }
+  .arch-item.teal { border-left-color: #00897b; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 40px; }
+  .timeline::before { content: ''; position: absolute; left: 16px; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--primary), var(--accent-green)); border-radius: 2px; }
+  .tl-item { position: relative; margin-bottom: 28px; }
+  .tl-dot { position: absolute; left: -32px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 3px solid var(--primary-light); }
+  .tl-item:nth-child(even) .tl-dot { background: var(--accent-green); }
+  .tl-week { font-weight: 700; font-size: 0.9em; color: var(--primary); }
+  .tl-date { font-size: 0.78em; color: var(--text-secondary); }
+  .tl-content { font-size: 0.88em; color: var(--text); margin-top: 4px; }
+  .tl-tag { display: inline-block; background: var(--primary-light); color: var(--primary); font-size: 0.72em; padding: 2px 8px; border-radius: 4px; margin-right: 4px; }
+  .tl-tag.green { background: #e6f4ea; color: #137333; }
+  .tl-tag.orange { background: #fef7e0; color: #b06000; }
+
+  /* Flow Diagram */
+  .flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 20px; }
+  .flow-step { background: white; border: 2px solid var(--primary); border-radius: 12px; padding: 12px 18px; font-size: 0.85em; font-weight: 600; text-align: center; min-width: 120px; }
+  .flow-arrow { font-size: 1.4em; color: var(--primary); }
+  .flow-step.highlight { background: var(--primary); color: white; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+  th { background: var(--primary-light); color: var(--primary); padding: 10px 14px; text-align: left; font-weight: 600; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: #f8f9ff; }
+
+  /* Badge */
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 600; }
+  .badge.blue { background: #e3f2fd; color: #1565c0; }
+  .badge.green { background: #e8f5e9; color: #2e7d32; }
+  .badge.orange { background: #fff3e0; color: #e65100; }
+  .badge.red { background: #fce4ec; color: #c62828; }
+  .badge.purple { background: #f3e5f5; color: #6a1b9a; }
+
+  /* Quote */
+  .insight-box { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-radius: 14px; padding: 24px 28px; margin: 20px 0; }
+  .insight-box .quote { font-size: 1.05em; font-weight: 600; color: #4a2c2a; line-height: 1.8; }
+  .insight-box .source { font-size: 0.82em; color: #7c5a58; margin-top: 8px; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 40px 0 20px; color: var(--text-secondary); font-size: 0.82em; }
+
+  /* Daily Flow */
+  .daily-flow { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+  .df-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .df-time { font-weight: 700; font-size: 0.85em; color: #00695c; min-width: 70px; }
+  .df-icon { font-size: 1.2em; }
+  .df-desc { font-size: 0.88em; flex: 1; }
+  .df-ai { display: inline-block; background: #00897b; color: white; font-size: 0.7em; padding: 1px 8px; border-radius: 4px; }
+
+  /* Highlight Number */
+  .highlight-num { color: var(--primary); font-weight: 800; }
+
+  /* Knowledge map */
+  .km-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .km-item { background: white; border-radius: 10px; padding: 16px; border-left: 4px solid var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .km-item h4 { font-size: 0.9em; margin-bottom: 6px; }
+  .km-item p { font-size: 0.8em; color: var(--text-secondary); }
+  .km-item.g { border-left-color: var(--accent-green); }
+  .km-item.o { border-left-color: #f57c00; }
+  .km-item.p { border-left-color: #9c27b0; }
+  .km-item.r { border-left-color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <h1>运营 × AI 协作<br>工作项目全局架构</h1>
+  <div class="subtitle">一个人 + 一个 AI = 超级个体的实践验证</div>
+  <div class="meta">
+    <span>👤 Going · 林丽莹 · 食品饮料中心 · 行业运营</span>
+    <span>📅 2026.02 — 2026.04（18 周持续迭代）</span>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="number">20</div>
+    <div class="label">SKILL 场景能力模块</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">8</div>
+    <div class="label">Rule 行为规范</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">3</div>
+    <div class="label">每日自动化任务</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">7</div>
+    <div class="label">客户档案 + 4 品牌经营档案</div>
+  </div>
+  <div class="stat-card">
+    <div class="number">37</div>
+    <div class="label">日连续 Memory 日志</div>
+  </div>
+</div>
+
+<!-- Section 1: Daily Flow -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">一天的工作节奏 · AI 如何嵌入每个环节</div>
+  </div>
+
+  <div class="daily-flow">
+    <div class="df-row">
+      <div class="df-time">08:30</div>
+      <div class="df-icon">🌅</div>
+      <div class="df-desc"><strong>晨间规划 · Mode I</strong> <span class="df-ai">AI 自动</span><br>AI 自动读取 OKR → 扫描 todo → 扫描需求待办 → 扫描 Obsidian 会议记录 → 输出当日优先级清单</div>
+    </div>
+    <div class="df-row">
+      <div class="df-time">09:00</div>
+      <div class="df-icon">📊</div>
+      <div class="df-desc"><strong>数据分析执行</strong><br>每日早报（3-5min）/ 客户复盘（10min）/ 掉量归因（5-10min）— AI 按 SKILL 标准流程自动产出</div>
+    </div>
+    <div class="df-row">
+      <div class="df-time">10:00-20:00</div>
+      <div class="df-icon">💼</div>
+      <div class="df-desc"><strong>业务工作 + AI 协作</strong><br>客户沟通 → 口述录入需求待办 → AI 结构化记录<br>深度分析 → AI 跑数据 + 生成报告 → 人工审阅 + 业务判断<br>会议结束 → AI 四维度梳理（业务方向/待办/客户认知/OKR 校准）</div>
+    </div>
+    <div class="df-row">
+      <div class="df-time">21:00</div>
+      <div class="df-icon">🌙</div>
+      <div class="df-desc"><strong>晚间归档 · Mode J</strong> <span class="df-ai">AI 自动</span><br>日志补建 → OKR 标签补全 → 进展摘要 → 遗漏检测 → 需求待办回写 → todo 更新 → Git 推送</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="quote">核心角色分工：AI 负责"算得快、算得细"，人负责"算什么、对不对、怎么用"。<br>运营的价值不是被替代，而是升级——从"花时间算数"变成"决定算什么、判断对不对、想好怎么用"。</div>
+  </div>
+</div>
+
+<!-- Section 2: Full Workflow Map -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">工作流全景 · 20 个 SKILL 覆盖的业务场景</div>
+  </div>
+
+  <div class="card">
+    <h3>📈 数据分析类（日常高频）</h3>
+    <table>
+      <tr><th>SKILL</th><th>场景</th><th>频率</th><th>效率提升</th></tr>
+      <tr><td>每日早报</td><td>赛道整体消耗/TOP 客户/版位/智投变化</td><td>每日</td><td>30-60min → <strong>3-5min</strong></td></tr>
+      <tr><td>周报</td><td>周度趋势信号识别，区分噪音和真正趋势</td><td>每周</td><td>1h → <strong>10min</strong></td></tr>
+      <tr><td>双周报</td><td>链路提收 + 运营洞察 + 推进事项（面向老板）</td><td>双周</td><td>半天 → <strong>20-30min</strong></td></tr>
+      <tr><td>月报</td><td>赛道月度全景（10 个板块）</td><td>每月</td><td>1天 → <strong>30min</strong></td></tr>
+      <tr><td>客户复盘</td><td>13 维度全面诊断：出价/版位/直播间/商品/起量/掉量归因</td><td>按需</td><td>2-3h → <strong>10min</strong></td></tr>
+      <tr><td>掉量分析</td><td>实时消耗掉量归因，支持轻量+深度两种模式</td><td>随时</td><td>1-2h → <strong>5-10min</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>🎬 素材与直播分析</h3>
+      <ul>
+        <li><strong>素材分析</strong>：视频下载 → Gemini API 转录 → 口播拆解 → 数据×创意交叉分析</li>
+        <li><strong>直播间分析</strong>：帧截取 → 音频转录 → 人设·货品·话术·场景四维融合分析 → 品牌经营档案卡</li>
+      </ul>
+      <p style="margin-top:10px;font-size:0.82em;color:#00897b;">实践数据：1 天完成 4 品牌 × 13 间直播间全流程深度分析（纯人工预估需 4 个工作日）</p>
+    </div>
+    <div class="card">
+      <h3>📋 客户交付物 + 业务工具</h3>
+      <ul>
+        <li><strong>案例 OnePage</strong>：标准化案例制作 SOP（如 EGUOO 京东 CID）</li>
+        <li><strong>客户投放指引</strong>：面向客户的可视化 HTML 指引</li>
+        <li><strong>分人群出价</strong>：客户沟通话术 + 配置方案 + 效果分析</li>
+        <li><strong>服务商培训</strong>：培训材料体系（PPT 内容 + Showcase）</li>
+        <li><strong>腾讯广告助手</strong>：对接妙问 API 回答平台规则问题</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: Architecture -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">三层架构 · SKILL / Rule / Automation 三位一体</div>
+  </div>
+
+  <div class="arch-box">
+    <div class="arch-layer">
+      <div class="arch-layer-title">Layer 1 · 始终生效 Rules（每次对话自动加载 · 基础规范层）</div>
+      <div class="arch-items">
+        <div class="arch-item red">广告术语库<br><span style="font-size:0.75em;color:#888;">200+ 术语 · 全场景共享</span></div>
+        <div class="arch-item red">直播间商品补充<br><span style="font-size:0.75em;color:#888;">自动标注主推品</span></div>
+        <div class="arch-item red">Prompt 记录<br><span style="font-size:0.75em;color:#888;">每次对话自动归档</span></div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-title">Layer 2 · 按需加载 Rules（AI 判断相关时自动读取 · 共享知识层）</div>
+      <div class="arch-items">
+        <div class="arch-item orange">数据分析基础规范<br><span style="font-size:0.75em;color:#888;">640 行 · 指标计算/ROI口径/版位/自检清单</span></div>
+        <div class="arch-item orange">掉量分析流程<br><span style="font-size:0.75em;color:#888;">188 行 · 12 维度归因</span></div>
+        <div class="arch-item orange">输出质量门禁<br><span style="font-size:0.75em;color:#888;">独立验收 · 四维检查</span></div>
+        <div class="arch-item orange">OKR 锚定<br><span style="font-size:0.75em;color:#888;">自动注入 OKR 上下文</span></div>
+        <div class="arch-item orange">会议分级<br><span style="font-size:0.75em;color:#888;">L1-L4 差异化处理</span></div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-title">Layer 3 · 场景 SKILLs（被触发时才加载 · 20 个场景能力模块）</div>
+      <div class="arch-items">
+        <div class="arch-item">每日早报</div>
+        <div class="arch-item">周报</div>
+        <div class="arch-item">双周报</div>
+        <div class="arch-item">月报</div>
+        <div class="arch-item green">客户复盘<br><span style="font-size:0.7em">已模块化 · 6 子模块</span></div>
+        <div class="arch-item green">素材分析<br><span style="font-size:0.7em">已模块化 · 3 模块</span></div>
+        <div class="arch-item">直播间分析</div>
+        <div class="arch-item purple">运营军师<br><span style="font-size:0.7em">10 种服务模式</span></div>
+        <div class="arch-item teal">案例制作</div>
+        <div class="arch-item teal">客户指引</div>
+        <div class="arch-item teal">分人群出价</div>
+        <div class="arch-item">...</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-title">Automation 层 · 定时自动化（无需人工触发）</div>
+      <div class="arch-items">
+        <div class="arch-item" style="border-left-color:#00bcd4;">☀️ 晨间规划 08:30<br><span style="font-size:0.7em">OKR → todo → 需求待办 → 日清单</span></div>
+        <div class="arch-item" style="border-left-color:#00bcd4;">🌙 晚间归档 21:00<br><span style="font-size:0.7em">日志 → 标签 → 摘要 → Git 推送</span></div>
+        <div class="arch-item" style="border-left-color:#00bcd4;">🔔 专项提醒<br><span style="font-size:0.7em">华大智投快推跟进</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔑 架构设计核心原则</h3>
+    <table>
+      <tr><th>原则</th><th>说明</th><th>实例</th></tr>
+      <tr><td>改通用规则 → 改 Rule</td><td>术语/计算方法进 Rule，所有 SKILL 自动继承</td><td>万益蓝诊断中发现的"转化外溢"概念 → 自动进入术语库</td></tr>
+      <tr><td>改场景逻辑 → 改 SKILL</td><td>具体分析流程写在对应场景 SKILL</td><td>外溢分析流程 → 客户复盘 SKILL Step 5.5</td></tr>
+      <tr><td>500 行警戒线</td><td>SKILL 主文件不超 500 行，超出则模块化拆分</td><td>客户复盘 1918→467 行（+6 子模块）</td></tr>
+      <tr><td>验收独立于生成</td><td>"自己不检查自己的作业"，独立验收机制</td><td>output-quality-gate：重新读取文件 → 四维检查</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Section 4: AI Brain -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">AI 共脑 · 如何让 AI 持续了解"我的情况"</div>
+  </div>
+
+  <div class="card">
+    <h3>🧠 记忆系统：五层架构</h3>
+    <div class="km-grid">
+      <div class="km-item">
+        <h4>L0 · 每日工作日志</h4>
+        <p>37 天连续记录（3.9 — 4.23）<br>每天自动补建，OKR 标签补全</p>
+      </div>
+      <div class="km-item g">
+        <h4>L1 · Prompt 记录</h4>
+        <p>每次对话自动归档到 prompt.md<br>累计 45.85 KB，全程可追溯</p>
+      </div>
+      <div class="km-item o">
+        <h4>L2 · 客户档案卡</h4>
+        <p>7 个客户速查卡 + 4 个品牌经营档案<br>AI 每次复盘自动读取，不需重复描述客户背景</p>
+      </div>
+      <div class="km-item p">
+        <h4>L3 · 业务认知纠错库</h4>
+        <p>MEMORY.md 中 13 条认知纠错<br>如"ROI 出价↑=竞争力下降"，固化为不可推翻规则</p>
+      </div>
+      <div class="km-item r">
+        <h4>L4 · 知识沉淀体系</h4>
+        <p>腾讯广告知识库（105 文件）<br>微信小店规则库（500+ 文件）<br>数据平台 Agent 参考文档（7 份）</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔄 知识飞轮：实践 → 提炼 → 模块化 → 自动引用</h3>
+    <div class="flow">
+      <div class="flow-step">实际业务分析<br><span style="font-size:0.7em">客户复盘/掉量/素材</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">发现新知识<br><span style="font-size:0.7em">方法论/教训/术语</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step highlight">三层归位沉淀<br><span style="font-size:0.7em">Rule / SKILL / Memory</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">下次自动引用<br><span style="font-size:0.7em">AI 自动读取新知识</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">质量持续提升<br><span style="font-size:0.7em">返工率持续下降</span></div>
+    </div>
+    <p style="font-size:0.85em;color:var(--text-secondary);text-align:center;margin-top:8px;">
+      <strong>实例</strong>：万益蓝银发直购诊断 → 发现"转化外溢"→ 3 个新术语进术语库 + 2 个新分析步骤进客户复盘 SKILL + 3 条方法论进运营军师 → 下次诺特兰德外溢分析时 AI 自动引用，无需人工提醒
+    </p>
+  </div>
+</div>
+
+<!-- Section 5: Iteration Timeline -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">迭代历程 · 18 周持续进化</div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 1-2（2.28 — 3.13）<span class="tl-tag">起步期</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：从 0 搭建 SKILL + 痛点驱动重构</span><br>
+        9 个客户复盘积累经验 → 五个女博士 7 轮返工暴露 SKILL 结构缺陷 → 倒逼大重构（1918→403 行 + 6 子模块）<br>
+        <strong>核心洞察</strong>：知识量增长到临界点后执行力反而下降，"痛点是最好的迭代驱动力"
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 3（3.16 — 3.20）<span class="tl-tag green">多模式并行</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：从"给需求→出报告"到多种协作模式并行</span><br>
+        产出 +50%，返工 -43%。新增"提问引导式"协作模式（AI 提问引导思考 → 专项提案直接可用），首次从执行层向策略层跃迁
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 4（3.23 — 3.27）<span class="tl-tag green">战略协作期</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：AI 成为"知识管理系统"而非只是"报告生成器"</span><br>
+        厦门创享会 10 场会议 → 459 行系统化文档（四维度梳理法），出差前"打地基"14 项产出，信息半衰期从 2 周缩短到 0 天
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 5（3.28 — 4.3）<span class="tl-tag orange">工程化协作期</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：三阶段 Pipeline 流水线 + Harness 工程框架引入</span><br>
+        直播间分析大项目：4 品牌 × 13 间，1 天完成（纯人工预估 4 个工作日）。产出 CVR 方法论 + 4 品牌经营档案 + 15 份话术转录，引入 Golden Sample 回归验证机制
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 6（4.7 — 4.10）<span class="tl-tag">深度分析 + 顶层设计</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：知识飞轮跑通 + OKR 经营模型共创</span><br>
+        EGUOO 全套 6 份报告 + 万益蓝"转化外溢"发现（ROI 下滑 37% 的真正原因）→ 7 类知识三层归位沉淀。OKR 7 轮人机共创定稿
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 17（4.14 — 4.18）<span class="tl-tag green">系统运行期</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：从"框架设计"到"系统自动运行"</span><br>
+        SKILL V3 架构 6 Phase 全部落地 + OKR 锚定工作流系统搭建完成（晨间/晚间/双周会三个自动化模式）+ ROI 口径全局修复根治历史顽疾
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-week">Week 18（4.20 — 至今）<span class="tl-tag" style="background:#e8f5e9;color:#2e7d32;">稳定运行期</span></div>
+      <div class="tl-content">
+        <span class="tl-tag orange">AI 协作重点：自动化稳定运行 + 向组织赋能输出</span><br>
+        晨间规划 + 晚间归档连续 4 天 100% 自动执行。4.22 食品饮料 AI 现状分享，面向商消全业务部输出体系化经验
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 6: Key Metrics -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-title">核心价值验证 · 从提效到提质</div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>📊 效率提升数据</h3>
+      <table>
+        <tr><th>工作场景</th><th>传统方式</th><th>AI 协作后</th></tr>
+        <tr><td>客户复盘报告</td><td>2-3 小时</td><td><strong>10 分钟</strong></td></tr>
+        <tr><td>每日早报</td><td>30-60 分钟</td><td><strong>3-5 分钟</strong></td></tr>
+        <tr><td>掉量归因分析</td><td>1-2 小时</td><td><strong>5-10 分钟</strong></td></tr>
+        <tr><td>双周报/月报</td><td>半天</td><td><strong>20-30 分钟</strong></td></tr>
+        <tr><td>13 间直播间深度分析</td><td>~4 工作日</td><td><strong>1 天</strong></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>📈 质量提升曲线</h3>
+      <table>
+        <tr><th>指标</th><th>Week 2</th><th>Week 17</th></tr>
+        <tr><td>平均返工轮数</td><td>3.5 轮</td><td><strong>~1 轮</strong></td></tr>
+        <tr><td>一次过交付数</td><td>1 项/周</td><td><strong>3+ 项/周</strong></td></tr>
+        <tr><td>周产出量</td><td>12 项</td><td><strong>22+ 项</strong></td></tr>
+        <tr><td>Memory 日志覆盖率</td><td>—</td><td><strong>100%</strong></td></tr>
+        <tr><td>SKILL 架构健康度</td><td>⭐⭐</td><td><strong>⭐⭐⭐⭐</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="quote">比效率提升更重要的是分析的深度和颗粒度——以前手动看数据很难同时兼顾十几个维度，现在 AI 可以全部跑一遍。<br><br>当别人还在讨论 AI 能做什么的时候，我们已经用 AI 做出了什么。</div>
+  </div>
+</div>
+
+<!-- Section 7: Deep Case -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <div class="section-title">深度案例 · 先进经验 × 客户优势 = 个性化营销方案</div>
+  </div>
+
+  <p style="font-size:0.92em;color:var(--text-secondary);margin-bottom:20px;">以下三个案例展示了完整的方法论生产闭环：先从赛道头部直播间和跑量素材中<strong>提炼通用的先进经验</strong>，再将方法论<strong>与具体客户的优势结合</strong>，输出可直接落地的个性化营销方案。</p>
+
+  <!-- Case 1: CVR 方法论 -->
+  <div class="card">
+    <h3>📊 案例一：膳食赛道直播间 CVR 人货场方法论</h3>
+    <p style="margin-bottom:12px;font-size:0.88em;"><strong>业务背景</strong>：赛道有大量直播间在跑，但缺少系统化的 CVR 优化方法论。各品牌各自摸索，经验散落在不同团队手中。</p>
+
+    <p style="font-size:0.85em;"><strong>生产过程</strong>：</p>
+    <table>
+      <tr><th>阶段</th><th>做了什么</th><th>产出</th></tr>
+      <tr><td>Phase 1：视频预处理</td><td>4 品牌 × 13 间直播间录屏 → AI 批量截取 170+ 关键帧 + 提取 15 份音频 → Gemini API 批量转录（~400KB 文本）</td><td>帧画面分析笔记 + 15 份完整话术转录</td></tr>
+      <tr><td>Phase 2：逐品牌拆解</td><td>按人设·货品·话术·场景四个维度，逐品牌深度分析</td><td>4 份品牌经营档案卡（共 61KB）</td></tr>
+      <tr><td>Phase 3：跨品牌提炼</td><td>横向对比 → 提炼共性规律 → 输出可复制的方法论</td><td>CVR 人货场方法论（29KB）</td></tr>
+    </table>
+
+    <p style="margin-top:12px;font-size:0.85em;"><strong>方法论核心发现</strong>（举例）：</p>
+    <ul style="font-size:0.85em;padding-left:20px;">
+      <li><strong>人设</strong>：膳食赛道四大主播人设类型（专业顾问 / 知识专家 / 管理师 / 品牌代言人），不同品类适配不同人设</li>
+      <li><strong>货</strong>：单品聚焦是 CVR 最高的挂车策略；华大的"服用阶段式"SKU 命名是最高级的隐形逼单设计</li>
+      <li><strong>场</strong>：品类定制装修是 CVR 的隐形杠杆——用户进入直播间 3 秒内建立"这个间是为我准备的"的认知</li>
+      <li><strong>话术</strong>：标准 5-7 分钟循环：痛点放大 → 科学塑品 → 品牌背书 → 开价促销 → 逼单催付</li>
+      <li><strong>大场</strong>：升级公式 = 日常主播班底（稳定器）× 组合套餐（GPM 引擎）× 节日主题换装（催化剂）</li>
+    </ul>
+    <p style="margin-top:10px;font-size:0.82em;color:#00897b;"><strong>关键价值</strong>：一天完成的深度分析量，纯人工预估需 4 个工作日。且产出不只是报告，而是<strong>可复用的方法论 + 持续丰富的品牌经营档案</strong>——每次分析新直播间，档案自动更新。</p>
+  </div>
+
+  <!-- Case 2: 素材拆解 -->
+  <div class="card">
+    <h3>🎬 案例二：膳食赛道 Top 素材创意深度拆解</h3>
+    <p style="margin-bottom:12px;font-size:0.88em;"><strong>业务背景</strong>：赛道 9 个品类的 Top 跑量素材，需要拆解出跨品类的创意规律，指导素材制作和投放优化。</p>
+
+    <p style="font-size:0.85em;"><strong>生产过程</strong>：28 条 Top 素材 × Gemini AI 音频转录（完整口播文案 + 音频特征）+ 167 帧关键帧画面分析 + 投放数据交叉验证</p>
+
+    <p style="margin-top:12px;font-size:0.85em;"><strong>核心产出</strong>：</p>
+    <ul style="font-size:0.85em;padding-left:20px;">
+      <li><strong>赛道爆量素材 5 大共性</strong>：人设号口播主流（24/28 条）、前 5 秒"痛点钩子"决定生死、限时促销+数字锚定是转化核心、用户证言比硬科普更有效、BGM 需匹配内容节奏</li>
+      <li><strong>分人群创意策略</strong>：中老年（健康焦虑+真人证言）、宝妈（专家人设+症状描述）、年轻女性（情绪共鸣+英文 BGM）、泛健康（症状自查+促销）</li>
+      <li><strong>高转化公式</strong>：精准 Hook（前 3 秒）+ 痛点精准匹配 + 信任体系 + 促销紧迫感 + 短决策路径</li>
+      <li><strong>标杆发现</strong>：维生素 B Top3 素材 CVR 11%（28 条最高）、ROI 1.19，证明"小店直购 + 症状自查 + 促销紧迫感"是超高转化组合</li>
+    </ul>
+    <p style="margin-top:10px;font-size:0.82em;color:#00897b;"><strong>关键价值</strong>：口播文案 + 音频特征 + 画面分析 + 投放数据的四维交叉，建立了"创意策略 → 数据表现"的因果链——不只是看哪个素材跑得好，而是明确<strong>为什么</strong>跑得好、<strong>怎么复制</strong>。</p>
+  </div>
+
+  <!-- Case 3: EGUOO -->
+  <div class="card">
+    <h3>🎯 案例三：基于方法论沉淀 × 客户优势 → EGUOO 直播链路拓展方案</h3>
+    <p style="margin-bottom:12px;font-size:0.88em;"><strong>业务背景</strong>：EGUOO 是海外保健食品客户，CID 链路日耗已过千万级，但直播链路刚冷启动，日均仅 400 元。基于前两个案例沉淀的直播间方法论和素材创意规律，为 EGUOO 定制从 CID 到直播的转型方案。</p>
+
+    <div class="flow" style="flex-wrap:wrap;">
+      <div class="flow-step">案例一 · 直播间方法论<br><span style="font-size:0.7em">人设/货品/话术/场景</span></div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-step">案例二 · 素材创意规律<br><span style="font-size:0.7em">钩子策略/BGM/高转化公式</span></div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-step">EGUOO 自身数据<br><span style="font-size:0.7em">96 天 · 7 品类 · 43 条素材转录</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step highlight">定制化拓展方案<br><span style="font-size:0.7em">选品→素材→人货场→投放</span></div>
+    </div>
+
+    <p style="margin-top:16px;font-size:0.85em;"><strong>生产过程拆解</strong>：</p>
+    <table>
+      <tr><th>步骤</th><th>AI 做了什么</th><th>人做了什么</th></tr>
+      <tr><td>① 数据全量分析</td><td>自动跑 7 大品类 × 全量指标，发现消化酶 CVR 7.13%（全品类第一）、养肝 ROI 1.362（全品类最优）</td><td>判断"养肝+心脑双品类冷启动、消化酶作黑马"的选品策略</td></tr>
+      <tr><td>② 素材口播拆解</td><td>Gemini API 转录 43 条 Top 素材 → 逐条拆解钩子策略、BGM 风格、话术结构</td><td>从 9 种钩子中精选 5 种高效策略，判断哪些适合直播改编</td></tr>
+      <tr><td>③ 方法论迁移</td><td>将案例一、二沉淀的方法论（人设信任金字塔 × 挂车策略 × 话术循环 × 高转化公式）自动适配到 EGUOO 的品类特征</td><td>结合 EGUOO 的冠军运动员背书资产、三国品质链等独特优势做差异化设计</td></tr>
+      <tr><td>④ 方案整合</td><td>输出选品策略 + 素材脚本模板 + 人货场定位 + 投放基建（含智投工具组合）+ 4 周冲刺里程碑</td><td>审阅方案的可执行性，调整预算分配和节奏</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:0.82em;color:#00897b;"><strong>关键价值</strong>：不是给客户一份泛泛的"建议直播"，而是基于已验证的数据告诉客户——"你的消化酶品类 CTCVR 23.16‱ 全品类第一，这个品是直播的超级转化品；你的冠军运动员素材 3s 完播率 65.5% 全品牌最高，这是直播间的核心信任锚点。"</p>
+  </div>
+
+  <div class="insight-box">
+    <div class="quote">三个案例的递进逻辑：先从赛道头部实践中<strong>提炼通用方法论</strong>（直播间 + 素材），再将方法论<strong>与具体客户数据结合</strong>输出定制化方案——AI 不是凭空编方案，而是基于大量已验证的数据和方法论，为新场景做适配。</div>
+  </div>
+</div>
+
+<!-- Section 8: Replicability -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <div class="section-title">从个体能力到组织能力 · 超级个体模式的推广路径</div>
+  </div>
+
+  <div class="card">
+    <h3>📌 核心命题：如何让"好的销售、好的运营变得越来越多"</h3>
+    <p style="font-size:0.9em;margin-bottom:14px;">当前 AI 应用已进入从 1.0 百花齐放到 2.0 收拢梳理的阶段。关键不是让每个人都从零搭建自己的 SKILL，而是基于已有的先进实践，沉淀可复用的组织能力，拉高整体下限。</p>
+    <table>
+      <tr><th>维度</th><th>1.0 现状（个体探索）</th><th>2.0 方向（组织沉淀）</th></tr>
+      <tr><td>SKILL</td><td>各行业各自搭建，百花齐放，水平参差</td><td>按"四力"框架甄选先进实践 → 区分通用部分与行业适配部分 → 上架 SKILL 市集供复用</td></tr>
+      <tr><td>知识体系</td><td>知识散落在个人手中，"孤岛"状态</td><td>建立行业级最优知识库 → 明确什么是"最优产出"的标准和标注 → 通用输入沉淀</td></tr>
+      <tr><td>交付标准</td><td>交付质量取决于个人 AI 熟练度</td><td>固定业务口径 + 标准分析框架 + 输出模板 → 确保下限可控</td></tr>
+      <tr><td>培养路径</td><td>各自摸索，上手成本高</td><td>初阶（基础取数）→ 中阶（SKILL + 深度洞察）→ 高阶（架构设计 + 方法论沉淀），分阶段赋能</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🔄 已验证的可复制组件</h3>
+    <div class="two-col">
+      <div>
+        <p style="font-size:0.88em;font-weight:700;margin-bottom:8px;">对内：重新定义角色的工作流</p>
+        <ul style="font-size:0.85em;padding-left:18px;">
+          <li><strong>OKR 锚定工作流</strong>：晨间自动生成当日 OKR 优先级 → 日间执行 → 晚间自动归档。让每个角色"早上打开就知道今天该干什么"</li>
+          <li><strong>AI 承接度标注体系</strong>（🟢🟡🔵⚪）：明确每项任务中"AI 能做什么、人需要做什么"，可作为角色能力升级的评估框架</li>
+          <li><strong>SKILL 使用指南</strong>（V6）：面向零技术背景同学，从安装到使用到自建的完整指引，已在中心内部共享验证</li>
+          <li><strong>SKILL 打包分发</strong>：文件夹直接复制，3 分钟完成部署</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:0.88em;font-weight:700;margin-bottom:8px;">对客：提效转增收的路径</p>
+        <ul style="font-size:0.85em;padding-left:18px;">
+          <li><strong>定制化深度复盘方案</strong>：结合客户数据 + 赛道先进经验，输出"言之有物、可直接行动"的报告，过去人工无法完成的分析深度</li>
+          <li><strong>客户投放指引 HTML</strong>：面向客户的可视化指引，定期更新政策和能力变化</li>
+          <li><strong>服务商培训体系</strong>：PPT 内容 + Showcase + 方法论文档，可规模化赋能渠道</li>
+          <li><strong>产能提升</strong>：从服务 N 个客户 → 服务 5N 个客户，同等精力下覆盖更多客户</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>👥 按角色差异化推送的设想</h3>
+    <p style="font-size:0.88em;margin-bottom:12px;">不同角色收到的 AI 工作推送应该是不同的：</p>
+    <table>
+      <tr><th>角色</th><th>每日推送示例</th><th>AI 承接的核心价值</th></tr>
+      <tr><td><strong>增长拓客销售</strong></td><td>基于客户列表 → 哪些客户收入提升了、哪些没有 → 今天优先联系谁</td><td>减少无效判断，让普通销售也能按最优流程执行</td></tr>
+      <tr><td><strong>存量大客运营</strong></td><td>全域通/潜客消耗异动 → 哪些起量需跟进、哪些掉量需止血 → 批量处理</td><td>漏洞分析自动化，运营聚焦策略而非看数</td></tr>
+      <tr><td><strong>中长尾运营</strong></td><td>创意新建增长 30%，在线增长 2%，曝光仅增长 0.8% → 创意竞争力提升方案</td><td>自动识别"新建拖进来了但跑不出去"的卡点</td></tr>
+      <tr><td><strong>经营决策</strong></td><td>赛道整体 KPI 仪表盘 + 异动预警 + 行动建议</td><td>从"花时间看数"到"看到就能决策"</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:0.82em;color:var(--text-secondary);">核心逻辑：让不同角色在打开工作台时，直接收到基于当前重点的个性化任务推送，拉高整体平均水平。</p>
+  </div>
+</div>
+
+<!-- Section 9: Org Alignment -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <div class="section-title">与商消 AI 专项的协同方向</div>
+  </div>
+
+  <div class="card">
+    <h3>📋 从四大专项方向看对接点</h3>
+    <table>
+      <tr><th>专项方向</th><th>已有实践基础</th><th>2.0 阶段可贡献的内容</th></tr>
+      <tr>
+        <td><strong>① SKILL 甄选与沉淀</strong><br><span style="font-size:0.78em;color:#888;">按四力框架梳理优质 SKILL</span></td>
+        <td>20 个 SKILL 覆盖投放力全链路（选品→投放→复盘→优化），已有三层架构设计（Rule / SKILL / Automation）</td>
+        <td>输出"食品饮料板块"在四力框架中的 SKILL 矩阵，区分通用部分（客户复盘/早报/掉量分析框架）和行业适配部分（品类规则/术语/品牌映射），供跨行业参考和复用</td>
+      </tr>
+      <tr>
+        <td><strong>② 角色重新定义</strong><br><span style="font-size:0.78em;color:#888;">基于 AI 能力升级各角色工作流</span></td>
+        <td>OKR 锚定工作流（晨间规划 → 日间执行 → 晚间归档）+ AI 承接度标注体系 + 自动化任务推送</td>
+        <td>提供"运营角色"的 2.0 工作流范本：如何从"手动看数+写报告"升级为"AI 看数 + 人做判断 + AI 写报告"，含角色 OKR 自动生成、日报自动产出的完整方案</td>
+      </tr>
+      <tr>
+        <td><strong>③ 外包优化与电子化</strong><br><span style="font-size:0.78em;color:#888;">基础重复工作由 AI 承接</span></td>
+        <td>超级个体模式验证：一人覆盖日报/周报/双周报/月报/客户复盘全场景，基础工作 AI 承接率超 70%</td>
+        <td>梳理当前外包承担的工作清单，评估哪些可由 AI 直接电子化（如催审、白名单检查、数据汇总），哪些可让外包升级为更高价值的辅助（如初步分析、客户沟通准备）</td>
+      </tr>
+      <tr>
+        <td><strong>④ 知识体系沉淀</strong><br><span style="font-size:0.78em;color:#888;">打破知识孤岛，建立行业最优</span></td>
+        <td>三层知识架构（术语库 200+ → 分析规范 640 行 → 场景 SKILL 20 个）+ 知识飞轮机制（实践→提炼→模块化→自动引用）</td>
+        <td>输出知识沉淀方法论：如何判断"什么是最优产出"→ 如何标注和输入 → 三层归位（通用规则/共享知识/场景逻辑）→ 持续迭代的飞轮机制。可作为跨行业知识管理的参考范式</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🔗 对外协同：leverage 已有能力，沉淀差异化</h3>
+    <p style="font-size:0.88em;margin-bottom:12px;">在 AMS 内部其他团队已有大量 AI 工具沉淀（adataclaw、选品 Agent、Box AI 等）。协同的核心思路是：</p>
+    <ul style="font-size:0.85em;padding-left:20px;">
+      <li><strong>底层能力复用</strong>：数据取数、基础看板等通用能力，优先使用平台已有工具（如 adataclaw 定时报告推送），避免重复造轮子</li>
+      <li><strong>行业差异化建设</strong>：行业知识、分析口径、品类规则等个性化内容，通过 SKILL/Rule 体系沉淀，这是各行业的核心竞争力</li>
+      <li><strong>经验反哺平台</strong>：一线 MVP 验证结果（如哪些分析维度有效、哪些口径容易出错）反馈给平台侧，帮助迭代更贴合业务的 AI 工具</li>
+    </ul>
+  </div>
+
+  <div class="insight-box">
+    <div class="quote">当前已经完成了 1.0 百花齐放的阶段。2.0 的核心是：在各行业已有的先进实践基础上，甄选最优、沉淀通用、适配行业，让所有同学都能站在已有经验的肩膀上快速起步——而不是每个人都从零开始。</div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Going · 林丽莹 · 食品饮料中心 · 行业运营</p>
+  <p style="margin-top:4px;">文档生成日期：2026 年 4 月 23 日 · 本文档由 Going × AI 协作产出</p>
+</div>
+
+</div>
+</body>
+</html>
