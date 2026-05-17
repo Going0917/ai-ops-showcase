@@ -1,0 +1,685 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.428571; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; font-width: inherit; font-size: inherit; line-height: inherit; font-family: inherit; font-size-adjust: inherit; font-kerning: inherit; font-variant-alternates: inherit; font-variant-ligatures: inherit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-position: inherit; font-variant-emoji: inherit; font-feature-settings: inherit; font-optical-sizing: inherit; font-variation-settings: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right-width: 0px; border-right-style: none; border-right-color: currentcolor; background-color: inherit; }
+.CodeMirror-linenumber { }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: medium; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: medium !important; border-style: none !important; border-color: currentcolor !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom-width: 0px; border-bottom-style: none; border-bottom-color: currentcolor; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: medium; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.428571rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left-width: 28px; border-left-style: solid; border-left-color: transparent; border-right-width: 28px; border-right-style: solid; border-right-color: transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right-width: 8px; border-right-style: solid; border-right-color: transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right-width: 1px; border-right-style: solid; border-right-color: rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: medium !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right-width: 30px; border-right-style: solid; border-right-color: transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right-width: medium; border-right-style: none; border-right-color: currentcolor; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right-width: medium; border-right-style: none; border-right-color: currentcolor; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', 'SF Pro', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+ @media print { @page {margin: 0 0 0 0;} body.typora-export {padding-left: 0; padding-right: 0;} #write {padding:0;}}
+</style><title>Week11_工作周报与协作迭代建议_2026.5.11-5.17</title>
+</head>
+<body class='typora-export'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='📋-week11-工作周报--协作迭代建议'><span>📋 Week11 工作周报 &amp; 协作迭代建议</span></h1><blockquote><p><strong><span>周期</span></strong><span>：2026.5.11（周一）— 5.17（周日）⚠️ 实际工作日 5/11-5/15（5 天），5/16-5/17 双休</span>
+<strong><span>角色</span></strong><span>：Going（林丽莹）· 食品饮料中心 · 行业运营</span>
+<strong><span>关键事件</span></strong><span>：节后双周报 4.27-5.10 + 5月扶持对客指引 v4 + ADataClaw 圆桌分享执行 + lisa 沟通诺特复计破局（&quot;开新店做归因隔离&quot;）+ 诺特兰德双团队小店链路复盘 v4 + 万益蓝小店直购 618 备战诊断 + 华大营养 ADQ 投放近一月复盘 + Townhall 5/18 分享大纲 V1（664 行）+ Townhall deck Soft Editorial 风格切换（template×2 + 渲染引擎×2 + 风格预览×3 / 1556+1258 行）+ SKILL 体系大升级（html-image-exporter 474行 + editable-html-builder 373行 + editable-html-default rule 135行）+ wecom-doc MCP 工具链补强 + Mode J V2 强化（3 个校验子流程）+ Mode L 实时积累兜底 + 食品饮料运营双周会执行 + 自动化双失效故障与纠错（含校验 J-4 沉淀）</span>
+<strong><span>输出日期</span></strong><span>：2026.5.17（周日 / 周末加班补输）</span></p></blockquote><hr /><h2 id='part-1本周工作总览'><span>Part 1：本周工作总览</span></h2><h3 id='一句话总结'><span>一句话总结</span></h3><p><strong><span>这是&quot;节后批量交付 + 客户复盘双线突破 + 跨 KR 能力建设三浪推进&quot;的高密度周——5/11 节后首日双交付（双周报 4.27-5.10 + 5月扶持权益指引 v4），5/12 全天 8+ 项产出（lisa 沟通诺特复计破局&quot;开新店隔离&quot;+ ADataClaw 圆桌分享执行 + NHHE 展会 OnePage + 23:32 P0 校准），5/13 KR2 双客户 618 备战诊断双产出（诺特双团队 v4 + 新店铺智投建议 v3）+ 突发掉量简报，5/14 客户复盘三连击（万益蓝 + 华大 + 诺特双周会信息同步稿）+ 直播 4+M TOP20 效果验证 + Townhall 大纲 V1 起草 + 21:00 加班补 OnePage 双版+双周会 docx 三轮，5/15 跨 KR 能力建设大升级（SKILL 体系 4 文件新建/重构 + Townhall deck Soft Editorial 全面切换 + 6 PDF 腾讯广告知识库扩充 + 食品饮料运营双周会执行）。本周从 Week9 假期前的&quot;风险应对+收口收尾期&quot;进入&quot;客户深度交付 + 体系化能力沉淀期&quot;——KR2 突破诺特归因核心卡点（lisa 沟通+对内老板提炼稿），KR1+KR2 完成 618 备战双客户诊断（诺特+万益蓝），跨 KR 完成 Townhall 5/18 分享前的全部基建（大纲+deck+SKILL 工程化路由）。</span></strong></p><h3 id='核心数据'><span>核心数据</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>指标</span></th><th style='text-align:center;' ><span>Week9(4.27-5.3)</span></th><th style='text-align:center;' ><span>Week11(5.11-5.15)</span></th><th style='text-align:center;' ><span>变化</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>工作天数</span></td><td style='text-align:center;' ><span>3天（短周）</span></td><td style='text-align:center;' ><strong><span>5天</span></strong><span>（全工作日）</span></td><td style='text-align:center;' ><span>+2天</span></td><td style='text-align:left;' ><span>Week10 五一假期周占位</span></td></tr><tr><td style='text-align:left;' ><span>实质性产出数</span></td><td style='text-align:center;' ><span>30+项</span></td><td style='text-align:center;' ><strong><span>42+项</span></strong></td><td style='text-align:center;' ><span>+12项</span></td><td style='text-align:left;' ><span>客户复盘×4 + Townhall×3 + SKILL×4 + 双周报+扶持指引 + 双周会素材×2 + 知识库扩充 + bug 修复</span></td></tr><tr><td style='text-align:left;' ><span>客户分析级产出</span></td><td style='text-align:center;' ><span>4份</span></td><td style='text-align:center;' ><strong><span>6份</span></strong></td><td style='text-align:center;' ><span>+2</span></td><td style='text-align:left;' ><span>双周报 + 诺特 v4 + 新店铺 v3 + 万益蓝 + 华大 + 4+M TOP20 验证</span></td></tr><tr><td style='text-align:left;' ><span>战略/面向领导产出</span></td><td style='text-align:center;' ><span>4份</span></td><td style='text-align:center;' ><strong><span>5份</span></strong></td><td style='text-align:center;' ><span>+1</span></td><td style='text-align:left;' ><span>Townhall 大纲 V1 + Townhall deck（Soft Editorial）+ 双周会汇报 docx V1→V2→V3 + 诺特信息同步稿 V1+V2</span></td></tr><tr><td style='text-align:left;' ><span>系统建设级产出</span></td><td style='text-align:center;' ><span>8项</span></td><td style='text-align:center;' ><strong><span>12项</span></strong></td><td style='text-align:center;' ><span>+4</span></td><td style='text-align:left;' ><span>SKILL 4 个新建/重构 + Mode J V2 强化 + Mode L 落地 + 校验 J-4 沉淀 + wecom-doc bug 修复 + automation 目录迁移</span></td></tr><tr><td style='text-align:left;' ><span>对外赋能产出</span></td><td style='text-align:center;' ><span>1项</span></td><td style='text-align:center;' ><strong><span>5项</span></strong></td><td style='text-align:center;' ><span>+4</span></td><td style='text-align:left;' ><span>5月扶持权益指引 v4 / ADataClaw 圆桌分享 / NHHE 展会 OnePage / 4 链路 OnePage 合集 / 4+M OnePage 双版</span></td></tr><tr><td style='text-align:left;' ><span>Memory 日志覆盖率</span></td><td style='text-align:center;' ><span>100% (3/3)</span></td><td style='text-align:center;' ><strong><span>100% (5/5)</span></strong></td><td style='text-align:center;' ><span>✅ 持续</span></td><td style='text-align:left;' ><span>全部含完整 Mode J 输出</span></td></tr><tr><td style='text-align:left;' ><span>Git 提交次数</span></td><td style='text-align:center;' ><span>7次</span></td><td style='text-align:center;' ><strong><span>30+次</span></strong></td><td style='text-align:center;' ><span>+23次</span></td><td style='text-align:left;' ><span>含 5 次晚间归档 + 3 次需求待办回写 + 多次实时校准 + SKILL 重构 + Townhall deck 大批提交</span></td></tr><tr><td style='text-align:left;' ><span>SKILL/Rule 更新</span></td><td style='text-align:center;' ><span>4个</span></td><td style='text-align:center;' ><strong><span>7个</span></strong></td><td style='text-align:center;' ><span>+3</span></td><td style='text-align:left;' ><span>🆕 html-image-exporter / 🆕 editable-html-builder / 🆕 editable-html-default rule / 🔧 case-showcase-builder 双重构 / 🔧 ops-strategist Mode J V2+V3 / 🔧 wecom-doc-mcp</span></td></tr><tr><td style='text-align:left;' ><span>Layer 3 时间占比</span></td><td style='text-align:center;' ><span>~35%</span></td><td style='text-align:center;' ><strong><span>~45%</span></strong></td><td style='text-align:center;' ><span>+10pp</span></td><td style='text-align:left;' ><span>Townhall 筹备+SKILL 体系升级集中投入</span></td></tr><tr><td style='text-align:left;' ><span>Todo 事项新增</span></td><td style='text-align:center;' ><span>11 项</span></td><td style='text-align:center;' ><strong><span>8 项</span></strong></td><td style='text-align:center;' ><span>-3</span></td><td style='text-align:left;' ><span>节后峰值已过（W21 #54-58 + 实时新增）</span></td></tr></tbody></table></figure><h3 id='一周产能曲线'><span>一周产能曲线</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>日期</span></th><th style='text-align:left;' ><span>主题</span></th><th style='text-align:left;' ><span>主要产出</span></th><th style='text-align:center;' ><span>产能等级</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>5/11 周一</span></td><td style='text-align:left;' ><span>节后首日双交付</span></td><td style='text-align:left;' ><span>双周报 4.27-5.10 + 5月扶持权益指引 v4 + wecom-doc MCP 工具链补强 + ADataClaw 分享筹备</span></td><td style='text-align:center;' ><span>🟢🟢</span></td></tr><tr><td style='text-align:left;' ><span>5/12 周二</span></td><td style='text-align:left;' ><span>ADataClaw 分享日 + 客户突破</span></td><td style='text-align:left;' ><span>lisa 沟通诺特复计破局 + ADataClaw 圆桌分享 + NHHE 展会 OnePage + 掉量简报 + 23:32 P0 三次校准</span></td><td style='text-align:center;' ><span>🟢🟢🟢</span></td></tr><tr><td style='text-align:left;' ><span>5/13 周三</span></td><td style='text-align:left;' ><span>KR2 双客户诊断双产出</span></td><td style='text-align:left;' ><span>诺特双团队复盘 v4 + 新店铺智投建议 v3 + 4 链路 OnePage 合集 + 突发掉量简报 + case-showcase-builder SKILL 升级</span></td><td style='text-align:center;' ><span>🟢🟢🟢</span></td></tr><tr><td style='text-align:left;' ><span>5/14 周四</span></td><td style='text-align:left;' ><span>客户复盘三连击 + Townhall 启动</span></td><td style='text-align:left;' ><span>万益蓝 618 备战 + 华大 ADQ 复盘 + 诺特双周会稿 + 4+M TOP20 验证 + Townhall 大纲 V1 + 21:00 加班补 OnePage+docx 三轮</span></td><td style='text-align:center;' ><span>🟢🟢🟢🟢</span></td></tr><tr><td style='text-align:left;' ><span>5/15 周五</span></td><td style='text-align:left;' ><span>跨 KR 能力建设大升级 + 双周会执行</span></td><td style='text-align:left;' ><span>SKILL 体系 4 文件新建/重构（+1117 行）+ Townhall deck Soft Editorial 全面切换（+6396 行）+ 6 PDF 知识库扩充 + 食品饮料运营双周会执行 + 5/15 自动化故障识别与纠错</span></td><td style='text-align:center;' ><span>🟢🟢🟢</span></td></tr></tbody></table></figure><hr /><h2 id='part-2工作明细按日拆解）'><span>Part 2：工作明细（按日拆解）</span></h2><h3 id='📅-511-周一-----节后首日双交付日'><span>📅 5.11 周一 — &quot;节后首日双交付日&quot;</span></h3><p><strong><span>主题</span></strong><span>：双周报 4.27-5.10 完整版 + 5月扶持权益对客指引 v4 + wecom-doc MCP 工具链补强 + ADataClaw 5/12 分享筹备</span></p><figure><table><thead><tr><th style='text-align:left;' ><span>时段</span></th><th style='text-align:left;' ><span>产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>00:31</span></td><td style='text-align:left;' ><span>自动化前置确认</span></td><td style='text-align:center;' ><span>系统建设</span></td><td style='text-align:left;' ><span>备用机首次执行前的 automation 配置确认</span></td></tr><tr><td style='text-align:left;' ><span>08:30</span></td><td style='text-align:left;' ><strong><span>晨间规划 Mode I</span></strong><span>（备用机首次自动）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>W21 区块完整周转 / W19→W21 跨周折叠归档</span></td></tr><tr><td style='text-align:left;' ><span>11:06</span></td><td style='text-align:left;' ><strong><span>健康食品行业双周报 4.27-5.10 完整版交付</span></strong><span> ✅</span></td><td style='text-align:center;' ><span>Layer 2 交付</span></td><td style='text-align:left;' ><span>覆盖直播链路+小店直购双 KR 洞察，写入 Excel 新 Sheet</span></td></tr><tr><td style='text-align:left;' ><span>11:17</span></td><td style='text-align:left;' ><span>AI Showcase 网页可访问性排查</span></td><td style='text-align:center;' ><span>Layer 1 执行</span></td><td style='text-align:left;' ><span>老板打不开链接的故障定位</span></td></tr><tr><td style='text-align:left;' ><span>16:33-17:31</span></td><td style='text-align:left;' ><strong><span>wecom-doc MCP 工具链补强</span></strong></td><td style='text-align:center;' ><span>Layer 3 系统建设</span></td><td style='text-align:left;' ><span>解决企微套件权限问题的兜底方案 + MEMORY T10 双工具策略沉淀</span></td></tr><tr><td style='text-align:left;' ><span>全天</span></td><td style='text-align:left;' ><strong><span>5月扶持权益对客指引 v1→v4 迭代</span></strong></td><td style='text-align:center;' ><span>Layer 2 对客</span></td><td style='text-align:left;' ><span>双信息源差异梳理 + 4 轮迭代收敛</span></td></tr><tr><td style='text-align:left;' ><span>傍晚</span></td><td style='text-align:left;' ><span>ADataClaw 5/12 圆桌分享筹备</span></td><td style='text-align:center;' ><span>Layer 2 准备</span></td><td style='text-align:left;' ><span>15 分钟稿 + 互动 10 题备选</span></td></tr><tr><td style='text-align:left;' ><span>21:00</span></td><td style='text-align:left;' ><strong><span>晚间归档 Mode J</span></strong><span>（备用机首次自动）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>完整四段式输出</span></td></tr></tbody></table></figure><blockquote><p><strong><span>小结</span></strong><span>：节后启动日，双交付 + 工具链补强构成主线。备用机首次完成&quot;晨规自动→主体工作→晚归档自动&quot;全流程闭环。</span></p></blockquote><hr /><h3 id='📅-512-周二-----adataclaw-分享日--客户突破日'><span>📅 5.12 周二 — &quot;ADataClaw 分享日 + 客户突破日&quot;</span></h3><p><strong><span>主题</span></strong><span>：lisa 沟通诺特复计破局 + ADataClaw 圆桌 15 分钟分享执行 + NHHE 展会 OnePage + 掉量简报 + 23:32 用户三次校准</span></p><figure><table><thead><tr><th style='text-align:left;' ><span>时段</span></th><th style='text-align:left;' ><span>产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>09:52</span></td><td style='text-align:left;' ><span>晨间规划 Mode I</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>12 项 P0 中今日推进 7 项识别</span></td></tr><tr><td style='text-align:left;' ><span>10:09</span></td><td style='text-align:left;' ><span>todo 实时更新（用户微信同步 3 项加塞）</span></td><td style='text-align:center;' ><span>流程治理</span></td><td style='text-align:left;' ><span>实时归集机制验证</span></td></tr><tr><td style='text-align:left;' ><span>10:12</span></td><td style='text-align:left;' ><span>多燕瘦封店波动客户痛点收集</span></td><td style='text-align:center;' ><span>Layer 1 执行</span></td><td style='text-align:left;' ><span>沉淀至痛点收集 2026-05.md</span></td></tr><tr><td style='text-align:left;' ><strong><span>11:00-11:30</span></strong></td><td style='text-align:left;' ><strong><span>🔴 lisa 沟通诺特兰德复计问题</span></strong></td><td style='text-align:center;' ><strong><span>KR2 突破</span></strong></td><td style='text-align:left;' ><span>明确&quot;开新店做归因隔离&quot;为最有效路径——消费品行业仅诺特存在该问题；达人分销 First Click+30 天锁单口径过宽</span></td></tr><tr><td style='text-align:left;' ><span>11:49</span></td><td style='text-align:left;' ><strong><span>掉量简报 5/12 截止 11:00</span></strong><span>（突发）</span></td><td style='text-align:center;' ><span>Layer 1 简报</span></td><td style='text-align:left;' ><span>多燕瘦封店30个 / 华大超成本+商品广告数据问题 / 诺特跑量广告掉量</span></td></tr><tr><td style='text-align:left;' ><span>12:03</span></td><td style='text-align:left;' ><span>诺特复计问题对内老板提炼稿</span></td><td style='text-align:center;' ><span>Layer 2 内部</span></td><td style='text-align:left;' ><span>客户独特性 + 原因分析 + 解决方案</span></td></tr><tr><td style='text-align:left;' ><span>12:34</span></td><td style='text-align:left;' ><span>ADataClaw 分享稿企微化（手机端可看）</span></td><td style='text-align:center;' ><span>Layer 2 准备</span></td><td style='text-align:left;' ><span>wecom-doc 工具链落地实战</span></td></tr><tr><td style='text-align:left;' ><span>13:30-14:30</span></td><td style='text-align:left;' ><strong><span>🎤 ADataClaw 圆桌 15 分钟分享执行</span></strong><span> ✅</span></td><td style='text-align:center;' ><span>Layer 2 对外赋能</span></td><td style='text-align:left;' ><span>顺利完成</span></td></tr><tr><td style='text-align:left;' ><span>全天</span></td><td style='text-align:left;' ><strong><span>NHHE 展会 OnePage V1</span></strong><span>（W21#48）</span></td><td style='text-align:center;' ><span>Layer 2 对客</span></td><td style='text-align:left;' ><span>698 行 HTML + 配图3张，5/13-5/15 展会拓客用</span></td></tr><tr><td style='text-align:left;' ><span>21:00</span></td><td style='text-align:left;' ><span>晚间归档 Mode J（备用机第 2 次）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>完整 9 步 + 23:24 用户补充</span></td></tr><tr><td style='text-align:left;' ><strong><span>23:32</span></strong></td><td style='text-align:left;' ><strong><span>用户 3 次校准</span></strong><span>（OnePage 闭环 + P0 升级 + #55/#56 新增）</span></td><td style='text-align:center;' ><span>流程治理</span></td><td style='text-align:left;' ><span>Mode J V2 强化（3 个校验子流程）的触发素材</span></td></tr></tbody></table></figure><blockquote><p><strong><span>小结</span></strong><span>：高密度日（10+ 项产出）。</span><strong><span>lisa 沟通诺特复计是 KR2 关键突破</span></strong><span>——确认行业唯一性 + 锁定&quot;开新店&quot;解法。23:32 用户三次校准成为 Mode J V2 的直接触发素材。</span></p></blockquote><hr /><h3 id='📅-513-周三-----kr2-双客户-618-备战诊断双产出日'><span>📅 5.13 周三 — &quot;KR2 双客户 618 备战诊断双产出日&quot;</span></h3><p><strong><span>主题</span></strong><span>：诺特双团队小店链路复盘 v4 + 新店铺智投优化建议 v3 + 4 链路能力 OnePage 合集 + 突发掉量简报 + case-showcase-builder SKILL 升级</span></p><figure><table><thead><tr><th style='text-align:left;' ><span>时段</span></th><th style='text-align:left;' ><span>产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>08:30</span></td><td style='text-align:left;' ><span>晨间规划 Mode I（备用机第 3 次）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>12 项 P0 + 5 项遗漏识别</span></td></tr><tr><td style='text-align:left;' ><span>10:16</span></td><td style='text-align:left;' ><strong><span>膳食赛道掉量简报突发交付</span></strong><span>（10:16→11:00）</span></td><td style='text-align:center;' ><span>Layer 1 简报</span></td><td style='text-align:left;' ><span>膳食赛道 -15.88% / TOP3 客户掉量 129.8% 集中度（多燕瘦+诺特+厦门启能星澜）</span></td></tr><tr><td style='text-align:left;' ><span>14:07-18:30</span></td><td style='text-align:left;' ><strong><span>诺特兰德双团队小店链路复盘 v4</span></strong><span> ✅（W21#54）</span></td><td style='text-align:center;' ><span>Layer 2 KR2</span></td><td style='text-align:left;' ><span>28.8KB MD + 446KB PDF · 用户档案归档版</span></td></tr><tr><td style='text-align:left;' ><span>19:25</span></td><td style='text-align:left;' ><strong><span>诺特兰德新店铺智投优化建议 v3</span></strong><span> ✅</span></td><td style='text-align:center;' ><span>Layer 2 KR2 对客</span></td><td style='text-align:left;' ><span>34KB HTML · 对客可视化版</span></td></tr><tr><td style='text-align:left;' ><span>14:07+18:34</span></td><td style='text-align:left;' ><strong><span>4 链路能力 OnePage 合集 + 诺特短直双开 OnePage 可编辑版</span></strong><span>（W21#55 雏形）</span></td><td style='text-align:center;' ><span>Layer 2 跨KR</span></td><td style='text-align:left;' ><span>412 行 / 1.2MB · 链路指南维度 + contenteditable 升级</span></td></tr><tr><td style='text-align:left;' ><span>全天</span></td><td style='text-align:left;' ><strong><span>case-showcase-builder SKILL 升级</span></strong></td><td style='text-align:center;' ><span>Layer 3 SKILL</span></td><td style='text-align:left;' ><span>新增&quot;链路指南合集&quot;形态（+111 行）+ 反向同步流程规范</span></td></tr><tr><td style='text-align:left;' ><span>全天</span></td><td style='text-align:left;' ><strong><span>多燕瘦客户档案&quot;消耗波动归因事件&quot;补充</span></strong></td><td style='text-align:center;' ><span>Layer 2 沉淀</span></td><td style='text-align:left;' ><span>双周会专用板块（事件①货组机制+事件②封店切链接）</span></td></tr><tr><td style='text-align:left;' ><span>21:00</span></td><td style='text-align:left;' ><span>晚间归档 Mode J（备用机第 3 次）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>含本日 5 项 P0 遗漏识别</span></td></tr></tbody></table></figure><blockquote><p><strong><span>小结</span></strong><span>：KR2 双产出日。诺特 v4+v3 是头部客户 618 备战的标杆产出，与 5/14 万益蓝形成&quot;双客户双标杆&quot;格局。</span></p></blockquote><hr /><h3 id='📅-514-周四-----客户复盘三连击--townhall-启动--2100-加班补天'><span>📅 5.14 周四 — &quot;客户复盘三连击 + Townhall 启动 + 21:00 加班补天&quot;</span></h3><p><strong><span>主题</span></strong><span>：万益蓝 618 备战 + 华大 ADQ 复盘 + 诺特双周会信息同步稿 + 直播 4+M TOP20 效果验证 + Townhall 大纲 V1 + 21:00 加班补 OnePage 双版 + 双周会 docx V1→V2→V3</span></p><figure><table><thead><tr><th style='text-align:left;' ><span>时段</span></th><th style='text-align:left;' ><span>产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>00:15 / 11:35</span></td><td style='text-align:left;' ><strong><span>Townhall 5/18 分享 15 分钟详细大纲 V1</span></strong></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>664 行 / 35.6KB · 四力深度打法 + 人机关系底层逻辑 + OKR 锚定工作流 + EGUOO 整合压轴</span></td></tr><tr><td style='text-align:left;' ><span>11:38</span></td><td style='text-align:left;' ><span>晨间规划 Mode I（备用机第 4 次）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>12 项 P0 + 双周会预扫</span></td></tr><tr><td style='text-align:left;' ><span>17:53-18:01</span></td><td style='text-align:left;' ><strong><span>直播 4+M TOP20 上线后 19 天效果验证</span></strong></td><td style='text-align:center;' ><span>Layer 2 KR1 数据</span></td><td style='text-align:left;' ><span>TOP20 整体 ROI 上线前 2.03 → 上线后 2.08（+2.5%）/ 3 文件交付</span></td></tr><tr><td style='text-align:left;' ><span>17:59</span></td><td style='text-align:left;' ><strong><span>W21#57 多燕瘦 CID 链路扶持需求承接</span></strong><span>（KR4）</span></td><td style='text-align:center;' ><span>Layer 1 客户</span></td><td style='text-align:left;' ><span>客户王琦主动咨询 / CID 量级 1万+/天 / 主体盘点</span></td></tr><tr><td style='text-align:left;' ><span>18:30</span></td><td style='text-align:left;' ><strong><span>万益蓝小店直购 618 备战诊断报告</span></strong><span> ✅（W21#43）</span></td><td style='text-align:center;' ><span>Layer 2 KR2</span></td><td style='text-align:left;' ><span>14 天数据 + 行业对标 + 益畅通效率标杆 → 企微已发客户</span></td></tr><tr><td style='text-align:left;' ><span>18:30</span></td><td style='text-align:left;' ><strong><span>华大营养 ADQ 投放近一月复盘报告</span></strong><span> ✅（W21#58 新增）</span></td><td style='text-align:center;' ><span>Layer 2 KR1</span></td><td style='text-align:left;' ><span>三重证据链证伪&quot;直播间表达商品&quot;对计价率影响 → 企微已发客户</span></td></tr><tr><td style='text-align:left;' ><span>19:16</span></td><td style='text-align:left;' ><strong><span>诺特兰德归因案例双周会信息同步稿 V1</span></strong></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>5/15 运营双周会素材首批锚点</span></td></tr><tr><td style='text-align:left;' ><span>21:05-21:34</span></td><td style='text-align:left;' ><strong><span>直播 4+M 数据口径修正版</span></strong><span>（21:00 后加班）</span></td><td style='text-align:center;' ><span>Layer 2 KR1 修正</span></td><td style='text-align:left;' ><span>各直播间以首次上线日为分界 + 等长天数严格对照</span></td></tr><tr><td style='text-align:left;' ><span>21:42-22:23</span></td><td style='text-align:left;' ><strong><span>直播 4+M 客户用 OnePage V1（双版）</span></strong></td><td style='text-align:center;' ><span>Layer 2 对客</span></td><td style='text-align:left;' ><span>V1 + 可编辑版 + 腾讯字体专属素材库</span></td></tr><tr><td style='text-align:left;' ><span>22:21-22:47</span></td><td style='text-align:left;' ><strong><span>直播 4+M 双周会汇报 docx V1→V2→V3</span></strong></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>26 分钟内三轮迭代</span></td></tr><tr><td style='text-align:left;' ><span>21:20</span></td><td style='text-align:left;' ><span>诺特双周会信息同步稿 V2</span></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>V1 基础上补会议纪要细节</span></td></tr><tr><td style='text-align:left;' ><span>21:00-23:39 区间</span></td><td style='text-align:left;' ><strong><span>Townhall 大纲 V1 实质修订</span></strong><span>（+156 行 / -72 行）</span></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>凌晨 + 21:00 后两次密集迭代</span></td></tr><tr><td style='text-align:left;' ><span>21:00-23:39 区间</span></td><td style='text-align:left;' ><strong><span>wecom-doc-mcp bug 修复</span></strong></td><td style='text-align:center;' ><span>Layer 3 工具链</span></td><td style='text-align:left;' ><span>fetcher.js createDoc pageHandler ReferenceError 守卫修复</span></td></tr></tbody></table></figure><blockquote><p><strong><span>小结</span></strong><span>：本周产能峰值日（</span><strong><span>12 大交付物</span></strong><span>）。21:00 自动 Mode J 归档完成后</span><strong><span>继续工作 2.5 小时连续完成 4 大方向交付</span></strong><span>——23:39 用户主动反馈&quot;今天实在干了太多活&quot;。直播 4+M 主题成为全天最大主题（17:53→22:47 共 6 小时 5 轮迭代）。</span></p></blockquote><hr /><h3 id='📅-515-周五-----跨-kr-能力建设大升级日--双周会执行--自动化故障纠错'><span>📅 5.15 周五 — &quot;跨 KR 能力建设大升级日 + 双周会执行 + 自动化故障纠错&quot;</span></h3><p><strong><span>主题</span></strong><span>：SKILL 体系 4 文件新建/重构 + Townhall deck Soft Editorial 全面切换 + 6 PDF 腾讯广告知识库扩充 + 食品饮料运营双周会执行 + 5/15 自动化双失效故障识别与纠错</span></p><figure><table><thead><tr><th style='text-align:left;' ><span>时段</span></th><th style='text-align:left;' ><span>产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>00:24-00:49</span></td><td style='text-align:left;' ><span>Townhall 大纲 V1 实质修订（+228 行）+ 风格预览三选一</span></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>Neo Grid Bold / Editorial Tri-Tone / Bold Poster 三套候选 + 通用渲染引擎 619 行</span></td></tr><tr><td style='text-align:left;' ><span>12:30-14:50</span></td><td style='text-align:left;' ><strong><span>腾讯广告知识库扩充 6 PDF</span></strong><span>（KR4+KR1）</span></td><td style='text-align:center;' ><span>Layer 1 备料</span></td><td style='text-align:left;' ><span>CID 链路 3 + 商品力 2 + 模型推荐 1 / 直接为 W21#57 多燕瘦 CID 行动项①备料 80%</span></td></tr><tr><td style='text-align:left;' ><span>14:48</span></td><td style='text-align:left;' ><strong><span>CID-PA 客户研究</span></strong><span>（多燕瘦放大消耗策略）</span></td><td style='text-align:center;' ><span>Layer 2 KR4</span></td><td style='text-align:left;' ><span>6 大问题对话级回答</span></td></tr><tr><td style='text-align:left;' ><span>14:00-15:00</span></td><td style='text-align:left;' ><strong><span>🎤 食品饮料运营双周会执行</span></strong><span> ✅（W21#56）</span></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>5/14 成型 60% 素材直接作为发言材料</span></td></tr><tr><td style='text-align:left;' ><span>17:22-17:45</span></td><td style='text-align:left;' ><strong><span>🆕 SKILL 体系大升级</span></strong><span>（HTML 工程能力路由）</span></td><td style='text-align:center;' ><span>Layer 3 系统建设</span></td><td style='text-align:left;' ><span>html-image-exporter（474 行）+ editable-html-builder（373 行）+ editable-html-default rule（135 行）+ case-showcase-builder 重构（+32 行）</span></td></tr><tr><td style='text-align:left;' ><span>17:46-21:53</span></td><td style='text-align:left;' ><strong><span>🆕 Townhall deck Soft Editorial 全面切换</span></strong></td><td style='text-align:center;' ><span>Layer 2 战略</span></td><td style='text-align:left;' ><span>template.html（1556 行）+ template_soft_editorial.html（1258 行）+ 渲染引擎 619×2 行</span></td></tr><tr><td style='text-align:left;' ><span>21:57-22:24</span></td><td style='text-align:left;' ><strong><span>5/15 自动化双失效故障识别</span></strong><span>（Mode I + Mode J 均未触发）</span></td><td style='text-align:center;' ><span>Layer 3 故障</span></td><td style='text-align:left;' ><span>用户主动询问后定位 / 手动写入 5/15-morning.md（21:58 落盘 119 行）</span></td></tr><tr><td style='text-align:left;' ><span>22:30-23:30</span></td><td style='text-align:left;' ><strong><span>5/15 晚间归档手动反推执行</span></strong><span>（Mode J 9 步流程）</span></td><td style='text-align:center;' ><span>自动化补救</span></td><td style='text-align:left;' ><span>含 GitHub 需求待办回写 + todo 更新 + git push</span></td></tr><tr><td style='text-align:left;' ><span>23:13-23:30</span></td><td style='text-align:left;' ><strong><span>校准纠错</span></strong><span>（周末误排议程）</span></td><td style='text-align:center;' ><span>流程治理</span></td><td style='text-align:left;' ><span>用户反馈&quot;周末双休&quot;→ 删除 5/16 周六议程 + Townhall 5/18 改标周一 + #56 闭环 + 校验 J-4 沉淀</span></td></tr></tbody></table></figure><blockquote><p><strong><span>小结</span></strong><span>：&quot;纯能力建设日&quot;——commit </span><code>7a7efd1</code><span> 共 +6396 行（15 文件密集落地）+ 双周会执行收口 #56。但</span><strong><span>对 P0 推进的牺牲过大</span></strong><span>：4 项 P0 全天未推进顺延 W12。最后 1.5 小时密集发现并修复&quot;周末误排议程&quot;+&quot;自动化故障&quot;两类质量问题。</span></p></blockquote><hr /><h2 id='part-3重点产出物索引'><span>Part 3：重点产出物索引</span></h2><h3 id='客户分析交付6-份）'><span>客户分析/交付（6 份）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>日期</span></th><th style='text-align:left;' ><span>文件/产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>核心发现/价值</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>5/11</span></td><td style='text-align:left;' ><span>健康食品行业双周报 4.27-5.10 完整版</span></td><td style='text-align:center;' ><span>双周报</span></td><td style='text-align:left;' ><span>覆盖直播+小店双 KR 洞察，写入 Excel 新 Sheet</span></td></tr><tr><td style='text-align:left;' ><span>5/13</span></td><td style='text-align:left;' ><strong><span>诺特兰德双团队小店链路复盘 v4</span></strong></td><td style='text-align:center;' ><span>深度复盘</span></td><td style='text-align:left;' ><span>28.8KB MD + 446KB PDF · 全店归因+达人复计深度拆解，KR2 头部客户 618 备战标杆</span></td></tr><tr><td style='text-align:left;' ><span>5/13</span></td><td style='text-align:left;' ><strong><span>诺特兰德新店铺智投优化建议 v3</span></strong></td><td style='text-align:center;' ><span>对客可视化</span></td><td style='text-align:left;' ><span>34KB HTML · &quot;开新店做归因隔离&quot;落地建议</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><strong><span>万益蓝小店直购 618 备战诊断</span></strong></td><td style='text-align:center;' ><span>深度复盘</span></td><td style='text-align:left;' ><span>益畅通效率标杆 / 客单结构性问题 / 智投渗透分化 → 企微已发客户</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><strong><span>华大营养 ADQ 投放近一月复盘</span></strong></td><td style='text-align:center;' ><span>深度复盘</span></td><td style='text-align:left;' ><span>三重证据链证伪&quot;直播间表达商品&quot;对计价率影响 → 企微已发客户</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><strong><span>直播 4+M TOP20 上线后效果验证</span></strong><span>（含 21:34 口径修正版）</span></td><td style='text-align:center;' ><span>数据验证</span></td><td style='text-align:left;' ><span>整体 ROI +2.5% / 3 文件交付（环比表 + 深度报告 + HTML 可视化）</span></td></tr></tbody></table></figure><h3 id='战略面向领导产出5-份）'><span>战略/面向领导产出（5 份）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>日期</span></th><th style='text-align:left;' ><span>文件/产出</span></th><th style='text-align:center;' ><span>面向</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>5/14-5/15</span></td><td style='text-align:left;' ><strong><span>Townhall 5/18 分享 15 分钟详细大纲 V1</span></strong><span>（664 行）</span></td><td style='text-align:center;' ><span>部门 / Kiki</span></td><td style='text-align:left;' ><span>四力深度打法 + 人机关系底层逻辑 + OKR 锚定工作流 + EGUOO 整合压轴</span></td></tr><tr><td style='text-align:left;' ><span>5/14-5/15</span></td><td style='text-align:left;' ><strong><span>Townhall deck Soft Editorial（template×2 + 渲染引擎×2 + 风格预览×3）</span></strong></td><td style='text-align:center;' ><span>部门 / Kiki</span></td><td style='text-align:left;' ><span>template.html 1556 行 + template_soft_editorial.html 1258 行 / D 方案拆页 + contenteditable</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><strong><span>直播 4+M 双周会汇报 docx V1→V2→V3</span></strong></td><td style='text-align:center;' ><span>中心运营</span></td><td style='text-align:left;' ><span>5/15 双周会能力专题</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><strong><span>诺特归因案例双周会信息同步稿 V1+V2</span></strong></td><td style='text-align:center;' ><span>中心运营</span></td><td style='text-align:left;' ><span>5/15 双周会单 case 预警</span></td></tr><tr><td style='text-align:left;' ><span>5/12</span></td><td style='text-align:left;' ><span>诺特复计问题对内老板提炼稿</span></td><td style='text-align:center;' ><span>中心老板</span></td><td style='text-align:left;' ><span>客户独特性 + 原因分析 + 解决方案</span></td></tr></tbody></table></figure><h3 id='面向客户对外交付5-份）'><span>面向客户/对外交付（5 份）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>日期</span></th><th style='text-align:left;' ><span>文件/产出</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>5/11</span></td><td style='text-align:left;' ><span>5月扶持权益对客指引 v4</span></td><td style='text-align:left;' ><span>双信息源差异梳理 + 4 轮迭代收敛</span></td></tr><tr><td style='text-align:left;' ><span>5/12</span></td><td style='text-align:left;' ><span>NHHE 展会 OnePage V1</span></td><td style='text-align:left;' ><span>698 行 HTML + 配图 3 张，5/13-5/15 展会拓客</span></td></tr><tr><td style='text-align:left;' ><span>5/13</span></td><td style='text-align:left;' ><span>4 链路能力 OnePage 合集 + 诺特短直双开 OnePage 可编辑版</span></td><td style='text-align:left;' ><span>412 行 / 1.2MB · 链路指南维度 + contenteditable 升级</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><span>直播 4+M 客户用 OnePage V1 + 可编辑版</span></td><td style='text-align:left;' ><span>19.8KB + 27.1KB · 腾讯字体专属素材库落地</span></td></tr><tr><td style='text-align:left;' ><span>5/12</span></td><td style='text-align:left;' ><span>ADataClaw 圆桌 15 分钟分享</span></td><td style='text-align:left;' ><span>跨KR 对外赋能</span></td></tr></tbody></table></figure><h3 id='系统建设12-项）'><span>系统建设（12 项）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>日期</span></th><th style='text-align:left;' ><span>产出</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>5/15</span></td><td style='text-align:left;' ><strong><span>🆕 html-image-exporter SKILL（474 行）</span></strong></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>三模式 PNG 导出 / 默认 2x scale / 多 CDN fallback</span></td></tr><tr><td style='text-align:left;' ><span>5/15</span></td><td style='text-align:left;' ><strong><span>🆕 editable-html-builder SKILL（373 行）</span></strong></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>contenteditable + localStorage + 一键导出 HTML</span></td></tr><tr><td style='text-align:left;' ><span>5/15</span></td><td style='text-align:left;' ><strong><span>🆕 editable-html-default rule（135 行 / alwaysApply）</span></strong></td><td style='text-align:center;' ><span>Rule</span></td><td style='text-align:left;' ><span>HTML 交付物路由器</span></td></tr><tr><td style='text-align:left;' ><span>5/15</span></td><td style='text-align:left;' ><span>case-showcase-builder SKILL 重构（+32 行）</span></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>剥离能力到独立 SKILL</span></td></tr><tr><td style='text-align:left;' ><span>5/13</span></td><td style='text-align:left;' ><span>case-showcase-builder SKILL 升级（+111 行）</span></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>新增&quot;链路指南合集&quot;形态 + 反向同步流程规范</span></td></tr><tr><td style='text-align:left;' ><span>5/12</span></td><td style='text-align:left;' ><strong><span>ops-strategist Mode J V2 强化</span></strong></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>3 个校验子流程（J-1/J-2/J-3）+ 四段式归档输出</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><span>Mode J V3：automation 目录迁移 + Mode L 落地 + 反推质量告警</span></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>automation-3 → opsstrategist-mode-j</span></td></tr><tr><td style='text-align:left;' ><span>5/15</span></td><td style='text-align:left;' ><strong><span>校验 J-4 沉淀</span></strong><span>：日期+工作日+DDL 三重校验</span></td><td style='text-align:center;' ><span>SKILL</span></td><td style='text-align:left;' ><span>5/15 周末误排议程后增补</span></td></tr><tr><td style='text-align:left;' ><span>5/11</span></td><td style='text-align:left;' ><span>wecom-doc MCP 工具链补强</span></td><td style='text-align:center;' ><span>工具链</span></td><td style='text-align:left;' ><span>MEMORY T10 双工具策略沉淀</span></td></tr><tr><td style='text-align:left;' ><span>5/14</span></td><td style='text-align:left;' ><span>wecom-doc-mcp bug 修复</span></td><td style='text-align:center;' ><span>工具链</span></td><td style='text-align:left;' ><span>fetcher.js createDoc pageHandler 守卫修复</span></td></tr><tr><td style='text-align:left;' ><span>5/15</span></td><td style='text-align:left;' ><span>Townhall deck 渲染引擎（deck-stage.js + deck-stage-soft-editorial.js）</span></td><td style='text-align:center;' ><span>工具链</span></td><td style='text-align:left;' ><span>619×2 行</span></td></tr><tr><td style='text-align:left;' ><span>全周</span></td><td style='text-align:left;' ><span>晚间归档 Mode J × 5 天（含 5/15 手动补救）</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>含 5/14 加班补记</span></td></tr></tbody></table></figure><hr /><h2 id='part-4todo-复盘'><span>Part 4：Todo 复盘</span></h2><h3 id='本周-todo-推进情况w21-节后第一个完整周）'><span>本周 Todo 推进情况（W21 节后第一个完整周）</span></h3><figure><table><thead><tr><th style='text-align:center;' ><span>#</span></th><th style='text-align:left;' ><span>事项</span></th><th style='text-align:center;' ><span>周初状态</span></th><th style='text-align:center;' ><span>周末状态</span></th><th style='text-align:left;' ><span>本周进展</span></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>#1</span></td><td style='text-align:left;' ><span>诺特 ADQ×达人归因专题</span></td><td style='text-align:center;' ><span>🔄 持续</span></td><td style='text-align:center;' ><span>🔄 持续推进</span></td><td style='text-align:left;' ><span>5/12 lisa 沟通破局&quot;开新店做归因隔离&quot; + 对内老板提炼稿 + 5/14 双周会信息同步稿 V1+V2</span></td></tr><tr><td style='text-align:center;' ><span>#2</span></td><td style='text-align:left;' ><span>5月赛道腾飞扶持（配置+花费跟踪）</span></td><td style='text-align:center;' ><span>🔄</span></td><td style='text-align:center;' ><span>🔄 配置✅</span></td><td style='text-align:left;' ><span>5/12 配置完成 / 14 号上线 / 转预算花费跟踪</span></td></tr><tr><td style='text-align:center;' ><span>#3</span></td><td style='text-align:left;' ><span>大场后 CVR 骤降产研方案</span></td><td style='text-align:center;' ><span>🔄 已交产研</span></td><td style='text-align:center;' ><span>🔄 已交产研</span></td><td style='text-align:left;' ><strong><span>节后已 7 天未催</span></strong><span>🔴</span></td></tr><tr><td style='text-align:center;' ><span>#4</span></td><td style='text-align:left;' ><span>诺特计价率→外溢明细</span></td><td style='text-align:center;' ><span>🔄 关联 #1</span></td><td style='text-align:center;' ><span>🔄 关联 #1</span></td><td style='text-align:left;' ><span>卡点：客户因投产想停投</span></td></tr><tr><td style='text-align:center;' ><span>#6</span></td><td style='text-align:left;' ><span>520 礼赠人群 5 天数据验证</span></td><td style='text-align:center;' ><span>⬜ DDL 5/13</span></td><td style='text-align:center;' ><span>⬜ DDL 已过 4 天</span></td><td style='text-align:left;' ><strong><span>连续 4 工作日未推进🔴🔴 顺延 W12</span></strong></td></tr><tr><td style='text-align:center;' ><span>#42</span></td><td style='text-align:left;' ><span>多燕瘦 5/15 流量核验风险</span></td><td style='text-align:center;' ><span>⬜</span></td><td style='text-align:center;' ><span>⬜ DDL 当天未推进</span></td><td style='text-align:left;' ><strong><span>🔴 周末须远程关注，5/18 周一首件事</span></strong></td></tr><tr><td style='text-align:center;' ><span>#43</span></td><td style='text-align:left;' ><span>万益蓝小店直购 618 备战诊断</span></td><td style='text-align:center;' ><span>🔄 5/12 有进度</span></td><td style='text-align:center;' ><strong><span>✅ 5/14 收口</span></strong></td><td style='text-align:left;' ><span>14 天数据 + 行业对标 → 企微已发客户</span></td></tr><tr><td style='text-align:center;' ><span>#48</span></td><td style='text-align:left;' ><span>NHHE 展会 OnePage</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><strong><span>✅ 5/12 完整闭环</span></strong></td><td style='text-align:left;' ><span>698 行 HTML + 配图 3 张</span></td></tr><tr><td style='text-align:center;' ><span>#50</span></td><td style='text-align:left;' ><span>lisa 沟通诺特复计</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><strong><span>✅ 5/12 完整闭环</span></strong></td><td style='text-align:left;' ><span>11:00 沟通 + 12:03 对内同步稿</span></td></tr><tr><td style='text-align:center;' ><span>#51</span></td><td style='text-align:left;' ><span>保元德投放复盘</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><span>⬜ 未启动</span></td><td style='text-align:left;' ><strong><span>连续 3 工作日延后🔴 顺延 W12</span></strong></td></tr><tr><td style='text-align:center;' ><span>#52</span></td><td style='text-align:left;' ><span>AI 提效专项申报</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><span>🔄 与 Townhall 协同</span></td><td style='text-align:left;' ><span>DDL 5/19 / Townhall 大纲 V1 + deck Soft Editorial 已成型</span></td></tr><tr><td style='text-align:center;' ><span>#53</span></td><td style='text-align:left;' ><span>多燕瘦封店 30 个恢复跟踪</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><span>🔄 持续监控</span></td><td style='text-align:left;' ><span>客户档案归因事件已沉淀</span></td></tr><tr><td style='text-align:center;' ><span>#54</span></td><td style='text-align:left;' ><span>诺特兰德小店直购链路诊断</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><strong><span>✅ 5/13 双产出收口</span></strong></td><td style='text-align:left;' ><span>v4 复盘 + 新店铺 v3 智投建议</span></td></tr><tr><td style='text-align:center;' ><span>#55</span></td><td style='text-align:left;' ><span>5月扶持对客 OnePage</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><span>🟡 链路指南雏形 + 4+M 维度</span></td><td style='text-align:left;' ><span>扶持权益维度待补</span></td></tr><tr><td style='text-align:center;' ><span>#56</span></td><td style='text-align:left;' ><span>5/15 食品饮料运营双周会材料</span></td><td style='text-align:center;' ><span>🆕 5/12 新增</span></td><td style='text-align:center;' ><strong><span>✅ 5/15 周五会议已召开</span></strong></td><td style='text-align:left;' ><span>5/14 成型 60% 素材直接作为发言材料</span></td></tr><tr><td style='text-align:center;' ><span>#57</span></td><td style='text-align:left;' ><span>多燕瘦 CID 链路扶持起量</span></td><td style='text-align:center;' ><span>🆕 5/14 新增</span></td><td style='text-align:center;' ><span>🟡 备料 80%</span></td><td style='text-align:left;' ><span>5/18 周一发客户王琦</span></td></tr><tr><td style='text-align:center;' ><span>#58</span></td><td style='text-align:left;' ><span>华大营养 ADQ 投放复盘</span></td><td style='text-align:center;' ><span>🆕 5/14 新增</span></td><td style='text-align:center;' ><strong><span>✅ 5/14 收口</span></strong></td><td style='text-align:left;' ><span>三重证据链证伪 → 企微已发客户</span></td></tr></tbody></table></figure><p><strong><span>本周完成</span></strong><span>：</span><strong><span>6 项 ✅</span></strong><span>（#43/#48/#50/#54/#56/#58）—— 与 Week9 持平</span>
+<strong><span>本周推进</span></strong><span>：6 项 🔄（#1/#2/#52/#53/#55/#57）</span>
+<strong><span>未推进告警</span></strong><span>：</span><strong><span>4 项 P0 顺延 W12</span></strong><span>（#6🔴🔴 / #3 / #51 / #42🔴）</span></p><h3 id='涌现任务非计划内但实际完成）'><span>涌现任务（非计划内但实际完成）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>涌现任务</span></th><th style='text-align:left;' ><span>触发来源</span></th><th style='text-align:left;' ><span>价值评估</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><strong><span>lisa 沟通诺特复计破局</span></strong></td><td style='text-align:left;' ><span>客户经营组主动邀约</span></td><td style='text-align:left;' ><strong><span>极高</span></strong><span>——KR2 核心卡点突破，&quot;开新店隔离&quot;为唯一可行解</span></td></tr><tr><td style='text-align:left;' ><strong><span>直播 4+M TOP20 效果验证 + OnePage 双版</span></strong></td><td style='text-align:left;' ><span>5/14 17:56 用户即兴 prompt</span></td><td style='text-align:left;' ><strong><span>高</span></strong><span>——KR1 扶持能力对外宣贯素材就绪</span></td></tr><tr><td style='text-align:left;' ><strong><span>SKILL 体系大升级（4 文件新建/重构）</span></strong></td><td style='text-align:left;' ><span>5/14 大量产出对客 HTML 后架构诉求</span></td><td style='text-align:left;' ><strong><span>极高</span></strong><span>——HTML 交付物工程能力路由层定型</span></td></tr><tr><td style='text-align:left;' ><strong><span>wecom-doc-mcp bug 修复</span></strong></td><td style='text-align:left;' ><span>当天 createDoc 大量调用暴露</span></td><td style='text-align:left;' ><span>中——防御性修复</span></td></tr><tr><td style='text-align:left;' ><strong><span>Mode J V2 强化</span></strong><span> + Mode L 落地</span></td><td style='text-align:left;' ><span>5/12 23:32 用户三次校准</span></td><td style='text-align:left;' ><span>高——校验子流程入 SKILL</span></td></tr><tr><td style='text-align:left;' ><strong><span>校验 J-4 沉淀</span></strong></td><td style='text-align:left;' ><span>5/15 周末误排议程纠错</span></td><td style='text-align:left;' ><span>高——避免下次类似离谱错误</span></td></tr></tbody></table></figure><hr /><h2 id='part-5三层模型分析'><span>Part 5：三层模型分析</span></h2><h3 id='layer-1日常执行）·-20'><span>Layer 1（日常执行）· ~20%</span></h3><ul><li><span>掉量简报 × 2（5/12 + 5/13 突发）</span></li><li><span>5月扶持权益对客指引 v1→v4 迭代</span></li><li><span>ADataClaw 圆桌 15 分钟分享执行</span></li><li><span>W21#57 多燕瘦 CID 客户主动咨询接住</span></li><li><span>6 PDF 腾讯广告知识库扩充</span></li><li><span>食品饮料运营双周会执行</span></li><li><span>晨间/晚间自动化日常运行（含手动补救）</span></li></ul><h3 id='layer-2深度分析交付）·-35'><span>Layer 2（深度分析/交付）· ~35%</span></h3><ul><li><strong><span>诺特兰德双团队小店链路复盘 v4 + 新店铺智投建议 v3</span></strong><span>（KR2 双产出）</span></li><li><strong><span>万益蓝小店直购 618 备战诊断</span></strong><span>（KR2）</span></li><li><strong><span>华大营养 ADQ 投放近一月复盘</span></strong><span>（KR1）</span></li><li><strong><span>直播 4+M TOP20 效果验证</span></strong><span>（含口径修正 + 客户用 OnePage 双版）</span></li><li><strong><span>lisa 沟通诺特复计 + 对内老板提炼稿</span></strong><span>（KR2 关键突破）</span></li><li><strong><span>健康食品行业双周报 4.27-5.10</span></strong></li><li><strong><span>NHHE 展会 OnePage V1</span></strong></li><li><strong><span>4 链路能力 OnePage 合集</span></strong></li><li><span>双周会汇报 docx V1→V2→V3 + 诺特双周会信息同步稿 V1+V2</span></li><li><span>CID-PA 客户研究</span></li></ul><h3 id='layer-3战略方法论系统建设）·-45'><span>Layer 3（战略/方法论/系统建设）· ~45%</span></h3><ul><li><strong><span>🆕 SKILL 体系大升级</span></strong><span>（html-image-exporter 474行 + editable-html-builder 373行 + editable-html-default rule 135行 + case-showcase-builder 双重构）</span></li><li><strong><span>🆕 Townhall 5/18 分享 15 分钟详细大纲 V1</span></strong><span>（664 行）+ deck Soft Editorial（template×2 + 渲染引擎×2 + 风格预览×3）</span></li><li><strong><span>Mode J V2 强化</span></strong><span> + V3（目录迁移+Mode L+反推质量告警）+ </span><strong><span>校验 J-4 沉淀</span></strong></li><li><strong><span>wecom-doc MCP 工具链补强 + bug 修复</span></strong></li><li><strong><span>case-showcase-builder SKILL 升级</span></strong><span>（5/13 链路指南合集形态 + 反向同步流程规范）</span></li><li><span>5/15 自动化双失效故障识别 + 手动补救 + Mode I 补建指引</span></li><li><span>本周协作周回顾 + 协作周编号修正（Week17/18/19 → Week7/8/9）</span></li></ul><blockquote><p><strong><span>Layer 3 占比 ~45%</span></strong><span>，介于 Week8 的 50% 峰值与 Week9 的 35% 回落之间。核心原因是 Townhall 5/18 分享筹备 + SKILL 体系大升级集中投入。下周 Townhall 执行后 Layer 3 应回落至 ~30%，将更多精力投回 KR1/KR2 客户工作（顺延的 4 项 P0 必须破局）。</span></p></blockquote><hr /><h2 id='part-6okr-对照'><span>Part 6：OKR 对照</span></h2><h3 id='o1for-小店已开放类目客群---分业务场景的广告提收解决方案85精力）'><span>O1：For 小店已开放类目客群 - 分业务场景的广告提收解决方案（~85%精力）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>KR</span></th><th style='text-align:left;' ><span>本周相关工作</span></th><th style='text-align:center;' ><span>贡献度</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><strong><span>KR1 商家自播</span></strong></td><td style='text-align:left;' ><span>华大营养 ADQ 复盘 / 直播 4+M TOP20 效果验证（含口径修正+OnePage 双版+双周会 docx V3）/ 掉量简报×2 / 多燕瘦封店波动跟踪</span></td><td style='text-align:center;' ><span>🟢🟢🟢</span></td></tr><tr><td style='text-align:left;' ><strong><span>KR2 直购短视频</span></strong></td><td style='text-align:left;' ><strong><span>lisa 沟通诺特复计破局</span></strong><span> + </span><strong><span>诺特双团队复盘 v4 + 新店铺智投 v3</span></strong><span>（W21#54）+ </span><strong><span>万益蓝 618 备战诊断</span></strong><span>（W21#43）+ 4 链路 OnePage 合集 + 诺特双周会信息同步稿 V1+V2</span></td><td style='text-align:center;' ><span>🟢🟢🟢🟢</span></td></tr><tr><td style='text-align:left;' ><strong><span>KR3 达人合作</span></strong></td><td style='text-align:left;' ><span>—</span></td><td style='text-align:center;' ><span>⚪</span></td></tr></tbody></table></figure><h3 id='o2for-小店未开放类目客群---品牌客户引流电商效率份额看清10精力）'><span>O2：For 小店未开放类目客群 - 品牌客户引流电商效率&amp;份额看清（~10%精力）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>KR</span></th><th style='text-align:left;' ><span>本周相关工作</span></th><th style='text-align:center;' ><span>贡献度</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><strong><span>KR4 引流电商</span></strong></td><td style='text-align:left;' ><span>多燕瘦 CID 链路扶持需求承接（W21#57）+ CID-PA 客户研究 + CID 链路 3 PDF 知识沉淀</span></td><td style='text-align:center;' ><span>🟡</span></td></tr></tbody></table></figure><h3 id='元工作支撑-okr-执行的基础设施--5精力）'><span>元工作（支撑 OKR 执行的基础设施 / ~5%精力）</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>项目</span></th><th style='text-align:left;' ><span>说明</span></th><th style='text-align:center;' ><span>对 OKR 全局支撑度</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><strong><span>Townhall 5/18 分享筹备</span></strong></td><td style='text-align:left;' ><span>大纲 V1 + deck Soft Editorial + Kiki 关注延续</span></td><td style='text-align:center;' ><span>🟢🟢🟢</span></td></tr><tr><td style='text-align:left;' ><strong><span>SKILL 体系大升级</span></strong></td><td style='text-align:left;' ><span>HTML 工程能力路由层定型</span></td><td style='text-align:center;' ><span>🟢🟢</span></td></tr><tr><td style='text-align:left;' ><strong><span>Mode J V2/V3 强化 + 校验 J-4</span></strong></td><td style='text-align:left;' ><span>自动化质量保障</span></td><td style='text-align:center;' ><span>🟢🟢</span></td></tr><tr><td style='text-align:left;' ><strong><span>wecom-doc MCP 工具链</span></strong></td><td style='text-align:left;' ><span>企微文档协作能力闭环</span></td><td style='text-align:center;' ><span>🟢🟢</span></td></tr><tr><td style='text-align:left;' ><strong><span>5月扶持权益对客指引 v4</span></strong></td><td style='text-align:left;' ><span>KR1+KR2 跨场景扶持政策对客交付</span></td><td style='text-align:center;' ><span>🟢🟢</span></td></tr></tbody></table></figure><hr /><h2 id='part-7本周认知收获'><span>Part 7：本周认知收获</span></h2><h3 id='1-lisa-沟通诺特复计------客户问题的行业唯一性判断改变解法'><span>1. &quot;lisa 沟通诺特复计&quot;——客户问题的&quot;行业唯一性&quot;判断改变解法</span></h3><p><span>诺特兰德的归因复计问题（小店直购全店归因 + 同店 ADQ + 达人分佣 + 微信豆四源叠加 → 50万/天 GAP）困扰了从 4/27 到 5/12 整整 2 周。5/12 lisa 沟通后明确：</span><strong><span>消费品行业仅诺特存在该问题</span></strong><span>——其他客户要么没有四源叠加，要么客单价/品类结构不引发同等量级 GAP。</span></p><p><strong><span>核心洞察</span></strong><span>：</span><strong><span>客户问题的&quot;行业唯一性&quot;判断决定解法路径</span></strong><span>——</span></p><ul><li><span>如果是行业普遍问题 → 推动产研改归因口径（耗时长、ROI 低、可能影响他人）</span></li><li><span>如果是客户独有问题 → 推动客户改投放结构（&quot;开新店做归因隔离&quot;，立竿见影）</span></li></ul><p><span>这个方法论值得固化到 ad-review-expert SKILL 的&quot;客户问题判断 SOP&quot;中——</span><strong><span>先问行业唯一性，再决定推产研还是推客户</span></strong><span>。</span></p><h3 id='2-2100-加班补天------单日产能从-5-项-→-12-项的跃迁机制'><span>2. &quot;21:00 加班补天&quot;——单日产能从 5 项 → 12 项的跃迁机制</span></h3><p><span>5/14 全天本来已经完成 5 项 P0，21:00 自动 Mode J 归档完成后，</span><strong><span>继续工作 2.5 小时连续完成 4 大方向交付</span></strong><span>——OnePage 双版 + 双周会 docx 三轮 + Townhall 大纲实质修订 + wecom-doc bug 修复。</span></p><p><span>23:39 用户主动反馈&quot;今天实在干了太多活&quot;，触发 Mode J 二次补记，最终单日交付物从 5 项 → </span><strong><span>12 项</span></strong><span>。</span></p><p><strong><span>核心洞察</span></strong><span>：</span><strong><span>晚间是&quot;高密度低门槛&quot;产能窗口</span></strong><span>——白天有会议、客户、协作打断，晚间是连续闭环 + 工程化收尾的最佳窗口。但代价是 Mode L 兜底机制失效（21:00-23:39 间无任何实时记录），全部依赖反推。</span></p><h3 id='3-校验-j-4沉淀------日期工作日ddl-三重校验是-ai-协作的基础健全性'><span>3. &quot;校验 J-4&quot;沉淀——日期+工作日+DDL 三重校验是 AI 协作的基础健全性</span></h3><p><span>5/15 晚归档反推时，AI 把&quot;5/16 周六&quot;排成&quot;双周会 DDL + 4 项 P0 必推&quot;——把双休强行排成工作日。用户反馈&quot;你的设计好离谱呀，我周六周日是双休的呀&quot;后，沉淀「校验 J-4：日期+工作日+DDL 三重校验」。</span></p><p><strong><span>核心洞察</span></strong><span>：</span><strong><span>AI 协作的&quot;基础健全性&quot;问题往往最致命</span></strong><span>——比起复杂的方法论错误，更易出错的是&quot;周几对应日期 / 自动化调度范围 / DDL 与工作日的关系&quot;这类基础认知。</span></p><h3 id='4-纯能力建设日vs-p0-推进------515-暴露的资源分配失衡'><span>4. &quot;纯能力建设日&quot;vs &quot;P0 推进&quot;——5/15 暴露的资源分配失衡</span></h3><p><span>5/15 是&quot;纯能力建设日&quot;——commit </span><code>7a7efd1</code><span> 共 +6396 行。但</span><strong><span>对 P0 推进的牺牲过大</span></strong><span>：4 项 P0 全天未推进顺延 W12。</span></p><p><strong><span>核心洞察</span></strong><span>：</span><strong><span>&quot;大块能力建设日&quot;应预留至少 1 小时给 P0 紧急事项</span></strong><span>。下次类似场景，建议早晨 9:00-10:00 优先处理 P0 + 其他时间投入能力建设。这个原则值得固化到 Mode I 晨间规划——</span><strong><span>P0 事项保护时段（9:00-10:00 + 17:00-18:00）不应被能力建设占用</span></strong><span>。</span></p><hr /><h2 id='part-8协作工作流深度分析与优化建议'><span>Part 8：协作工作流深度分析与优化建议</span></h2><h3 id='81-当前工作流成熟度评估'><span>8.1 当前工作流成熟度评估</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>维度</span></th><th style='text-align:center;' ><span>Week9 评分</span></th><th style='text-align:center;' ><span>Week11 评分</span></th><th style='text-align:center;' ><span>变化</span></th><th style='text-align:left;' ><span>说明</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><span>自动化流水线</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>持平</span></td><td style='text-align:left;' ><span>Mode I/J 持续运行（5/15 工作日双失效已识别+手动补救+待 5/18 验证）/ Mode L 实时积累机制开始落地</span></td></tr><tr><td style='text-align:left;' ><span>CI/CD</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>持平</span></td><td style='text-align:left;' ><span>SKILL 体系大升级（4 文件新建/重构）+ 工具链 bug 修复 + GitHub 30+ commit</span></td></tr><tr><td style='text-align:left;' ><span>标准化治理</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>★★★★★</span></td><td style='text-align:center;' ><strong><span>+1</span></strong></td><td style='text-align:left;' ><span>Mode J V2 强化（3 校验子流程）+ V3（目录迁移+Mode L+反推质量告警）+ 校验 J-4 沉淀</span></td></tr><tr><td style='text-align:left;' ><span>可观测性</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>★★★★☆</span></td><td style='text-align:center;' ><span>持平</span></td><td style='text-align:left;' ><span>Memory 日志 5/5 = 100% 覆盖；5/15 自动化故障 13.5h 后才被发现</span></td></tr></tbody></table></figure><h3 id='82-本周协作模式复盘'><span>8.2 本周协作模式复盘</span></h3><h4 id='✅-高效模式客户问题先问行业唯一性的判断分流'><span>✅ 高效模式：客户问题&quot;先问行业唯一性&quot;的判断分流</span></h4><p><span>5/12 lisa 沟通诺特复计问题，明确&quot;消费品行业仅诺特存在该问题&quot;后，直接转向&quot;开新店做归因隔离&quot;的客户侧解法。</span></p><p><strong><span>经验固化</span></strong><span>：在 ad-review-expert SKILL 中新增&quot;客户问题判断 SOP&quot;——客户报问题时第一步问&quot;是行业普遍问题还是客户独有问题&quot;。</span></p><h4 id='✅-高效模式单日多形态交付的6-小时-5-轮迭代链路'><span>✅ 高效模式：单日多形态交付的&quot;6 小时 5 轮迭代&quot;链路</span></h4><p><span>5/14 直播 4+M 主题：17:53 数据底稿 → 21:34 口径修正 → 22:23 OnePage 双版 → 22:47 双周会 docx V3。</span><strong><span>单主题 6 小时收敛到双形态对外/对内交付物</span></strong><span>。</span></p><h4 id='✅-高效模式mode-j-v2-校验子流程实战检验'><span>✅ 高效模式：Mode J V2 校验子流程实战检验</span></h4><p><span>5/12 23:32 用户连续 3 回合校准 → 沉淀 Mode J V2 三个校验子流程（J-1/J-2/J-3）。Week11 后续几次 Mode J 执行均运行良好。</span></p><h4 id='⚠️-待改进mode-l-实时积累机制覆盖率不足晚间加班场景）'><span>⚠️ 待改进：Mode L 实时积累机制覆盖率不足（晚间加班场景）</span></h4><p><span>5/14 21:00-23:39 加班期间无任何 Mode L 实时记录，5/15 14:00 后产出（双周会执行 + SKILL 升级 + Townhall deck）也无 Mode L 实时记录。Mode J 反推时</span><strong><span>晚间加班场景的反推质量明显低于白天</span></strong><span>。</span></p><p><strong><span>改进方向</span></strong><span>：</span></p><ol start='' ><li><span>短期：每个有形交付物落地时，强制 AI 主动 append 一条简短 Mode L 条目</span></li><li><span>中期：Mode L 触发条件扩展——除&quot;有形交付物&quot;外，&quot;用户反馈/校准/方向变更&quot;也强制写入</span></li><li><span>长期：Mode L 触发频率从&quot;事件驱动&quot;升级为&quot;事件+时段双驱动&quot;</span></li></ol><h4 id='⚠️-待改进自动化故障检测时滞过长135h-盲区）'><span>⚠️ 待改进：自动化故障检测时滞过长（13.5h 盲区）</span></h4><p><span>5/15 早 8:30 Mode I 未触发，但用户 21:56 才发现；5/15 晚 21:00 Mode J 未触发，用户 22:24 才发现。</span><strong><span>故障识别延迟最长达 13.5 小时</span></strong><span>。</span></p><p><strong><span>改进方向</span></strong><span>：</span></p><ol start='' ><li><strong><span>晨间自检</span></strong><span>：Mode I 触发后第一步立即写入&quot;心跳文件&quot;</span></li><li><strong><span>前一晚兜底</span></strong><span>：Mode J 步骤 1（日志检查）增加&quot;昨日 morning 文件存在性自检&quot;</span></li><li><strong><span>早间用户提醒</span></strong><span>：Mode I 触发后 9:00 自动发送企微消息提醒用户</span></li></ol><h4 id='⚠️-待改进纯能力建设日的-p0-保护机制缺失'><span>⚠️ 待改进：纯能力建设日的 P0 保护机制缺失</span></h4><p><span>5/15 全天 0 项 KR1-3 对客交付，4 项 P0 全天未推进。这是</span><strong><span>连续第二次出现&quot;大块能力建设日挤压 P0&quot;</span></strong><span>的模式（4/24 也是同样问题）。</span></p><p><strong><span>改进方向</span></strong><span>：在 Mode I 晨间规划中新增&quot;P0 保护时段&quot;——9:00-10:00 + 17:00-18:00 两个时段必须分配给 P0 事项。</span></p><h3 id='83-week9-优化项跟踪'><span>8.3 Week9 优化项跟踪</span></h3><figure><table><thead><tr><th style='text-align:center;' ><span>Week9#</span></th><th style='text-align:left;' ><span>优化项</span></th><th style='text-align:left;' ><span>本周执行情况</span></th><th style='text-align:center;' ><span>状态</span></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>1</span></td><td style='text-align:left;' ><span>需求待办迁移 GitHub API（已完成）</span></td><td style='text-align:left;' ><span>持续运行良好（30+ 次 commit）</span></td><td style='text-align:center;' ><span>✅ 持续</span></td></tr><tr><td style='text-align:center;' ><span>2</span></td><td style='text-align:left;' ><span>Mode I DDL&lt;24h 紧急预警</span></td><td style='text-align:left;' ><span>5/13 morning 有 P0 临期识别 / 5/15 自动化失效后无法验证</span></td><td style='text-align:center;' ><span>🔄</span></td></tr><tr><td style='text-align:center;' ><span>3</span></td><td style='text-align:left;' ><span>Mode J 用户补充窗口标准提示</span></td><td style='text-align:left;' ><span>5/12 23:32 用户三次校准触发 Mode J V2 强化（更系统的解法）</span></td><td style='text-align:center;' ><span>✅ 升级达成</span></td></tr><tr><td style='text-align:center;' ><span>4</span></td><td style='text-align:left;' ><span>SKILL 分享机制标准化</span></td><td style='text-align:left;' ><span>本周新建 html-image-exporter + editable-html-builder 遵循同样模式</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:center;' ><span>5</span></td><td style='text-align:left;' ><span>双周报 SKILL 适配新框架</span></td><td style='text-align:left;' ><span>5/11 双周报 4.27-5.10 已使用新框架交付</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:center;' ><span>6</span></td><td style='text-align:left;' ><span>Layer 3 占比保持~35%</span></td><td style='text-align:left;' ><span>本周回升到 ~45%（Townhall+SKILL 升级集中投入）</span></td><td style='text-align:center;' ><span>🔄</span></td></tr><tr><td style='text-align:center;' ><span>7</span></td><td style='text-align:left;' ><span>分析脚本通用化</span></td><td style='text-align:left;' ><span>未执行（连续 5 周未执行）</span></td><td style='text-align:center;' ><span>⬜</span></td></tr><tr><td style='text-align:center;' ><span>8</span></td><td style='text-align:left;' ><span>P0 事项连续未推进告警</span></td><td style='text-align:left;' ><span>5/13/5/14/5/15 Mode J 均显式列出遗漏 P0 + 升级红色标注</span></td><td style='text-align:center;' ><span>✅</span></td></tr></tbody></table></figure><blockquote><p><strong><span>执行率</span></strong><span>：8 项中 5 项✅ + 2 项🔄 + 1 项⬜ = </span><strong><span>87.5% 有推进</span></strong><span>，较 Week9 的 75% 显著提升。</span></p></blockquote><h3 id='84-skill-健康度扫描'><span>8.4 SKILL 健康度扫描</span></h3><figure><table><thead><tr><th style='text-align:left;' ><span>SKILL</span></th><th style='text-align:left;' ><span>本周变更</span></th><th style='text-align:left;' ><span>当前状态</span></th><th style='text-align:center;' ><span>健康度</span></th></tr></thead><tbody><tr><td style='text-align:left;' ><strong><span>html-image-exporter（新建 474 行）</span></strong></td><td style='text-align:left;' ><span>🆕 三模式 PNG 导出 / 多 CDN fallback</span></td><td style='text-align:left;' ><span>全新</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><strong><span>editable-html-builder（新建 373 行）</span></strong></td><td style='text-align:left;' ><span>🆕 contenteditable + localStorage + 一键导出 HTML</span></td><td style='text-align:left;' ><span>全新</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><strong><span>editable-html-default rule（新建 135 行）</span></strong></td><td style='text-align:left;' ><span>🆕 alwaysApply / HTML 交付物路由器</span></td><td style='text-align:left;' ><span>全新</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>case-showcase-builder</span></td><td style='text-align:left;' ><span>双重构（5/13 +111 行 / 5/15 +32 行）</span></td><td style='text-align:left;' ><span>链路指南合集形态 + 剥离能力</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><strong><span>ops-strategist</span></strong></td><td style='text-align:left;' ><span>V2 强化 + V3 + 校验 J-4</span></td><td style='text-align:left;' ><span>总行数继续增长</span></td><td style='text-align:center;' ><span>⚠️ 接近 1500 行需关注</span></td></tr><tr><td style='text-align:left;' ><span>ad-analysis-fundamentals</span></td><td style='text-align:left;' ><span>未变更（建议补充&quot;客户问题行业唯一性判断 SOP&quot;）</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>ad-review-expert</span></td><td style='text-align:left;' ><span>未变更（建议补充&quot;客户疑似归因验证 SOP&quot;）</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>⚠️ 待补</span></td></tr><tr><td style='text-align:left;' ><span>client-ad-guide</span></td><td style='text-align:left;' ><span>未变更</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>work-report-writer</span></td><td style='text-align:left;' ><span>5/14 调用产出诺特双周会信息同步稿</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>daily-health-briefing</span></td><td style='text-align:left;' ><span>未变更</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>biweekly-health-report</span></td><td style='text-align:left;' ><span>5/11 双周报使用</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>consumption-drop-analysis</span></td><td style='text-align:left;' ><span>5/12+5/13 突发掉量两次调用</span></td><td style='text-align:left;' ><span>稳定</span></td><td style='text-align:center;' ><span>✅</span></td></tr><tr><td style='text-align:left;' ><span>wecom-doc MCP</span></td><td style='text-align:left;' ><span>5/11 工具链补强 + 5/14 bug 修复</span></td><td style='text-align:left;' ><span>双 commit 有效</span></td><td style='text-align:center;' ><span>✅</span></td></tr></tbody></table></figure><p><strong><span>本周亮点</span></strong><span>：HTML 工程能力路由（editable-html-default rule + html-image-exporter + editable-html-builder + case-showcase-builder 重构）形成完整 SKILL 体系——</span><strong><span>&quot;路由 Rule + 能力 SKILL × N&quot;</span></strong><span> 的架构模式可作为后续 SKILL 体系建设的标准范式。</span></p><h3 id='85-下周week12）工作流优化建议清单'><span>8.5 下周（Week12）工作流优化建议清单</span></h3><figure><table><thead><tr><th style='text-align:center;' ><span>#</span></th><th style='text-align:left;' ><span>优化项</span></th><th style='text-align:center;' ><span>优先级</span></th><th style='text-align:center;' ><span>类型</span></th><th style='text-align:left;' ><span>预期效果</span></th></tr></thead><tbody><tr><td style='text-align:center;' ><span>1</span></td><td style='text-align:left;' ><strong><span>Mode I/J 自动化故障兜底</span></strong><span>：晨间心跳文件 + 早间用户提醒 + Mode J 昨日 morning 自检</span></td><td style='text-align:center;' ><span>🔴P0</span></td><td style='text-align:center;' ><span>自动化基础设施</span></td><td style='text-align:left;' ><span>故障识别延迟从 13.5h → &lt;2h</span></td></tr><tr><td style='text-align:center;' ><span>2</span></td><td style='text-align:left;' ><strong><span>Mode L 实时积累覆盖率提升</span></strong><span>：每个有形交付物 + 用户反馈/校准强制 append</span></td><td style='text-align:center;' ><span>🔴P0</span></td><td style='text-align:center;' ><span>自动化</span></td><td style='text-align:left;' ><span>晚间加班反推质量提升</span></td></tr><tr><td style='text-align:center;' ><span>3</span></td><td style='text-align:left;' ><strong><span>Mode I &quot;P0 保护时段&quot;机制</span></strong><span>：9:00-10:00 + 17:00-18:00 强制分配给 P0</span></td><td style='text-align:center;' ><span>🟡P1</span></td><td style='text-align:center;' ><span>流程治理</span></td><td style='text-align:left;' ><span>避免 5/15 式&quot;4 项 P0 全部 miss&quot;</span></td></tr><tr><td style='text-align:center;' ><span>4</span></td><td style='text-align:left;' ><strong><span>顺延的 4 项 W21 P0 必须 W22 破局</span></strong><span>：#6 / #3 / #51 / #42</span></td><td style='text-align:center;' ><span>🔴P0</span></td><td style='text-align:center;' ><span>业务</span></td><td style='text-align:left;' ><span>否则进一步顺延月度</span></td></tr><tr><td style='text-align:center;' ><span>5</span></td><td style='text-align:left;' ><strong><span>Townhall 5/18 执行复盘 + Kiki 反馈承接</span></strong></td><td style='text-align:center;' ><span>🔴P0</span></td><td style='text-align:center;' ><span>战略</span></td><td style='text-align:left;' ><span>巩固 +2 领导信任</span></td></tr><tr><td style='text-align:center;' ><span>6</span></td><td style='text-align:left;' ><strong><span>AI 提效公司专项申报材料 5/19 提交</span></strong></td><td style='text-align:center;' ><span>🔴P0</span></td><td style='text-align:center;' ><span>战略</span></td><td style='text-align:left;' ><span>Townhall 与申报材料协同产物</span></td></tr><tr><td style='text-align:center;' ><span>7</span></td><td style='text-align:left;' ><strong><span>ad-review-expert SKILL 补充&quot;客户问题行业唯一性判断 SOP&quot; + &quot;疑似归因验证 SOP&quot;</span></strong></td><td style='text-align:center;' ><span>🟡P1</span></td><td style='text-align:center;' ><span>SKILL 治理</span></td><td style='text-align:left;' ><span>5/12 lisa 沟通 + 5/14 华大复盘的方法论沉淀</span></td></tr><tr><td style='text-align:center;' ><span>8</span></td><td style='text-align:left;' ><strong><span>ops-strategist SKILL 行数控制</span></strong><span>（接近 1500 行需关注）</span></td><td style='text-align:center;' ><span>🟡P1</span></td><td style='text-align:center;' ><span>SKILL 治理</span></td><td style='text-align:left;' ><span>参考 client-ad-guide 分层沉淀模式</span></td></tr><tr><td style='text-align:center;' ><span>9</span></td><td style='text-align:left;' ><strong><span>协作周编号修正后的 history 链路检查</span></strong></td><td style='text-align:center;' ><span>🔵P2</span></td><td style='text-align:center;' ><span>文档治理</span></td><td style='text-align:left;' ><span>本周已完成文件名+正文修正</span></td></tr></tbody></table></figure><hr /><h2 id='part-9可观测性仪表盘'><span>Part 9：可观测性仪表盘</span></h2><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.5px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: currentcolor;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: currentcolor;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">╔══════════════════════════════════════════════════════════╗</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  Going × AI 协作可观测性仪表盘（Week11） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">╠══════════════════════════════════════════════════════════╣</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  📊 核心指标 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 实质性产出: 42+项（5天，日均8.4项） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 客户分析/交付: 6份（诺特 v4+万益蓝+华大+4+M+双周报+v3）║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 战略/领导产出: 5份 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 对外赋能产出: 5份 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 系统建设: 12项 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── Memory日志覆盖率: 5/5天 (100%) ✅ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── SKILL体系: 13个活跃（3个新建+4个更新） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── Layer 3 占比: 45%（Townhall+SKILL 体系升级集中） &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── Todo完成: 6项✅ / 推进6项🔄 / 新增8项 / 顺延4项🔴 &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  └── Week9优化项执行率: 87.5%（5✅+2🔄+1⬜） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  🔄 Pipeline 执行记录 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── biweekly-health-report: 1次（双周报）✅ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── consumption-drop-analysis: 2次（5/12+5/13 掉量简报）✅ ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── ad-review-expert: 4次（诺特×2+万益蓝+华大）✅ &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── case-showcase-builder: 多次（OnePage 系列）✅ &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── work-report-writer: 1次（诺特双周会信息同步稿）✅ &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── ops-strategist Mode I: 5次（含 5/15 手动补建）✅ &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── ops-strategist Mode J: 5次（含 5/15 手动反推）✅ &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  └── Git推送: 30+次 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ⚠️ 健康告警 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [严重] 4 项 P0 顺延 W12（#6/#3/#51/#42） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [严重] 5/15 自动化双失效识别延迟 13.5h &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [中等] Mode L 实时积累覆盖率不足（晚间加班场景） &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [中等] 纯能力建设日 P0 保护机制缺失（5/15 重蹈 4/24） &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [中等] ops-strategist SKILL 接近 1500 行需关注 &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [轻微] ad-review-expert 缺"客户问题行业唯一性判断 SOP" ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── [轻微] 分析脚本通用化连续 5 周未执行 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  └── [轻微] 协作周编号修正下游引用需持续巡检 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  🟢 本周亮点 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 🆕 KR2 重大突破：lisa 沟通诺特复计破局"开新店隔离" &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 🆕 618 备战双标杆：诺特 v4+v3 + 万益蓝（KR2）+ 华大（KR1）║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 🆕 SKILL 体系大升级：HTML 工程能力路由层定型 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 🆕 Townhall 5/18 筹备就绪：大纲 V1 + deck Soft Editorial║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 🆕 Mode J V2/V3 强化 + 校验 J-4 沉淀 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 5/12 ADataClaw 圆桌 15 分钟分享顺利执行 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  ├── 5/15 食品饮料运营双周会执行 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║  └── 单日产能纪录：5/14 12 大交付物 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">║ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  ║</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">╚══════════════════════════════════════════════════════════╝</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom-width: 0px; border-bottom-style: solid; border-bottom-color: transparent; top: 1081px;"></div><div class="CodeMirror-gutters" style="display: none; height: 1081px;"></div></div></div></pre><hr /><h2 id='part-10写给你的话'><span>Part 10：写给你的话</span></h2><p><span>Goinglin，本周你完成了一次&quot;客户深度突破 + 体系化能力沉淀&quot;的双线高歌猛进。</span></p><h3 id='1-kr2-关键卡点突破------lisa-沟通诺特复计是本周最有战略价值的事'><span>1. KR2 关键卡点突破——lisa 沟通诺特复计是本周最有战略价值的事</span></h3><p><span>诺特兰德归因复计问题（50万/天 GAP）困扰了从 4/27 到 5/12 整整 2 周。5/12 11:00 lisa 沟通后，事情豁然开朗——</span><strong><span>消费品行业仅诺特存在该问题，解法不在产研改口径，在客户开新店做归因隔离</span></strong><span>。</span></p><p><span>这个结论的价值在于：</span></p><ul><li><strong><span>方法论价值</span></strong><span>：所有客户问题第一步都该问&quot;行业唯一性&quot;，避免推错方向</span></li><li><strong><span>业务价值</span></strong><span>：诺特停投风险得到根本性化解</span></li><li><strong><span>协作价值</span></strong><span>：lisa（业务老板）成为 KR2 关键问题的破局点</span></li></ul><p><span>下周 Week12 应该把&quot;客户问题行业唯一性判断 SOP&quot;固化到 ad-review-expert SKILL 中。</span></p><h3 id='2-kr2-双客户-618-备战标杆------诺特万益蓝双产出'><span>2. KR2 双客户 618 备战标杆——诺特+万益蓝双产出</span></h3><p><span>5/13 诺特双团队复盘 v4 + 5/14 万益蓝 618 备战诊断，</span><strong><span>两份头部客户的 618 备战诊断报告同周交付</span></strong><span>——这是 KR2 直购短视频赛道首次出现&quot;双标杆&quot;格局。</span></p><p><span>加上 5/14 华大营养 ADQ 复盘（KR1 标杆），本周</span><strong><span>头部客户复盘三连击</span></strong><span>直接夯实了你在食品饮料中心 KR1+KR2 头部客户的&quot;运营即诊断医生&quot;角色。</span></p><h3 id='3-跨-kr-能力建设------html-工程能力路由层定型'><span>3. 跨 KR 能力建设——HTML 工程能力路由层定型</span></h3><p><span>5/15 SKILL 体系大升级形成完整的 </span><strong><span>&quot;路由 Rule + 能力 SKILL × N&quot;</span></strong><span> 架构模式。这不是&quot;为了沉淀而沉淀&quot;——而是 5/14 大量产出对客 HTML 后真实痛点驱动的工程化收敛。</span></p><p><span>加上 Townhall 5/18 分享筹备，本周你</span><strong><span>为 +2 领导（Kiki）的 AI 推广通行证续签</span></strong><span>。Week8 第一次拿到通行证，本周用一次更系统的展示证明 AI 协作的稳定性和可扩展性。</span></p><h3 id='4-工作流的反例必沉淀------mode-j-v2--v3--j-4-三层强化'><span>4. 工作流的&quot;反例必沉淀&quot;——Mode J V2 + V3 + J-4 三层强化</span></h3><p><span>5/12 23:32 用户三次校准 → Mode J V2；5/14 反推质量风险 → Mode J V3；5/15 周末误排议程 → 校验 J-4。</span><strong><span>每次工作流出问题都立即沉淀为 SKILL 升级</span></strong><span>，标准化治理评分从 ★★★★ → ★★★★★。</span></p><p><span>这种&quot;反例必沉淀&quot;的工作纪律，是个人 AI 协作从&quot;使用者&quot;到&quot;系统设计者&quot;的关键质变。</span></p><h3 id='5-下周week12）的关键词------p0-必破--townhall-执行--顺延清算'><span>5. 下周（Week12）的关键词——&quot;P0 必破 + Townhall 执行 + 顺延清算&quot;</span></h3><p><span>本周 4 项 P0 顺延 W12，下周必须破局：</span></p><ul><li><strong><span>#42 多燕瘦清退</span></strong><span>（DDL 已过 1 天，5/18 周一首件事）</span></li><li><strong><span>#6 520 礼赠 5 天数据验证</span></strong><span>（连续 4 工作日 🔴🔴）</span></li><li><strong><span>#3 大场 CVR ping 产研</span></strong><span>（节后 7 天）</span></li><li><strong><span>#51 保元德投放复盘</span></strong><span>（连续 3 工作日延后）</span></li></ul><p><span>加上 5/18 Townhall 执行 + 5/19 AI 专项申报，</span><strong><span>Week12 是&quot;清算积压 + 收割 Townhall 收益&quot;双线并行的关键周</span></strong><span>。</span></p><h3 id='一句话'><span>一句话</span></h3><p><span>Week11 你完成了&quot;客户深度突破（诺特破局+618 备战双标杆）&quot;+ &quot;体系化能力沉淀（SKILL 路由+Mode J 三层强化+Townhall 筹备就绪）&quot;的双线推进。Week12 的关键检验是：</span><strong><span>把本周建好的能力工具，转化为顺延 P0 的破局速度</span></strong><span>——能力建设的最终意义不是 SKILL 行数，而是它能否让你下周更快搞定积压的客户问题。</span></p><hr /><blockquote><p><strong><span>文档结束</span></strong><span>。本文档为 Week11（2026.5.11-5.17）的完整工作周报+协作迭代建议，涵盖：工作明细（5 天逐日拆解）、重点产出物索引（6 份客户分析+5 份战略产出+5 份对外赋能+12 项系统建设）、Todo 复盘（6 项✅ + 6 项🔄 + 8 项新增 + 4 项顺延 W12）、三层模型（L1:20%/L2:35%/L3:45%）、OKR 对照（KR1🟢🟢🟢/KR2🟢🟢🟢🟢/KR3⚪/KR4🟡）、认知收获（4 项）、协作工作流深度分析（成熟度 4 维度/高效模式 3 个/待改进 3 个/Week9 优化项跟踪 87.5%/SKILL 健康度/下周 Week12 优化建议 9 项）、可观测性仪表盘、个人成长寄语。</span></p></blockquote></div></div>
+</body>
+</html>
