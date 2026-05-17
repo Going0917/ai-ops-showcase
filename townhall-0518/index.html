@@ -1085,9 +1085,9 @@
   .s-force.v2.layout-stack .pane-top {
     grid-column: 1 / span 12; grid-row: 2;
     background: var(--paper);
-    padding: 30px 44px 28px;
+    padding: 24px 44px 22px;
     display: flex; flex-direction: column;
-    gap: 18px;
+    gap: 14px;
     border-bottom: 1.5px solid var(--ink);
   }
   .s-force.v2.layout-stack .pane-top .pt-label {
@@ -1170,10 +1170,10 @@
   .s-force.v2.layout-stack .pane-bottom {
     grid-column: 1 / span 12; grid-row: 3;
     background: var(--paper);
-    padding: 30px 44px 30px;
+    padding: 26px 44px 26px;
     display: grid;
     grid-template-rows: auto 1fr;
-    gap: 22px;
+    gap: 16px;
   }
   .s-force.v2.layout-stack .pane-bottom .pb-head {
     display: flex; align-items: baseline; gap: 18px;
@@ -1219,8 +1219,12 @@
   }
   /* 品牌力专属：左 1 右 2（左侧抓手① 营销方案窄，右侧抓手② OnePage 案例缩略图宽） */
   .s-force.v2.layout-stack .roadmap-stack.cols-1-2 {
-    grid-template-columns: 1fr 2.2fr;
-    gap: 18px;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 16px;
+  }
+  .s-force.v2.layout-stack .roadmap-stack.cols-1-2 .step {
+    padding: 22px 22px 18px;
+    gap: 10px;
   }
   /* 底层支撑卡：横通带左侧标签 */
   .s-force.v2.layout-stack .roadmap-stack .step.base-row {
@@ -1279,11 +1283,11 @@
   }
   .s-force.v2.layout-stack .roadmap-stack .step.base-row .tools-pair .tool-chip .tn {
     font-family:"JetBrains Mono", monospace;
-    font-size: 13px; font-weight: 700;
+    font-size: 15px; font-weight: 700;
     letter-spacing: .08em;
   }
   .s-force.v2.layout-stack .roadmap-stack .step.base-row .tools-pair .tool-chip .td {
-    font-size: 13px; line-height: 1.45;
+    font-size: 15px; line-height: 1.45;
     opacity: 0.9;
   }
   .s-force.v2.layout-stack .roadmap-stack .step.base-row .tools-pair .arrow {
@@ -1375,7 +1379,7 @@
   .s-force.v2.layout-stack .roadmap-stack .step .level-list .level .level-title {
     font-family:"Noto Sans SC", sans-serif;
     font-weight: 700;
-    font-size: 16px; line-height: 1.4;
+    font-size: 20px; line-height: 1.4;
   }
   .s-force.v2.layout-stack .roadmap-stack .step .level-list .level .level-title strong {
     background: rgba(0,0,0,0.06);
@@ -1386,12 +1390,12 @@
   }
   .s-force.v2.layout-stack .roadmap-stack .step .level-list .level .level-desc {
     font-family:"Noto Sans SC", sans-serif;
-    font-size: 14px; line-height: 1.55;
+    font-size: 17px; line-height: 1.55;
     opacity: 0.85;
   }
   .s-force.v2.layout-stack .roadmap-stack .step .level-list .level .level-link {
     font-family:"JetBrains Mono", monospace;
-    font-size: 13px; font-weight: 500;
+    font-size: 15px; font-weight: 500;
     letter-spacing: .03em;
     color: inherit;
     border-bottom: 1.5px solid currentColor;
@@ -1823,18 +1827,18 @@
   /* ============== 品牌力 P07 · 应用列表卡片（无图片，文字+关键词+链接）============== */
   .app-list {
     display: flex; flex-direction: column;
-    gap: 14px;
-    margin-top: 10px;
+    gap: 10px;
+    margin-top: 8px;
     flex: 1 1 auto;
   }
   .app-item {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr;
     gap: 18px;
     align-items: center;
     background: #fff;
     border: 1.5px solid var(--ink);
-    padding: 20px 22px;
+    padding: 14px 18px;
     cursor: pointer;
     transition: transform .15s, box-shadow .15s;
   }
@@ -1848,7 +1852,7 @@
   }
   .app-item .ai-tag {
     font-family:"JetBrains Mono", monospace;
-    font-size: 13px; font-weight: 700;
+    font-size: 15px; font-weight: 700;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--ink); opacity: .55;
@@ -1871,7 +1875,7 @@
   }
   .app-item .ai-links a {
     font-family:"JetBrains Mono", monospace;
-    font-size: 13px; font-weight: 500;
+    font-size: 15px; font-weight: 500;
     letter-spacing: .03em;
     color: var(--ink);
     border-bottom: 1.5px solid var(--ink);
@@ -1897,47 +1901,63 @@
   .force-modules {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin: 8px 0 6px;
+    gap: 8px;
+    margin: 6px 0 4px;
     flex: 1 1 auto;
   }
+  .force-modules.compact {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 8px 0;
+    flex: 0 0 auto;
+  }
+  .force-modules.compact .fm {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 14px 10px;
+    gap: 8px;
+  }
+  .force-modules.compact .fm .fm-name {
+    font-size: 17px;
+  }
   .force-modules .fm {
-    display: flex; align-items: flex-start; gap: 14px;
+    display: flex; align-items: flex-start; gap: 10px;
     background: #fff;
     border: 1.5px solid var(--ink);
-    padding: 18px 20px;
+    padding: 12px 14px;
     font-family:"Noto Sans SC", sans-serif;
-    font-size: 14px; font-weight: 500;
-    line-height: 1.45;
+    font-size: 15px; font-weight: 500;
+    line-height: 1.4;
   }
   .force-modules .fm .fm-icon {
-    width: 40px; height: 40px;
+    width: 32px; height: 32px;
     background: var(--accent);
     border: 1.5px solid var(--ink);
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
+    font-size: 16px;
     flex-shrink: 0;
   }
   .force-modules .fm .fm-body {
     display: flex; flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
   .force-modules .fm .fm-name {
     font-weight: 900;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--ink);
     line-height: 1.1;
   }
   .force-modules .fm .fm-points {
     display: flex; flex-direction: column;
-    gap: 3px;
+    gap: 2px;
   }
   .force-modules .fm .fm-points span {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--ink);
     opacity: .75;
-    line-height: 1.4;
-    padding-left: 12px;
+    line-height: 1.35;
+    padding-left: 10px;
     position: relative;
   }
   .force-modules .fm .fm-points span::before {
@@ -1948,8 +1968,8 @@
   }
   .ratio-bars {
     display: flex; flex-direction: column;
-    gap: 8px;
-    margin-top: 4px;
+    gap: 6px;
+    margin-top: 2px;
   }
   .ratio-bars .rb {
     display: flex; align-items: center; gap: 10px;
@@ -2095,7 +2115,7 @@
             <div class="mod-pain">
               <div>
                 <div class="pain-arrow" contenteditable="true" spellcheck="false">→ PAIN 01 · 复盘极耗时</div>
-                <h5 style="margin-top:10px" contenteditable="true" spellcheck="false">复盘 <mark>4–5h</mark> 打底——<br>看完数据，已无力做洞察</h5>
+                <h5 style="margin-top:10px" contenteditable="true" spellcheck="false"><div><br></div>复盘 <mark>4–5h</mark> 打底——<div><br>看完数据，已无力做洞察</div></h5>
               </div>
               <div class="pain-foot" contenteditable="true" spellcheck="false">必须靠 AI 把效率提上来</div>
             </div>
@@ -2115,7 +2135,7 @@
             <div class="mod-pain">
               <div>
                 <div class="pain-arrow" contenteditable="true" spellcheck="false">→ PAIN 02 · 角色升级</div>
-                <h5 style="margin-top:10px" contenteditable="true" spellcheck="false">要做<mark>生意经营合伙人</mark>，<br>不能只是广告复盘的角色</h5>
+                <h5 style="margin-top:10px" contenteditable="true" spellcheck="false"><div><br></div>要做<mark>生意经营合伙人</mark>，<div><br>不能只是广告复盘的角色</div></h5>
               </div>
               <div class="pain-foot" contenteditable="true" spellcheck="false">为「四力」深度打法埋下伏笔</div>
             </div>
@@ -2133,10 +2153,9 @@
       <div class="head card">
         <div>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.65; margin-bottom: 12px;">02 · TODAY'S ROADMAP / 今天的分享地图</div>
-          <h1 contenteditable="true" spellcheck="false">四力 · 一份共同的<br>客户营销框架</h1>
+          <h1 contenteditable="true" spellcheck="false">客户<span style="letter-spacing: -0.015em;">四力</span><span style="letter-spacing: -0.015em;">营销框架</span><br><div><span style="letter-spacing: -0.015em;">&nbsp; &nbsp; &nbsp; &amp;我与AI的协作共建</span></div></h1>
         </div>
-        <div class="sub" contenteditable="true" spellcheck="false">
-          四力 · 是中心今年梳理的<strong>客户营销四维框架</strong>。<br>
+        <div class="sub" contenteditable="true" spellcheck="false"><br>
           今天结合 AI 协作，分享团队在四力上的一些实践与思考。
         </div>
       </div>
@@ -2285,7 +2304,7 @@
           <div class="step lemon">
             <span class="step-tag" contenteditable="true" spellcheck="false">Step 1 · MVP</span>
             <h5 contenteditable="true" spellcheck="false">AI 跑通食品赛道</h5>
-            <p contenteditable="true" spellcheck="false">自研轻量化工具完成数据闭环，输出爆品多品机会榜 + 趋势品视频号洞察，作为食品饮料行业首批 AI 选品对客分享原料。</p>
+            <p contenteditable="true" spellcheck="false"><b>自研轻量化工具完成数据闭环</b>，输出爆品多品机会榜<div>&nbsp;+ <b>趋势品</b>视频号洞察</div><div>——&gt;食品饮料行业 <b>AI 选品对客分享</b>原料</div></p>
             <div class="step-links">
               <span class="sl-label" contenteditable="true" spellcheck="false">原始数据 · DATA</span>
               <a href="https://doc.weixin.qq.com/sheet/e3_AaEAUgbuAPUCNCB9miVySRbed7ztV?scode=AJEAIQdfAAoRZkDnlfAGYAPQbmACg&amp;tab=5yydxl" target="_blank">▸ Q4 爆品多品机会榜</a>
@@ -2298,7 +2317,7 @@
           <div class="step">
             <span class="step-tag" contenteditable="true" spellcheck="false">Step 2 · 横向复制</span>
             <h5 contenteditable="true" spellcheck="false">方法论标杆案例</h5>
-            <p contenteditable="true" spellcheck="false">从底表洞察 → 分人群拓品 → 品类 &amp; 选品推荐，每条建议有数据支撑。已落地具体客户应用，作为对客分享标杆。</p>
+            <p contenteditable="true" spellcheck="false">- 从底表洞察 → 分人群拓品 → 品类 &amp; 选品推荐<div>- 每条建议有数据支撑<div>- 已落地具体客户应用，作为对客分享标杆。</div></div></p>
             <div class="step-links">
               <span class="sl-label" contenteditable="true" spellcheck="false">对客分享 · CASE</span>
               <a href="https://doc.weixin.qq.com/doc/w3_AaEAUgbuAPUCNC1jm1vAzS8y0bxyl?scode=AJEAIQdfAAoxyxvJfeAGYAPQbmACg" target="_blank">▸ 善百年复盘 · 给点 AI 学习版</a>
@@ -2310,7 +2329,7 @@
           <div class="step ink">
             <span class="step-tag" contenteditable="true" spellcheck="false">Step 3 · 产品化</span>
             <h5 contenteditable="true" spellcheck="false">推动中台标准能力</h5>
-            <p contenteditable="true" spellcheck="false">商品机会洞察 Agent 一期已面向食品饮料上线，仅含广告数据源；下一步分行业补充类目映射、外采小店全域数据。</p>
+            <p contenteditable="true" spellcheck="false">- 商品机会洞察 Agent 一期已面向食品饮料上线，仅含广告数据源；<div>- 下一步分行业补充类目映射、外采小店全域数据。</div></p>
             <div class="step-links">
               <span class="sl-label" contenteditable="true" spellcheck="false">产品手册 · DOC</span>
               <a href="https://doc.weixin.qq.com/doc/w3_AewAuQanAD0CNrDl1XknsQ0mS8fwD?scode=AJEAIQdfAAoyn1vdTWAaEAUgbuAPU" target="_blank">▸ 【商品机会洞察 Agent】产品使用手册</a>
@@ -2372,7 +2391,7 @@
                 <div class="level-icon">L1</div>
                 <div class="level-body">
                   <div class="level-title" contenteditable="true" spellcheck="false">初始阶段 · <strong>分赛道 Top 素材双周报</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">固定输出双周报框架，沉淀膳食 / 海保 / AIGC 三赛道 Top 跑量素材的脚本结构与 BGM 规律。</div>
+                  <div class="level-desc" contenteditable="true" spellcheck="false">固定输出双周报框架，沉淀食品饮料分赛道 Top 跑量素材的脚本结构 拿量拆解。</div>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AM0A_AZiACICNuzpSLaQWQP6fQzQC?scode=AJEAIQdfAAoAxoXE9iAGYAPQbmACg" target="_blank">▸ 素材双周报</a>
                 </div>
               </div>
@@ -2403,8 +2422,8 @@
               <div class="level">
                 <div class="level-icon">L1</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">基础框架 · <strong>肖恩输出的直播间分析模板</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">起点是赛道前辈沉淀的直播间分析模板，定义"人货场"基础维度与 Gemini 转录工作流。</div>
+                  <div class="level-title" contenteditable="true" spellcheck="false">基础框架 · <strong>直播间分析模板</strong></div>
+                  <div class="level-desc" contenteditable="true" spellcheck="false">起点是先驱沉淀的直播间分析模板，定义"人货场"基础维度与 Gemini 转录工作流。</div>
                 </div>
               </div>
               <div class="level">
@@ -2442,7 +2461,7 @@
           <span class="force-name" contenteditable="true" spellcheck="false">投放力</span>
         </div>
         <div class="force-title">
-          <h2 contenteditable="true" spellcheck="false">从「我的工具」<mark>→</mark>「全行业的工具」</h2>
+          <h2 contenteditable="true" spellcheck="false">从「我的工具」<mark>→</mark>「赋能大家的工具」</h2>
         </div>
         <div class="force-credit" contenteditable="true" spellcheck="false">主战场 / Going</div>
       </div>
@@ -2477,7 +2496,7 @@
           <div class="step lemon">
             <span class="step-tag" contenteditable="true" spellcheck="false">方向 ① · 高频固定</span>
             <h5 contenteditable="true" spellcheck="false">固定场景 → 成熟 SKILL 自动化</h5>
-            <p contenteditable="true" spellcheck="false">消耗异动诊断 / 每日早报 / 双周报 / 月报 / 客户复盘等高频场景打磨为 SKILL，定时任务调用 — <strong>每次执行不需重新磨合</strong>。</p>
+            <p contenteditable="true" spellcheck="false"><b>消耗异动诊断 / 每日早报 / 双周报 / 月报 / 客户复盘</b>等高频场景打磨为 SKILL，定时任务调用&nbsp;<div>——— <strong>每次执行直接调用，输出完整的深度分析报告，不需重新磨合</strong>。</div></p>
             <div class="step-links">
               <span class="sl-label" contenteditable="true" spellcheck="false">SKILL 体系 · DOC</span>
               <a href="https://going0917.github.io/ai-ops-showcase/" target="_blank">▸ 数据分析能力全景</a>
@@ -2572,11 +2591,11 @@
           <div class="step lemon">
             <span class="step-tag" contenteditable="true" spellcheck="false">抓手 ① · 客户营销方案</span>
             <h5 contenteditable="true" spellcheck="false">整合四力 · 个性化深度方案</h5>
-            <div class="force-modules">
-              <div class="fm"><span class="fm-icon">🛒</span><div class="fm-body"><span class="fm-name">选品</span><div class="fm-points"><span>趋势洞察与品类机会</span><span>商品 × 人群匹配推荐</span></div></div></div>
-              <div class="fm"><span class="fm-icon">🎬</span><div class="fm-body"><span class="fm-name">创意</span><div class="fm-points"><span>Top 素材脚本结构拆解</span><span>客户素材优化建议</span></div></div></div>
-              <div class="fm"><span class="fm-icon">📡</span><div class="fm-body"><span class="fm-name">直播经营</span><div class="fm-points"><span>人货场 + 话术四维诊断</span><span>赛道头部直播间对标</span></div></div></div>
-              <div class="fm"><span class="fm-icon">📊</span><div class="fm-body"><span class="fm-name">投放链路</span><div class="fm-points"><span>链路选型与出价策略</span><span>投放基建对标分析</span></div></div></div>
+            <div class="force-modules compact">
+              <div class="fm"><span class="fm-icon">🛒</span><span class="fm-name">选品策略</span></div>
+              <div class="fm"><span class="fm-icon">🎬</span><span class="fm-name">创意素材</span></div>
+              <div class="fm"><span class="fm-icon">📡</span><span class="fm-name">直播经营</span></div>
+              <div class="fm"><span class="fm-icon">📊</span><span class="fm-name">投放链路</span></div>
             </div>
             <div class="ratio-bars">
               <div class="rb ai"><span class="rb-pct">80%</span> AI 完成分析整合 — 数据取数 + 多维归因 + 方案框架</div>
@@ -2599,12 +2618,8 @@
                   <span class="ai-tag" contenteditable="true" spellcheck="false">应用 ① · 信息整合</span>
                   <div class="ai-title" contenteditable="true" spellcheck="false">复杂扶持 / 能力信息 → 客户更好理解的 OnePage</div>
                   <div class="ai-links">
-                    <a href="javascript:void(0)">▸ 点击查看案例 · 客户周知 OnePage</a>
+                    <a href="javascript:void(0)">▸ 点击查看案例</a>
                   </div>
-                </div>
-                <div class="ai-right">
-                  <span class="ai-keyword">扶持 × 能力</span>
-                  <span class="ai-keyword">一页看懂</span>
                 </div>
               </div>
               <!-- 应用 ② 产品标杆 -->
@@ -2613,14 +2628,9 @@
                   <span class="ai-tag" contenteditable="true" spellcheck="false">应用 ② · 产品标杆</span>
                   <div class="ai-title" contenteditable="true" spellcheck="false">某产品能力的使用标杆输出 · 3 个案例</div>
                   <div class="ai-links">
-                    <a href="assets/huobu-onepage.png" target="_blank">▸ 生鲜 · 货补 OnePage</a>
-                    <a href="assets/huobu-ability.png" target="_blank">▸ 货补能力 OnePage</a>
-                    <a href="assets/livestream-product-onepage.png" target="_blank">▸ 直播间表达商品 OnePage</a>
+                    <a href="assets/huobu-onepage.png" target="_blank">▸ 货补 OnePage</a>
+                    <a href="assets/livestream-product-onepage.png" target="_blank">▸ 直播间表达商品</a>
                   </div>
-                </div>
-                <div class="ai-right">
-                  <span class="ai-keyword">货补</span>
-                  <span class="ai-keyword">直播间表达商品</span>
                 </div>
               </div>
               <!-- 应用 ③ 个性化响应 -->
@@ -2629,12 +2639,8 @@
                   <span class="ai-tag" contenteditable="true" spellcheck="false">应用 ③ · 个性化响应</span>
                   <div class="ai-title" contenteditable="true" spellcheck="false">个性化需求快速响应 · 如链路一览图等</div>
                   <div class="ai-links">
-                    <a href="javascript:void(0)">▸ 点击查看案例 · 4 链路能力长图</a>
+                    <a href="javascript:void(0)">▸ 点击查看案例</a>
                   </div>
-                </div>
-                <div class="ai-right">
-                  <span class="ai-keyword">链路一览图</span>
-                  <span class="ai-keyword">快速响应</span>
                 </div>
               </div>
             </div>
@@ -2649,7 +2655,7 @@
   <div class="lightbox" id="lightbox" onclick="if(event.target.id==='lightbox'||event.target.classList.contains('lightbox-close'))closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="关闭">✕</button>
     <div id="lightbox-body"></div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
+    <div class="lightbox-caption" id="lightbox-caption">客户周知 · 扶持/能力信息整合 OnePage</div>
   </div>
 
 
@@ -2742,7 +2748,7 @@
       <div class="pane-title">
         <div>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; margin-bottom: 28px;">真正让 AI 不偏航的，是 OKR</div>
-          <h2 contenteditable="true" spellcheck="false">四力是"产出"，<br><mark>OKR</mark> 才是"航向"</h2>
+          <h2 contenteditable="true" spellcheck="false">四力是"产出"，<div><br><mark>OKR</mark> 才是"航向"</div></h2>
         </div>
         <div class="footer-row">
           <p contenteditable="true" spellcheck="false">
