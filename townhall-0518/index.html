@@ -1842,6 +1842,10 @@
     pointer-events: none;
   }
 
+
+  /* === 禁止编辑 === */
+  * { -webkit-user-modify: read-only !important; }
+  [contenteditable] { -webkit-user-modify: read-only !important; pointer-events: auto; }
 </style>
 </head>
 <body>
@@ -2704,7 +2708,7 @@
               <span class="l2-icon">📊</span>
               <div class="l2-case-body">
                 <div class="l2-case-title">周回顾 · 精力分配可视化</div>
-                <div class="l2-case-desc">发现"觉得很忙但 55% 时间花在客户返工"——开始有意识调整，向 OKR 推进倾斜。<br><a href="assets/week11-review.html" target="_blank">📎 查看最新一期周回顾 →</a></div>
+                <div class="l2-case-desc">发现"觉得很忙但 55% 时间花在客户返工"——开始有意识调整，向 OKR 推进倾斜。</div>
               </div>
             </div>
           </div>
