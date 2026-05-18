@@ -1843,9 +1843,9 @@
   }
 
 
-  /* === 禁止编辑（只读分享版） === */
-  .edit-toolbar { display: none !important; }
-  [contenteditable] { -webkit-user-modify: read-only !important; }
+  /* === 禁止编辑 === */
+  * { -webkit-user-modify: read-only !important; }
+  [contenteditable] { -webkit-user-modify: read-only !important; pointer-events: auto; }
 </style>
 </head>
 <body>
@@ -2801,6 +2801,11 @@
 </div>
 
 
+<div class="tb-status saved" id="tbStatus">✓ 已自动保存到本地</div>
+  <button onclick="exportHTML()">💾 导出当前 HTML</button>
+  <button class="btn-reset" onclick="resetContent()">↩️ 清除本地改动</button>
+</div>
+
 <script>
 
 
@@ -2858,21 +2863,6 @@ document.addEventListener('keydown', (e) => {
     });
   }, { threshold: 0.15 });
   slides.forEach(s => observer.observe(s));
-})();
-
-// ============== 只读模式：移除所有编辑能力 ==============
-(function () {
-  document.querySelectorAll('[contenteditable]').forEach(function(el) {
-    el.removeAttribute('contenteditable');
-    el.removeAttribute('spellcheck');
-  });
-  ['editToolbar', 'tbStatus'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.remove();
-  });
-  document.querySelectorAll('.edit-toolbar').forEach(function(el) { el.remove(); });
-  window.exportHTML = function(){};
-  window.resetContent = function(){};
 })();
 </script>
 
