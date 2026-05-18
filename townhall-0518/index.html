@@ -11,196 +11,7 @@
     --bg: #ECECE8;
     --ink: #0A0A0A;
     --paper: #F5F4EF;
-    --accent: #E6FF3D;        /* signature neon yellow */
-    --line: #0A0A0A;
-    --muted: #8A8A85;
-  }
-  html, body { margin: 0; padding: 0; background: #1a1a1a; }
-  body {
-    font-family:"Space Grotesk","Noto Sans SC","PingFang SC","Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ================ deck container · 垂直滚动布局 ================ */
-  .deck {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    padding: 24px 0 48px;
-    background: #1a1a1a;
-  }
-
-  /* 每一页：内部按 1920×1080 设计稿，外层用 zoom 整体等比缩放
-     —— zoom 不影响内部布局逻辑，比 transform: scale 更稳定（不会破坏 grid 测量）。
-     默认 zoom 0.83 = 1600px；窄屏自适应。 */
-  section.slide {
-    position: relative;
-    width: 1920px;
-    height: 1080px;
-    background: var(--bg);
-    color: var(--ink);
-    overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
-    zoom: 0.83;            /* 1920 * 0.83 ≈ 1600px */
-    flex-shrink: 0;
-    /* 入场动效 — 初始状态 */
-    opacity: 0;
-    transform: translateY(48px);
-    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-  }
-  section.slide.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* 大屏：再放大一点 */
-  @media (min-width: 1920px) {
-    section.slide { zoom: 0.94; }   /* 1920 * 0.94 ≈ 1800 */
-  }
-  /* 中等屏 */
-  @media (max-width: 1600px) {
-    section.slide { zoom: 0.72; }   /* ≈ 1380 */
-  }
-  /* 笔记本 */
-  @media (max-width: 1440px) {
-    section.slide { zoom: 0.65; }   /* ≈ 1250 */
-  }
-  /* 小屏 */
-  @media (max-width: 1280px) {
-    section.slide { zoom: 0.58; }   /* ≈ 1110 */
-  }
-  @media (max-width: 1024px) {
-    section.slide { zoom: 0.48; }   /* ≈ 920 */
-  }
-
-  /* ================ shared slide chrome ================ */
-  .frame {
-    position: absolute; inset: 40px;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    gap: 12px;
-  }
-  .card {
-    background: var(--paper);
-    position: relative;
-    overflow: hidden;
-  }
-  .card.ink   { background: var(--ink);   color: var(--paper); }
-  .card.lemon { background: var(--accent); color: var(--ink); }
-
-  .pagenum {
-    position: absolute;
-    left: 0; bottom: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family:"JetBrains Mono", ui-monospace, monospace;
-    font-size: 24px;
-    padding: 14px 22px;
-    letter-spacing: 0.04em;
-    z-index: 5;
-  }
-  .pagenum.invert { background: var(--ink); color: var(--paper); }
-  .pagenum.lemon  { background: var(--accent); color: var(--ink); }
-
-  .corner-mark {
-    position: absolute;
-    top: 22px; right: 22px;
-    width: 36px; height: 36px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 4px;
-  }
-  .corner-mark span { background: currentColor; }
-  .corner-mark span:nth-child(2) { background: transparent; }
-
-  /* utility for hyperlinks within deck */
-  a { color: inherit; text-decoration: none; border-bottom: 1.5px solid currentColor; }
-  a:hover { background: var(--accent); color: var(--ink); }
-
-  h1, h2, h3, p { margin: 0; }
-
-  /* ================ 编辑模式 · 三件套样式（参考 case-showcase-builder SKILL §3.5.1）================ */
-
-  /* 浮动工具栏 */
-  .edit-toolbar {
-    position: fixed;
-    top: 20px; right: 20px;
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(230, 255, 61, 0.4);
-    border-radius: 10px;
-    padding: 14px 16px;
-    z-index: 9999;
-    min-width: 230px;
-    font-family:"JetBrains Mono","Noto Sans SC", monospace;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-  }
-  .edit-toolbar .tb-title {
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .edit-toolbar .tb-status {
-    font-size: 11px;
-    color: #b9c5d6;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    line-height: 1.5;
-  }
-  .edit-toolbar .tb-status.saved { color: #4ade80; }
-  .edit-toolbar button {
-    background: var(--accent);
-    color: var(--ink);
-    border: none;
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 12px;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 6px;
-    letter-spacing: 0.05em;
-    transition: transform 0.1s ease, opacity 0.15s ease;
-  }
-  .edit-toolbar button:hover { transform: translateY(-1px); opacity: 0.9; }
-  .edit-toolbar button:active { transform: translateY(0); }
-  .edit-toolbar button.btn-reset {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    font-size: 11px;
-    padding: 6px 10px;
-    margin-bottom: 0;
-  }
-  .edit-toolbar button.btn-reset:hover { background: rgba(255,255,255,0.2); }
-
-  /* 编辑高亮：鼠标悬停 + 聚焦时的视觉提示 */
-  [contenteditable="true"] {
-    transition: box-shadow 0.15s, background 0.15s;
-    border-radius: 3px;
-    outline: none;
-  }
-  [contenteditable="true"]:hover {
-    box-shadow: 0 0 0 2px rgba(230, 255, 61, 0.55);
-    background: rgba(230, 255, 61, 0.10);
-    cursor: text;
-  }
-  [contenteditable="true"]:focus {
-    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.7);
-    background: rgba(255, 107, 53, 0.05);
-  }
-
-  /* 编辑模式下，链接默认不跳转（避免点链接误跳走） */
-  body.editing a { pointer-events: none; }
+    --accent: #E6FF3D;        
 
   /* ================ COVER (s-cover) ================ */
   .s-cover .panel-photo-l { grid-column: 1 / span 3; grid-row: 1 / span 8; background: #0a0a0a; position: relative; overflow: hidden; }
@@ -2042,7 +1853,7 @@
     <div class="frame">
       <div class="panel-photo-l">
         <div class="ph"></div>
-        <div class="ph-text" contenteditable="true" spellcheck="false">
+        <div class="ph-text">
           2026.05.18<br>
           商消业务部<br>
           AI 主题<br>
@@ -2050,30 +1861,30 @@
         </div>
       </div>
       <div class="panel-mid">
-        <div class="top-label" contenteditable="true" spellcheck="false">SHARING / 抛砖引玉</div>
-        <h1 contenteditable="true" spellcheck="false">当 <span class="em">AI</span> 能跑数<div>写报告<span style="letter-spacing: -0.02em;">之后</span><div>行业运营的<br>价值是什么？</div></div></h1>
-        <div class="meta-row" contenteditable="true" spellcheck="false">04 维度 · 四力 / 12 周实践 / 1 份答案</div>
+        <div class="top-label">SHARING / 抛砖引玉</div>
+        <h1>当 <span class="em">AI</span> 能跑数<div>写报告<span style="letter-spacing: -0.02em;">之后</span><div>行业运营的<br>价值是什么？</div></div></h1>
+        <div class="meta-row">04 维度 · 四力 / 12 周实践 / 1 份答案</div>
       </div>
       <div class="panel-titletile">
-        <h2 contenteditable="true" spellcheck="false">我用 12 周给客户<br>做厚的 <mark>「四力」</mark> 答案</h2>
+        <h2>我用 12 周给客户<br>做厚的 <mark>「四力」</mark> 答案</h2>
         <div class="blockmark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       </div>
       <div class="panel-photo-r">
         <div class="ph"></div>
-        <div class="stat-num" contenteditable="true" spellcheck="false">180<span class="plus">+</span></div>
-        <div class="stat-lab" contenteditable="true" spellcheck="false"><span class="em">AI</span> 协作产出<br>REPORTS · 12 WEEKS</div>
+        <div class="stat-num">180<span class="plus">+</span></div>
+        <div class="stat-lab"><span class="em">AI</span> 协作产出<br>REPORTS · 12 WEEKS</div>
       </div>
       <div class="panel-cap">
-        <div class="cap-label" contenteditable="true" spellcheck="false">分享人</div>
-        <div class="cap-list" contenteditable="true" spellcheck="false">
+        <div class="cap-label">分享人</div>
+        <div class="cap-list">
           <strong>Going · 林丽莹</strong><br>
           食品饮料一中心 · 行业运营<br>
           膳食营养 / 海外保健食品
         </div>
-        <div class="cap-foot" contenteditable="true" spellcheck="false">© 2026 GOING · TOWNHALL 0518</div>
+        <div class="cap-foot">© 2026 GOING · TOWNHALL 0518</div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">01 / 12</div>
+    <div class="pagenum">01 / 12</div>
   </section>
 
 
@@ -2082,12 +1893,12 @@
     <div class="frame">
       <div class="pane-l">
         <div>
-          <div class="lab" contenteditable="true" spellcheck="false">01 · WHO AM I / 自我介绍</div>
-          <h2 class="punch" contenteditable="true" spellcheck="false">我服务的，<br>是一群很<em style="letter-spacing: -0.01em;">「重」</em><span style="letter-spacing: -0.01em;">的</span><span style="letter-spacing: -0.01em;">头部商家。</span></h2>
+          <div class="lab">01 · WHO AM I / 自我介绍</div>
+          <h2 class="punch">我服务的，<br>是一群很<em style="letter-spacing: -0.01em;">「重」</em><span style="letter-spacing: -0.01em;">的</span><span style="letter-spacing: -0.01em;">头部商家。</span></h2>
         </div>
         <div class="who-block">
-          <div class="who-name" contenteditable="true" spellcheck="false">Going · 林丽莹</div>
-          <div class="who-meta" contenteditable="true" spellcheck="false">
+          <div class="who-name">Going · 林丽莹</div>
+          <div class="who-meta">
             食品饮料一中心 · 行业运营<br>
             膳食营养 / 海外保健食品
           </div>
@@ -2096,54 +1907,54 @@
 
       <div class="pane-r-v2">
         <div class="v2-head">
-          <h3 contenteditable="true" spellcheck="false">这种「重」，体现在两个层面</h3>
-          <span class="tag" contenteditable="true" spellcheck="false">Why I need AI</span>
+          <h3>这种「重」，体现在两个层面</h3>
+          <span class="tag">Why I need AI</span>
         </div>
 
         <div class="module-stack">
           <!-- 模块 ① -->
           <div class="mod">
             <div class="mod-feat">
-              <div class="mod-tag" contenteditable="true" spellcheck="false">特点 · HEAVY ACCOUNT STRUCTURE</div>
-              <h4 contenteditable="true" spellcheck="false">头部商家的「复杂度」</h4>
+              <div class="mod-tag">特点 · HEAVY ACCOUNT STRUCTURE</div>
+              <h4>头部商家的「复杂度」</h4>
               <ul>
-                <li contenteditable="true" spellcheck="false">产品线非常复杂（30+ SKU 同时在投）</li>
-                <li contenteditable="true" spellcheck="false">投放主体多 · 内外赛马（团队 + 服务商 4-5 方）</li>
-                <li contenteditable="true" spellcheck="false">链路非常丰富（闭环 + CID + 全域通 + 互选）</li>
+                <li>产品线非常复杂（30+ SKU 同时在投）</li>
+                <li>投放主体多 · 内外赛马（团队 + 服务商 4-5 方）</li>
+                <li>链路非常丰富（闭环 + CID + 全域通 + 互选）</li>
               </ul>
             </div>
             <div class="mod-pain">
               <div>
-                <div class="pain-arrow" contenteditable="true" spellcheck="false">→ PAIN 01 · 复盘极耗时</div>
-                <h5 style="margin-top:10px" contenteditable="true" spellcheck="false"><div><br></div>复盘 <mark>4–5h</mark> 打底——<div><br>看完数据，已无力做洞察</div></h5>
+                <div class="pain-arrow">→ PAIN 01 · 复盘极耗时</div>
+                <h5 style="margin-top:10px"><div><br></div>复盘 <mark>4–5h</mark> 打底——<div><br>看完数据，已无力做洞察</div></h5>
               </div>
-              <div class="pain-foot" contenteditable="true" spellcheck="false">必须靠 AI 把效率提上来</div>
+              <div class="pain-foot">必须靠 AI 把效率提上来</div>
             </div>
           </div>
 
           <!-- 模块 ② -->
           <div class="mod">
             <div class="mod-feat">
-              <div class="mod-tag" contenteditable="true" spellcheck="false">挑战 · HIGH GMV TARGET</div>
-              <h4 contenteditable="true" spellcheck="false">GMV 目标决定服务深度</h4>
+              <div class="mod-tag">挑战 · HIGH GMV TARGET</div>
+              <h4>GMV 目标决定服务深度</h4>
               <ul>
-                <li contenteditable="true" spellcheck="false">客户 GMV 目标极高，浅层投放建议交付不动</li>
-                <li contenteditable="true" spellcheck="false">需要深度介入客户经营各环节</li>
-                <li contenteditable="true" spellcheck="false">从「投手工具」升级为「生意伙伴」</li>
+                <li>客户 GMV 目标极高，浅层投放建议交付不动</li>
+                <li>需要深度介入客户经营各环节</li>
+                <li>从「投手工具」升级为「生意伙伴」</li>
               </ul>
             </div>
             <div class="mod-pain">
               <div>
-                <div class="pain-arrow" contenteditable="true" spellcheck="false">→ PAIN 02 · 角色升级</div>
-                <h5 style="margin-top:10px" contenteditable="true" spellcheck="false"><div><br></div>要做<mark>生意经营合伙人</mark>，<div><br>不能只是广告复盘的角色</div></h5>
+                <div class="pain-arrow">→ PAIN 02 · 角色升级</div>
+                <h5 style="margin-top:10px"><div><br></div>要做<mark>生意经营合伙人</mark>，<div><br>不能只是广告复盘的角色</div></h5>
               </div>
-              <div class="pain-foot" contenteditable="true" spellcheck="false">为「四力」深度打法埋下伏笔</div>
+              <div class="pain-foot">为「四力」深度打法埋下伏笔</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">02 / 12</div>
+    <div class="pagenum">02 / 12</div>
   </section>
 
 
@@ -2153,9 +1964,9 @@
       <div class="head card">
         <div>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.65; margin-bottom: 12px;">02 · TODAY'S ROADMAP / 今天的分享地图</div>
-          <h1 contenteditable="true" spellcheck="false">客户<span style="letter-spacing: -0.015em;">四力</span><span style="letter-spacing: -0.015em;">营销框架</span><br><div><span style="letter-spacing: -0.015em;">&nbsp; &nbsp; &nbsp; &amp;我与AI的协作共建</span></div></h1>
+          <h1>客户<span style="letter-spacing: -0.015em;">四力</span><span style="letter-spacing: -0.015em;">营销框架</span><br><div><span style="letter-spacing: -0.015em;">&nbsp; &nbsp; &nbsp; &amp;我与AI的协作共建</span></div></h1>
         </div>
-        <div class="sub" contenteditable="true" spellcheck="false"><br>
+        <div class="sub"><br>
           今天结合 AI 协作，分享团队在四力上的一些实践与思考。
         </div>
       </div>
@@ -2163,14 +1974,14 @@
       <!-- 左 + 中：四力聚合（2×2 网格） -->
       <div class="group-forces">
         <div class="group-tag">
-          <div class="lbl" contenteditable="true" spellcheck="false"><em>4 FORCES</em>客户营销 · 四个能力维度</div>
-          <div class="meta" contenteditable="true" spellcheck="false">商品 / 内容 / 投放 / 品牌</div>
+          <div class="lbl"><em>4 FORCES</em>客户营销 · 四个能力维度</div>
+          <div class="meta">商品 / 内容 / 投放 / 品牌</div>
         </div>
 
         <div class="force-card">
           <div class="force-head">
-            <span class="idx" contenteditable="true" spellcheck="false">FORCE · 01</span>
-            <span class="name" contenteditable="true" spellcheck="false">
+            <span class="idx">FORCE · 01</span>
+            <span class="name">
               <span class="name-text">商品力</span>
               <svg class="brush" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M2 5 Q 18 1.8, 35 4.2 T 70 3.6 T 98 5.5"></path>
@@ -2178,17 +1989,17 @@
             </span>
           </div>
           <div>
-            <h3 contenteditable="true" spellcheck="false">从追爆品<br>→ 为平台开品</h3>
-            <p contenteditable="true" spellcheck="false">用 AI 爬小店全域 → 给客户做"以平台用户需求开品"的建议</p>
+            <h3>从追爆品<br>→ 为平台开品</h3>
+            <p>用 AI 爬小店全域 → 给客户做"以平台用户需求开品"的建议</p>
           </div>
-          <div class="hook" contenteditable="true" spellcheck="false"><span class="qmark">?</span>客户该卖什么、为谁卖——能不能比竞争更早一步？</div>
-          <div class="credit" contenteditable="true" spellcheck="false">主导 / 肖恩 × 李颖</div>
+          <div class="hook"><span class="qmark">?</span>客户该卖什么、为谁卖——能不能比竞争更早一步？</div>
+          <div class="credit">主导 / 肖恩 × 李颖</div>
         </div>
 
         <div class="force-card lemon">
           <div class="force-head">
-            <span class="idx" contenteditable="true" spellcheck="false">FORCE · 02</span>
-            <span class="name" contenteditable="true" spellcheck="false">
+            <span class="idx">FORCE · 02</span>
+            <span class="name">
               <span class="name-text">内容力</span>
               <svg class="brush" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M2 4 Q 22 6.5, 45 4 T 80 4.8 T 98 3.4"></path>
@@ -2196,17 +2007,17 @@
             </span>
           </div>
           <div>
-            <h3 contenteditable="true" spellcheck="false">从凭感觉<br>→ 拆每一帧</h3>
-            <p contenteditable="true" spellcheck="false">素材 Top 拆解 + 直播间四维诊断（人货场 + 话术）</p>
+            <h3>从凭感觉<br>→ 拆每一帧</h3>
+            <p>素材 Top 拆解 + 直播间四维诊断（人货场 + 话术）</p>
           </div>
-          <div class="hook" contenteditable="true" spellcheck="false"><span class="qmark">?</span>跑量素材为什么爆？直播间为什么留人？还能复制吗？</div>
-          <div class="credit" contenteditable="true" spellcheck="false">沉淀 / ivy × 肖恩</div>
+          <div class="hook"><span class="qmark">?</span>跑量素材为什么爆？直播间为什么留人？还能复制吗？</div>
+          <div class="credit">沉淀 / ivy × 肖恩</div>
         </div>
 
         <div class="force-card lemon">
           <div class="force-head">
-            <span class="idx" contenteditable="true" spellcheck="false">FORCE · 03</span>
-            <span class="name" contenteditable="true" spellcheck="false">
+            <span class="idx">FORCE · 03</span>
+            <span class="name">
               <span class="name-text">投放力</span>
               <svg class="brush" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M2 5.5 Q 25 3, 50 5 T 78 3.8 T 98 4.6"></path>
@@ -2214,17 +2025,17 @@
             </span>
           </div>
           <div>
-            <h3 contenteditable="true" spellcheck="false">从我的工具<br>→ 全行业的工具</h3>
-            <p contenteditable="true" spellcheck="false">20 SKILL 自动跑 → 迁移 ADataClaw 平台化共享</p>
+            <h3>从我的工具<br>→ 全行业的工具</h3>
+            <p>20 SKILL 自动跑 → 迁移 ADataClaw 平台化共享</p>
           </div>
-          <div class="hook" contenteditable="true" spellcheck="false"><span class="qmark">?</span>能不能让分析框架不止是"我的"，而成为"大家的"？</div>
-          <div class="credit" contenteditable="true" spellcheck="false">主战场 / Going</div>
+          <div class="hook"><span class="qmark">?</span>能不能让分析框架不止是"我的"，而成为"大家的"？</div>
+          <div class="credit">主战场 / Going</div>
         </div>
 
         <div class="force-card">
           <div class="force-head">
-            <span class="idx" contenteditable="true" spellcheck="false">FORCE · 04</span>
-            <span class="name" contenteditable="true" spellcheck="false">
+            <span class="idx">FORCE · 04</span>
+            <span class="name">
               <span class="name-text">品牌力</span>
               <svg class="brush" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M2 4.4 Q 20 6.2, 42 3.8 T 75 5.4 T 98 3.8"></path>
@@ -2232,31 +2043,31 @@
             </span>
           </div>
           <div>
-            <h3 contenteditable="true" spellcheck="false">降低决策成本 ·<br>做厚微信交易</h3>
-            <p contenteditable="true" spellcheck="false">认知 / 好感 / 信赖 + 小店运营投入度 / 链路完善度 / 功能应用率</p>
+            <h3>降低决策成本 ·<br>做厚微信交易</h3>
+            <p>认知 / 好感 / 信赖 + 小店运营投入度 / 链路完善度 / 功能应用率</p>
           </div>
-          <div class="hook" contenteditable="true" spellcheck="false"><span class="qmark">?</span>除了广告投放，我们还能为客户做些什么更长期的事？</div>
-          <div class="credit" contenteditable="true" spellcheck="false">团队下一步</div>
+          <div class="hook"><span class="qmark">?</span>除了广告投放，我们还能为客户做些什么更长期的事？</div>
+          <div class="credit">团队下一步</div>
         </div>
       </div>
 
       <!-- 右列：整合案例（上） + OKR（下） -->
       <div class="col-right">
         <div class="right-card ink">
-          <div class="num" contenteditable="true" spellcheck="false"><em>05</em>整合案例 · 压轴</div>
-          <h3 contenteditable="true" spellcheck="false">EGUOO ·<br>视频号潜力客户<br>深度定制</h3>
-          <p contenteditable="true" spellcheck="false">结合膳食赛道经验，为视频号直播潜力客户提供一份"四力打通"的深度定制方案——直播日均 400 → 完整营销基建</p>
-          <div class="credit" contenteditable="true" spellcheck="false">真实交付 · 4.20 落地</div>
+          <div class="num"><em>05</em>整合案例 · 压轴</div>
+          <h3>EGUOO ·<br>视频号潜力客户<br>深度定制</h3>
+          <p>结合膳食赛道经验，为视频号直播潜力客户提供一份"四力打通"的深度定制方案——直播日均 400 → 完整营销基建</p>
+          <div class="credit">真实交付 · 4.20 落地</div>
         </div>
         <div class="right-card outlined">
-          <div class="num" contenteditable="true" spellcheck="false"><em>06</em>OKR 锚定 + 共建</div>
-          <h3 contenteditable="true" spellcheck="false">不偏航 ·<br>共建工作流</h3>
-          <p contenteditable="true" spellcheck="false">AI 协助 OKR 共建：每天 / 每周 / 每双周——看清"是不是在做对的事"</p>
-          <div class="credit" contenteditable="true" spellcheck="false">分享之外 · 邀请共创</div>
+          <div class="num"><em>06</em>OKR 锚定 + 共建</div>
+          <h3>不偏航 ·<br>共建工作流</h3>
+          <p>AI 协助 OKR 共建：每天 / 每周 / 每双周——看清"是不是在做对的事"</p>
+          <div class="credit">分享之外 · 邀请共创</div>
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">03 / 12</div>
+    <div class="pagenum">03 / 12</div>
   </section>
 
 
@@ -2265,27 +2076,27 @@
     <div class="frame">
       <div class="head">
         <div class="force-pill">
-          <span class="force-idx" contenteditable="true" spellcheck="false">FORCE · 01 / 04</span>
-          <span class="force-name" contenteditable="true" spellcheck="false">商品力</span>
+          <span class="force-idx">FORCE · 01 / 04</span>
+          <span class="force-name">商品力</span>
         </div>
         <div class="force-title">
-          <h2 contenteditable="true" spellcheck="false">从「追爆品」<mark>→</mark>「为平台开品」</h2>
+          <h2>从「追爆品」<mark>→</mark>「为平台开品」</h2>
         </div>
-        <div class="force-credit" contenteditable="true" spellcheck="false">主导 / 肖恩 × 李颖</div>
+        <div class="force-credit">主导 / 肖恩 × 李颖</div>
       </div>
 
       <!-- 上区：能力 CAPABILITY ============================================ -->
       <div class="pane-top">
-        <span class="pt-label" contenteditable="true" spellcheck="false">▎AI 能力 · CAPABILITY</span>
+        <span class="pt-label">▎AI 能力 · CAPABILITY</span>
         <div class="pt-body">
-          <div class="pt-title" contenteditable="true" spellcheck="false">面向「以品拓品」目标，AI 把<strong>原本人工读不完的小店全量商品数据</strong>，变成可直接落地的拓品建议</div>
+          <div class="pt-title">面向「以品拓品」目标，AI 把<strong>原本人工读不完的小店全量商品数据</strong>，变成可直接落地的拓品建议</div>
           <div class="pt-routes">
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 能力①</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 能力①</span>
               <span><strong>全量数据自动洞察</strong> · 把小店全量商品 SKU 自动入模，AI 抽取卖点特征 + 类目映射 + 趋势信号，替代过去人工抽样阅读底表的工作。</span>
             </div>
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 能力②</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 能力②</span>
               <span><strong>分客群拓品推荐</strong> · 基于商品 × 平台人群匹配，AI 输出"对哪类客户、推哪类品"的具体建议，把卖点特征落到客户可执行的颗粒度。</span>
             </div>
           </div>
@@ -2295,18 +2106,18 @@
       <!-- 下区：实现 APPROACH × 三阶段路线图 ============================== -->
       <div class="pane-bottom">
         <div class="pb-head">
-          <span class="pb-label" contenteditable="true" spellcheck="false">▎实现 · APPROACH × ROADMAP</span>
-          <div class="pb-title" contenteditable="true" spellcheck="false">从单赛道 MVP → 跨赛道复用 → <strong>中台产品化</strong></div>
+          <span class="pb-label">▎实现 · APPROACH × ROADMAP</span>
+          <div class="pb-title">从单赛道 MVP → 跨赛道复用 → <strong>中台产品化</strong></div>
         </div>
 
         <div class="roadmap-stack">
           <!-- Step 1 -->
           <div class="step lemon">
-            <span class="step-tag" contenteditable="true" spellcheck="false">Step 1 · MVP</span>
-            <h5 contenteditable="true" spellcheck="false">AI 跑通食品赛道</h5>
-            <p contenteditable="true" spellcheck="false"><b>自研轻量化工具完成数据闭环</b>，输出爆品多品机会榜<div>&nbsp;+ <b>趋势品</b>视频号洞察</div><div>——&gt;食品饮料行业 <b>AI 选品对客分享</b>原料</div></p>
+            <span class="step-tag">Step 1 · MVP</span>
+            <h5>AI 跑通食品赛道</h5>
+            <p><b>自研轻量化工具完成数据闭环</b>，输出爆品多品机会榜<div>&nbsp;+ <b>趋势品</b>视频号洞察</div><div>——&gt;食品饮料行业 <b>AI 选品对客分享</b>原料</div></p>
             <div class="step-links">
-              <span class="sl-label" contenteditable="true" spellcheck="false">原始数据 · DATA</span>
+              <span class="sl-label">原始数据 · DATA</span>
               <a href="https://doc.weixin.qq.com/sheet/e3_AaEAUgbuAPUCNCB9miVySRbed7ztV?scode=AJEAIQdfAAoRZkDnlfAGYAPQbmACg&amp;tab=5yydxl" target="_blank">▸ Q4 爆品多品机会榜</a>
               <a href="https://doc.weixin.qq.com/sheet/e3_AaEAUgbuAPUCNH0HI792HQlSI2F5f?scode=AJEAIQdfAAo1MOmFDEAGYAPQbmACg&amp;tab=gkkxk0" target="_blank">▸ Q1 趋势视频号洞察</a>
             </div>
@@ -2315,11 +2126,11 @@
 
           <!-- Step 2 -->
           <div class="step">
-            <span class="step-tag" contenteditable="true" spellcheck="false">Step 2 · 横向复制</span>
-            <h5 contenteditable="true" spellcheck="false">方法论标杆案例</h5>
-            <p contenteditable="true" spellcheck="false">- 从底表洞察 → 分人群拓品 → 品类 &amp; 选品推荐<div>- 每条建议有数据支撑<div>- 已落地具体客户应用，作为对客分享标杆。</div></div></p>
+            <span class="step-tag">Step 2 · 横向复制</span>
+            <h5>方法论标杆案例</h5>
+            <p>- 从底表洞察 → 分人群拓品 → 品类 &amp; 选品推荐<div>- 每条建议有数据支撑<div>- 已落地具体客户应用，作为对客分享标杆。</div></div></p>
             <div class="step-links">
-              <span class="sl-label" contenteditable="true" spellcheck="false">对客分享 · CASE</span>
+              <span class="sl-label">对客分享 · CASE</span>
               <a href="https://doc.weixin.qq.com/doc/w3_AaEAUgbuAPUCNC1jm1vAzS8y0bxyl?scode=AJEAIQdfAAoxyxvJfeAGYAPQbmACg" target="_blank">▸ 善百年复盘 · 给点 AI 学习版</a>
             </div>
           </div>
@@ -2327,18 +2138,18 @@
 
           <!-- Step 3 -->
           <div class="step ink">
-            <span class="step-tag" contenteditable="true" spellcheck="false">Step 3 · 产品化</span>
-            <h5 contenteditable="true" spellcheck="false">推动中台标准能力</h5>
-            <p contenteditable="true" spellcheck="false">- 商品机会洞察 Agent 一期已面向食品饮料上线，仅含广告数据源；<div>- 下一步分行业补充类目映射、外采小店全域数据。</div></p>
+            <span class="step-tag">Step 3 · 产品化</span>
+            <h5>推动中台标准能力</h5>
+            <p>- 商品机会洞察 Agent 一期已面向食品饮料上线，仅含广告数据源；<div>- 下一步分行业补充类目映射、外采小店全域数据。</div></p>
             <div class="step-links">
-              <span class="sl-label" contenteditable="true" spellcheck="false">产品手册 · DOC</span>
+              <span class="sl-label">产品手册 · DOC</span>
               <a href="https://doc.weixin.qq.com/doc/w3_AewAuQanAD0CNrDl1XknsQ0mS8fwD?scode=AJEAIQdfAAoyn1vdTWAaEAUgbuAPU" target="_blank">▸ 【商品机会洞察 Agent】产品使用手册</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">04 / 12</div>
+    <div class="pagenum">04 / 12</div>
   </section>
 
 
@@ -2347,27 +2158,27 @@
     <div class="frame">
       <div class="head">
         <div class="force-pill">
-          <span class="force-idx" contenteditable="true" spellcheck="false">FORCE · 02 / 04</span>
-          <span class="force-name" contenteditable="true" spellcheck="false">内容力</span>
+          <span class="force-idx">FORCE · 02 / 04</span>
+          <span class="force-name">内容力</span>
         </div>
         <div class="force-title">
-          <h2 contenteditable="true" spellcheck="false">从「凭感觉」<mark>→</mark>「拆解每一帧」</h2>
+          <h2>从「凭感觉」<mark>→</mark>「拆解每一帧」</h2>
         </div>
-        <div class="force-credit" contenteditable="true" spellcheck="false">沉淀 / ivy × 肖恩</div>
+        <div class="force-credit">沉淀 / ivy × 肖恩</div>
       </div>
 
       <!-- 上区：AI 能力 ============================================ -->
       <div class="pane-top">
-        <span class="pt-label" contenteditable="true" spellcheck="false">▎AI 能力 · CAPABILITY</span>
+        <span class="pt-label">▎AI 能力 · CAPABILITY</span>
         <div class="pt-body">
-          <div class="pt-title" contenteditable="true" spellcheck="false">从「凭感觉判断创意好坏」→ AI 把<strong>视频与直播间的每一帧、每一句话</strong>拆成可对比的数据</div>
+          <div class="pt-title">从「凭感觉判断创意好坏」→ AI 把<strong>视频与直播间的每一帧、每一句话</strong>拆成可对比的数据</div>
           <div class="pt-routes">
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 能力①</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 能力①</span>
               <span><strong>素材逐帧自动拆解</strong> · Gemini API 自动转录口播 + 拆 BGM/语气/话术结构 + 画面逐帧分析，跨素材横向对比，输出"赛道爆款的 X 类规律"。</span>
             </div>
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 能力②</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 能力②</span>
               <span><strong>直播间录屏自动诊断</strong> · 多源音频转写校准（98% 准确率）+ 人货场四维分析，把"为什么留人/为什么逼单"从经验主义变成可对标的诊断报告。</span>
             </div>
           </div>
@@ -2377,37 +2188,37 @@
       <!-- 下区：实现 整合（两个子能力 · 并列结构）====================== -->
       <div class="pane-bottom">
         <div class="pb-head">
-          <span class="pb-label" contenteditable="true" spellcheck="false">▎实现 · APPROACH</span>
-          <div class="pb-title" contenteditable="true" spellcheck="false">两个子能力并行落地 — 视频素材分析 + 直播间诊断</div>
+          <span class="pb-label">▎实现 · APPROACH</span>
+          <div class="pb-title">两个子能力并行落地 — 视频素材分析 + 直播间诊断</div>
         </div>
 
         <div class="roadmap-stack cols-2">
           <!-- 子能力 ① 素材分析 -->
           <div class="step lemon">
-            <span class="step-tag" contenteditable="true" spellcheck="false">子能力 ① · 素材分析</span>
-            <h5 contenteditable="true" spellcheck="false">从赛道双周报 → 单客户素材诊断</h5>
+            <span class="step-tag">子能力 ① · 素材分析</span>
+            <h5>从赛道双周报 → 单客户素材诊断</h5>
             <div class="level-list">
               <div class="level">
                 <div class="level-icon">L1</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">初始阶段 · <strong>分赛道 Top 素材双周报</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">固定输出双周报框架，沉淀食品饮料分赛道 Top 跑量素材的脚本结构 拿量拆解。</div>
+                  <div class="level-title">初始阶段 · <strong>分赛道 Top 素材双周报</strong></div>
+                  <div class="level-desc">固定输出双周报框架，沉淀食品饮料分赛道 Top 跑量素材的脚本结构 拿量拆解。</div>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AM0A_AZiACICNuzpSLaQWQP6fQzQC?scode=AJEAIQdfAAoAxoXE9iAGYAPQbmACg" target="_blank">▸ 素材双周报</a>
                 </div>
               </div>
               <div class="level">
                 <div class="level-icon">L2</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">个人应用 · <strong>负责赛道 Top 跑量素材深度拆解</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">在双周报框架上做加深，提炼自己赛道的爆款素材规律——3s 钩子 / 信任背书 / 转化逼单的固定结构。</div>
+                  <div class="level-title">个人应用 · <strong>负责赛道 Top 跑量素材深度拆解</strong></div>
+                  <div class="level-desc">在双周报框架上做加深，提炼自己赛道的爆款素材规律——3s 钩子 / 信任背书 / 转化逼单的固定结构。</div>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCNPDj1XPUmSvyfQicE?scode=AJEAIQdfAAoYGikfccAGYAPQbmACg" target="_blank">▸ Top 素材深度拆解</a>
                 </div>
               </div>
               <div class="level">
                 <div class="level-icon">L3</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">单客户应用 · <strong>客户素材诊断与优化建议</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">应用到具体客户层面，拆解客户在投素材并对照赛道规律，给出可执行的脚本调整建议。</div>
+                  <div class="level-title">单客户应用 · <strong>客户素材诊断与优化建议</strong></div>
+                  <div class="level-desc">应用到具体客户层面，拆解客户在投素材并对照赛道规律，给出可执行的脚本调整建议。</div>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCNXcdekNsJSt6vrCcZ?scode=AJEAIQdfAAoMRw6ExfAGYAPQbmACg" target="_blank">▸ 华大素材解析</a>
                 </div>
               </div>
@@ -2416,29 +2227,29 @@
 
           <!-- 子能力 ② 直播间诊断 -->
           <div class="step">
-            <span class="step-tag" contenteditable="true" spellcheck="false">子能力 ② · 直播间诊断</span>
-            <h5 contenteditable="true" spellcheck="false">从基础模板 → 赛道方法论 → 单客户对标</h5>
+            <span class="step-tag">子能力 ② · 直播间诊断</span>
+            <h5>从基础模板 → 赛道方法论 → 单客户对标</h5>
             <div class="level-list">
               <div class="level">
                 <div class="level-icon">L1</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">基础框架 · <strong>直播间分析模板</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">起点是先驱沉淀的直播间分析模板，定义"人货场"基础维度与 Gemini 转录工作流。</div>
+                  <div class="level-title">基础框架 · <strong>直播间分析模板</strong></div>
+                  <div class="level-desc">起点是先驱沉淀的直播间分析模板，定义"人货场"基础维度与 Gemini 转录工作流。</div>
                 </div>
               </div>
               <div class="level">
                 <div class="level-icon">L2</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">框架定义 · <strong>赛道版"人货场"分析框架</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">基于模板和 AI 共创，定义负责赛道的人货场 + 话术四维分析框架，覆盖痛点唤醒/原理讲解/信任背书/逼单逻辑。</div>
+                  <div class="level-title">框架定义 · <strong>赛道版"人货场"分析框架</strong></div>
+                  <div class="level-desc">基于模板和 AI 共创，定义负责赛道的人货场 + 话术四维分析框架，覆盖痛点唤醒/原理讲解/信任背书/逼单逻辑。</div>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCNNS1K7OzvRqaPIlbc?scode=AJEAIQdfAAonTYP8z9AGYAPQbmACg" target="_blank">▸ 膳食 CVR 框架</a>
                 </div>
               </div>
               <div class="level">
                 <div class="level-icon">L3</div>
                 <div class="level-body">
-                  <div class="level-title" contenteditable="true" spellcheck="false">成果产出 · <strong>12 个头部直播间录屏 → 赛道经营方法论</strong></div>
-                  <div class="level-desc" contenteditable="true" spellcheck="false">提供 12 个不同类型赛道的头部直播间录屏分析，提炼负责赛道直播间经营方法论；并落地康富来等单客户对标诊断。</div>
+                  <div class="level-title">成果产出 · <strong>12 个头部直播间录屏 → 赛道经营方法论</strong></div>
+                  <div class="level-desc">提供 12 个不同类型赛道的头部直播间录屏分析，提炼负责赛道直播间经营方法论；并落地康富来等单客户对标诊断。</div>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCNX13j0b00Tfu3cUsB?scode=AJEAIQdfAAoc1VJu1bAGYAPQbmACg" target="_blank">▸ CVR 人货场方法论</a>
                   <a class="level-link" href="https://doc.weixin.qq.com/doc/w3_AfwA3Qb_AAYCNlgEq1AzmSgqCxXho?scode=AJEAIQdfAAoLhIVIeyAGYAPQbmACg" target="_blank">▸ 康富来诊断</a>
                 </div>
@@ -2448,7 +2259,7 @@
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">05 / 12</div>
+    <div class="pagenum">05 / 12</div>
   </section>
 
 
@@ -2457,27 +2268,27 @@
     <div class="frame">
       <div class="head">
         <div class="force-pill">
-          <span class="force-idx" contenteditable="true" spellcheck="false">FORCE · 03 / 04</span>
-          <span class="force-name" contenteditable="true" spellcheck="false">投放力</span>
+          <span class="force-idx">FORCE · 03 / 04</span>
+          <span class="force-name">投放力</span>
         </div>
         <div class="force-title">
-          <h2 contenteditable="true" spellcheck="false">从「我的工具」<mark>→</mark>「赋能大家的工具」</h2>
+          <h2>从「我的工具」<mark>→</mark>「赋能大家的工具」</h2>
         </div>
-        <div class="force-credit" contenteditable="true" spellcheck="false">主战场 / Going</div>
+        <div class="force-credit">主战场 / Going</div>
       </div>
 
       <!-- 上区：AI 能力 ============================================ -->
       <div class="pane-top">
-        <span class="pt-label" contenteditable="true" spellcheck="false">▎AI 能力 · CAPABILITY</span>
+        <span class="pt-label">▎AI 能力 · CAPABILITY</span>
         <div class="pt-body">
-          <div class="pt-title" contenteditable="true" spellcheck="false">AI 在投放数据分析上的两大本质优势 — <strong>极致的数据计算力</strong> + <strong>可被教会的业务理解力</strong></div>
+          <div class="pt-title">AI 在投放数据分析上的两大本质优势 — <strong>极致的数据计算力</strong> + <strong>可被教会的业务理解力</strong></div>
           <div class="pt-routes">
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 优势①</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 优势①</span>
               <span><strong>极致数据计算</strong> · 多源取数 / 维度切换 / 交叉验证 / 大表清洗，原本人工 4-5h 的复盘可压缩到 10min；维度从 3-5 维扩展到 13 维全覆盖。</span>
             </div>
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 优势②</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 优势②</span>
               <span><strong>业务理解可被沉淀</strong> · 把人类经验（指标口径、ROI 出价逻辑、链路特性、归因边界等）固化为 Rule，让 AI 在数据解读和归因结论上具备一线运营的判断力。</span>
             </div>
           </div>
@@ -2487,29 +2298,29 @@
       <!-- 下区：实现 整合（基于AI优势延伸出两个方向 + 双工具协作底层）====== -->
       <div class="pane-bottom">
         <div class="pb-head">
-          <span class="pb-label" contenteditable="true" spellcheck="false">▎实现 · APPROACH</span>
-          <div class="pb-title" contenteditable="true" spellcheck="false">基于上述优势，延伸出<strong>两个分析方向</strong>，由 <strong>CodeBuddy × ADataClaw 双工具协作</strong>产出</div>
+          <span class="pb-label">▎实现 · APPROACH</span>
+          <div class="pb-title">基于上述优势，延伸出<strong>两个分析方向</strong>，由 <strong>CodeBuddy × ADataClaw 双工具协作</strong>产出</div>
         </div>
 
         <div class="roadmap-stack split-2-1">
           <!-- 上左：高频固定 -->
           <div class="step lemon">
-            <span class="step-tag" contenteditable="true" spellcheck="false">方向 ① · 高频固定</span>
-            <h5 contenteditable="true" spellcheck="false">固定场景 → 成熟 SKILL 自动化</h5>
-            <p contenteditable="true" spellcheck="false"><b>消耗异动诊断 / 每日早报 / 双周报 / 月报 / 客户复盘</b>等高频场景打磨为 SKILL，定时任务调用&nbsp;<div>——— <strong>每次执行直接调用，输出完整的深度分析报告，不需重新磨合</strong>。</div></p>
+            <span class="step-tag">方向 ① · 高频固定</span>
+            <h5>固定场景 → 成熟 SKILL 自动化</h5>
+            <p><b>消耗异动诊断 / 每日早报 / 双周报 / 月报 / 客户复盘</b>等高频场景打磨为 SKILL，定时任务调用&nbsp;<div>——— <strong>每次执行直接调用，输出完整的深度分析报告，不需重新磨合</strong>。</div></p>
             <div class="step-links">
-              <span class="sl-label" contenteditable="true" spellcheck="false">SKILL 体系 · DOC</span>
+              <span class="sl-label">SKILL 体系 · DOC</span>
               <a href="https://going0917.github.io/ai-ops-showcase/" target="_blank">▸ 数据分析能力全景</a>
             </div>
           </div>
 
           <!-- 上右：个性化深度 -->
           <div class="step">
-            <span class="step-tag" contenteditable="true" spellcheck="false">方向 ② · 个性化深度</span>
-            <h5 contenteditable="true" spellcheck="false">调用业务框架 · 灵活产出</h5>
-            <p contenteditable="true" spellcheck="false">无成型 SKILL 的场景，AI 调用沉淀的业务框架快速产出 — 单客户小店直购复盘、广告掉量归因、跨客户竞品对标分析。</p>
+            <span class="step-tag">方向 ② · 个性化深度</span>
+            <h5>调用业务框架 · 灵活产出</h5>
+            <p>无成型 SKILL 的场景，AI 调用沉淀的业务框架快速产出 — 单客户小店直购复盘、广告掉量归因、跨客户竞品对标分析。</p>
             <div class="step-links">
-              <span class="sl-label" contenteditable="true" spellcheck="false">代表案例 · CASES</span>
+              <span class="sl-label">代表案例 · CASES</span>
               <a href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCNpDDrHuY4T7COcQVw?scode=AJEAIQdfAAopVt7sOdAGYAPQbmACg" target="_blank">▸ 万益蓝 · 小店直购复盘 &amp; 行业对标</a>
               <a href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCNjiu8u7WVS1219LYh?scode=AJEAIQdfAAoZMltLi3AGYAPQbmACg" target="_blank">▸ 华大营养 · ADQ 掉量深度分析</a>
             </div>
@@ -2518,8 +2329,8 @@
           <!-- 下：双工具协作（底层支撑） -->
           <div class="step ink full base-row">
             <div class="base-label">
-              <span class="step-tag" contenteditable="true" spellcheck="false">底层支撑</span>
-              <h5 contenteditable="true" spellcheck="false">CodeBuddy × ADataClaw<br>双 AI 各司其职</h5>
+              <span class="step-tag">底层支撑</span>
+              <h5>CodeBuddy × ADataClaw<br>双 AI 各司其职</h5>
             </div>
             <div class="base-body">
               <div class="tools-pair">
@@ -2543,7 +2354,7 @@
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">06 / 12</div>
+    <div class="pagenum">06 / 12</div>
   </section>
 
 
@@ -2552,27 +2363,27 @@
     <div class="frame">
       <div class="head">
         <div class="force-pill">
-          <span class="force-idx" contenteditable="true" spellcheck="false">FORCE · 04 / 04</span>
-          <span class="force-name" contenteditable="true" spellcheck="false">品牌力</span>
+          <span class="force-idx">FORCE · 04 / 04</span>
+          <span class="force-name">品牌力</span>
         </div>
         <div class="force-title">
-          <h2 contenteditable="true" spellcheck="false">复杂的事 · <mark>简单地讲给客户听</mark></h2>
+          <h2>复杂的事 · <mark>简单地讲给客户听</mark></h2>
         </div>
-        <div class="force-credit" contenteditable="true" spellcheck="false">团队下一步</div>
+        <div class="force-credit">团队下一步</div>
       </div>
 
       <!-- 上区：AI 能力 ============================================ -->
       <div class="pane-top">
-        <span class="pt-label" contenteditable="true" spellcheck="false">▎AI 能力 · CAPABILITY</span>
+        <span class="pt-label">▎AI 能力 · CAPABILITY</span>
         <div class="pt-body">
-          <div class="pt-title" contenteditable="true" spellcheck="false">AI 把<strong>复杂的业务信息</strong>高效处理后，帮我做两件对客户友好的事</div>
+          <div class="pt-title">AI 把<strong>复杂的业务信息</strong>高效处理后，帮我做两件对客户友好的事</div>
           <div class="pt-routes">
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 能力①</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 能力①</span>
               <span><strong>贴合客户的个性化营销方案</strong> · AI 处理深度任务的能力 + 高效率，让 KA 才有的方案，每个潜力客户都拿得到——选品 / 创意 / 直播 / 投放整合分析。</span>
             </div>
-            <div class="pt-route" contenteditable="true" spellcheck="false">
-              <span class="pt-route-tag" contenteditable="true" spellcheck="false">AI 能力②</span>
+            <div class="pt-route">
+              <span class="pt-route-tag">AI 能力②</span>
               <span><strong>复杂广告业务的客户化翻译</strong> · 把扶持/能力/链路等复杂业务整合成客户能直接看懂的 OnePage，制作从半天压到 30 分钟。</span>
             </div>
           </div>
@@ -2582,15 +2393,15 @@
       <!-- 下区：实现 整合（双抓手 · 并列结构）====================== -->
       <div class="pane-bottom">
         <div class="pb-head">
-          <span class="pb-label" contenteditable="true" spellcheck="false">▎实现 · APPROACH</span>
-          <div class="pb-title" contenteditable="true" spellcheck="false">两个抓手并行落地 — 客户营销方案 + 对客 OnePage</div>
+          <span class="pb-label">▎实现 · APPROACH</span>
+          <div class="pb-title">两个抓手并行落地 — 客户营销方案 + 对客 OnePage</div>
         </div>
 
         <div class="roadmap-stack cols-1-2">
           <!-- 抓手 ① 营销方案 -->
           <div class="step lemon">
-            <span class="step-tag" contenteditable="true" spellcheck="false">抓手 ① · 客户营销方案</span>
-            <h5 contenteditable="true" spellcheck="false">整合四力 · 个性化深度方案</h5>
+            <span class="step-tag">抓手 ① · 客户营销方案</span>
+            <h5>整合四力 · 个性化深度方案</h5>
             <div class="force-modules compact">
               <div class="fm"><span class="fm-icon">🛒</span><span class="fm-name">选品策略</span></div>
               <div class="fm"><span class="fm-icon">🎬</span><span class="fm-name">创意素材</span></div>
@@ -2602,21 +2413,21 @@
               <div class="rb human"><span class="rb-pct">20%</span> 运营聚焦策略定制 — 每条建议都有数据支撑</div>
             </div>
             <div class="step-links">
-              <span class="sl-label" contenteditable="true" spellcheck="false">代表案例 · CASE</span>
+              <span class="sl-label">代表案例 · CASE</span>
               <a href="https://doc.weixin.qq.com/doc/w3_AGYAPQbmACgCN8KLWy39VSyekEpEg?scode=AJEAIQdfAAoTT0NAo4AGYAPQbmACg" target="_blank">▸ EGUOO 直播链路拓展营销方案 ⤳</a>
             </div>
           </div>
 
           <!-- 抓手 ② 对客 OnePage · 三类应用（文字列表式） -->
           <div class="step">
-            <span class="step-tag" contenteditable="true" spellcheck="false">抓手 ② · 对客 OnePage</span>
-            <h5 contenteditable="true" spellcheck="false">把复杂业务讲给客户听 · 三类应用</h5>
+            <span class="step-tag">抓手 ② · 对客 OnePage</span>
+            <h5>把复杂业务讲给客户听 · 三类应用</h5>
             <div class="app-list">
               <!-- 应用 ① 信息整合 -->
               <div class="app-item" data-lb-type="iframe" data-lb-src="assets/kehu-zhouzhi.html" data-lb-caption="客户周知 · 扶持/能力信息整合 OnePage">
                 <div class="ai-left">
-                  <span class="ai-tag" contenteditable="true" spellcheck="false">应用 ① · 信息整合</span>
-                  <div class="ai-title" contenteditable="true" spellcheck="false">复杂扶持 / 能力信息 → 客户更好理解的 OnePage</div>
+                  <span class="ai-tag">应用 ① · 信息整合</span>
+                  <div class="ai-title">复杂扶持 / 能力信息 → 客户更好理解的 OnePage</div>
                   <div class="ai-links">
                     <a href="javascript:void(0)">▸ 点击查看案例</a>
                   </div>
@@ -2625,8 +2436,8 @@
               <!-- 应用 ② 产品标杆 -->
               <div class="app-item">
                 <div class="ai-left">
-                  <span class="ai-tag" contenteditable="true" spellcheck="false">应用 ② · 产品标杆</span>
-                  <div class="ai-title" contenteditable="true" spellcheck="false">某产品能力的使用标杆输出 · 3 个案例</div>
+                  <span class="ai-tag">应用 ② · 产品标杆</span>
+                  <div class="ai-title">某产品能力的使用标杆输出 · 3 个案例</div>
                   <div class="ai-links">
                     <a href="assets/huobu-onepage.png" target="_blank">▸ 货补 OnePage</a>
                     <a href="assets/livestream-product-onepage.png" target="_blank">▸ 直播间表达商品</a>
@@ -2636,8 +2447,8 @@
               <!-- 应用 ③ 个性化响应 -->
               <div class="app-item" data-lb-type="image" data-lb-src="assets/4-link-overview.png" data-lb-caption="膳食营养 · 4 链路能力一览图">
                 <div class="ai-left">
-                  <span class="ai-tag" contenteditable="true" spellcheck="false">应用 ③ · 个性化响应</span>
-                  <div class="ai-title" contenteditable="true" spellcheck="false">个性化需求快速响应 · 如链路一览图等</div>
+                  <span class="ai-tag">应用 ③ · 个性化响应</span>
+                  <div class="ai-title">个性化需求快速响应 · 如链路一览图等</div>
                   <div class="ai-links">
                     <a href="javascript:void(0)">▸ 点击查看案例</a>
                   </div>
@@ -2648,7 +2459,7 @@
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">07 / 12</div>
+    <div class="pagenum">07 / 12</div>
   </section>
 
   <!-- ============== Lightbox（图片/HTML 放大查看，全局共用）============== -->
@@ -2664,10 +2475,10 @@
     <div class="frame">
       <div class="head">
         <div class="left">
-          <div class="pre" contenteditable="true" spellcheck="false">压轴 · INTEGRATED CASE / EGUOO</div>
-          <h2 contenteditable="true" spellcheck="false">EGUOO ·<br>四力 <mark>打通的</mark> 营销方案</h2>
+          <div class="pre">压轴 · INTEGRATED CASE / EGUOO</div>
+          <h2>EGUOO ·<br>四力 <mark>打通的</mark> 营销方案</h2>
         </div>
-        <div class="right" contenteditable="true" spellcheck="false">
+        <div class="right">
           海外保健食品 · 直播日均仅 <strong>400 元</strong><br>
           → 一份覆盖选品/素材/人货场/基建的<br>
           系统性落地方案 · <strong>AI 80% × 运营 20%</strong>
@@ -2676,61 +2487,61 @@
 
       <div class="table">
         <!-- header -->
-        <div class="cell head-row" contenteditable="true" spellcheck="false">模块</div>
-        <div class="cell head-row" contenteditable="true" spellcheck="false">我做的事 / 策略判断</div>
-        <div class="cell head-row" contenteditable="true" spellcheck="false">AI 做的事 / 数据整合</div>
+        <div class="cell head-row">模块</div>
+        <div class="cell head-row">我做的事 / 策略判断</div>
+        <div class="cell head-row">AI 做的事 / 数据整合</div>
 
         <!-- 选品 -->
-        <div class="cell row-label" contenteditable="true" spellcheck="false">🛒 选品<br><span class="rl-en">Select</span></div>
-        <div class="cell me" contenteditable="true" spellcheck="false">
+        <div class="cell row-label">🛒 选品<br><span class="rl-en">Select</span></div>
+        <div class="cell me">
           <div class="me-dir">以直播链路<mark>跑量品类</mark>为参考依据，结合客户自身数据做交叉验证</div>
           <div class="me-why">不从零测试，用赛道已验证的品类方向降低客户试错成本</div>
         </div>
-        <div class="cell ai" contenteditable="true" spellcheck="false">
+        <div class="cell ai">
           <div class="ai-do"><mark>交叉验证</mark>赛道直播跑量品类 × 客户 CID 已验证品类，自动匹配重合度高的品类方向</div>
           <div class="ai-out">→ 产出：带优先级的品类推荐 + 组合定价方案</div>
         </div>
 
         <!-- 创意 -->
-        <div class="cell row-label" contenteditable="true" spellcheck="false">🎬 创意<br><span class="rl-en">Content</span></div>
-        <div class="cell me" contenteditable="true" spellcheck="false">
+        <div class="cell row-label">🎬 创意<br><span class="rl-en">Content</span></div>
+        <div class="cell me">
           <div class="me-dir">挖掘客户现有素材中，与直播头部客户跑量素材<mark>相契合的要点</mark>做深耕迁移</div>
           <div class="me-why">如客户跑量素材是"CEO 背书"，恰好与头部直播打法契合，则建议在直播间延续此方向</div>
         </div>
-        <div class="cell ai" contenteditable="true" spellcheck="false">
+        <div class="cell ai">
           <div class="ai-do"><mark>逐条拆解</mark>客户全量素材 + 赛道头部跑量素材，提取两侧共同的钩子策略 / BGM / 完播规律</div>
           <div class="ai-out">→ 产出：可迁移的契合点 + 直播话术脚本模板</div>
         </div>
 
         <!-- 直播经营 -->
-        <div class="cell row-label" contenteditable="true" spellcheck="false">📡 直播经营<br><span class="rl-en">Live Ops</span></div>
-        <div class="cell me" contenteditable="true" spellcheck="false">
+        <div class="cell row-label">📡 直播经营<br><span class="rl-en">Live Ops</span></div>
+        <div class="cell me">
           <div class="me-dir">用赛道头部直播间的人货场方法论做<mark>对标参考</mark>，告诉客户跑量直播间是什么样的</div>
           <div class="me-why">让客户有明确的参照系，知道差距在哪、该往哪个方向追赶</div>
         </div>
-        <div class="cell ai" contenteditable="true" spellcheck="false">
+        <div class="cell ai">
           <div class="ai-do"><mark>批量分析</mark>头部直播间录屏，提炼人货场 + 话术标杆，结合选品建议给客户提供经营方向</div>
           <div class="ai-out">→ 产出：头部对标报告 + 结合选品的经营建议</div>
         </div>
 
         <!-- 投放链路 -->
-        <div class="cell row-label last" contenteditable="true" spellcheck="false">📊 投放链路<br><span class="rl-en">Delivery</span></div>
-        <div class="cell me last" contenteditable="true" spellcheck="false">
+        <div class="cell row-label last">📊 投放链路<br><span class="rl-en">Delivery</span></div>
+        <div class="cell me last">
           <div class="me-dir">根据客户现有基建 vs 头部客户基建配比，<mark>判断优化方向</mark></div>
           <div class="me-why">从版位分布、智投占比、工具组合的差距中找到重点突破口</div>
         </div>
-        <div class="cell ai last" contenteditable="true" spellcheck="false">
+        <div class="cell ai last">
           <div class="ai-do"><mark>整合头部客户</mark>投放基建数据，与客户现状逐项对比，定位具体的配比差距</div>
           <div class="ai-out">→ 产出：版位重心 + 智投配比 + 冷启动工具组合建议</div>
         </div>
       </div>
 
       <div class="footrow">
-        <div class="quote" contenteditable="true" spellcheck="false">AI 把<em>「人工跑不完的数据维度」</em>系统整合 → <em>「每个潜力客户都拿到深度方案」</em></div>
-        <div class="src" contenteditable="true" spellcheck="false">▸ 完整方案 · EGUOO 直播链路拓展方案</div>
+        <div class="quote">AI 把<em>「人工跑不完的数据维度」</em>系统整合 → <em>「每个潜力客户都拿到深度方案」</em></div>
+        <div class="src">▸ 完整方案 · EGUOO 直播链路拓展方案</div>
       </div>
     </div>
-    <div class="pagenum invert" contenteditable="true" spellcheck="false">08 / 12</div>
+    <div class="pagenum invert">08 / 12</div>
   </section>
 
 
@@ -2739,24 +2550,24 @@
     <div class="frame">
       <div class="pane-num">
         <div>
-          <div class="lab" contenteditable="true" spellcheck="false">PART 02 / 底层</div>
+          <div class="lab">PART 02 / 底层</div>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.65; margin-top: 12px;">不止四力 · Beyond 4-Forces</div>
         </div>
-        <div class="n" contenteditable="true" spellcheck="false">02</div>
-        <div class="lab" contenteditable="true" spellcheck="false">15 MIN · TOWNHALL</div>
+        <div class="n">02</div>
+        <div class="lab">15 MIN · TOWNHALL</div>
       </div>
       <div class="pane-title">
         <div>
           <div style="font-family:'JetBrains Mono',monospace; font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; margin-bottom: 28px;">真正让 AI 不偏航的，是 OKR</div>
-          <h2 contenteditable="true" spellcheck="false">四力是"产出"，<div><br><mark>OKR</mark> 才是"航向"</div></h2>
+          <h2>四力是"产出"，<div><br><mark>OKR</mark> 才是"航向"</div></h2>
         </div>
         <div class="footer-row">
-          <p contenteditable="true" spellcheck="false">
+          <p>
             前面 8 分钟讲了"我能做出什么"。<br>
             接下来 4 分钟讲<strong>"是怎么做到的"</strong>——
             以及为什么我相信这套机制对每个岗位都有共鸣。
           </p>
-          <div class="credit" contenteditable="true" spellcheck="false">↳ 09 / 12</div>
+          <div class="credit">↳ 09 / 12</div>
         </div>
       </div>
     </div>
@@ -2767,46 +2578,46 @@
   <section class="slide s-flow" data-label="10 OKR Flow" data-om-validate="false">
     <div class="frame">
       <div class="head">
-        <h2 contenteditable="true" spellcheck="false">OKR 锚定的 <mark>人机协作工作流</mark></h2>
-        <div class="sub" contenteditable="true" spellcheck="false">AI 最擅长的不是"做某一件事"，<br>而是"持续地、不偏航地做对的事"。</div>
+        <h2>OKR 锚定的 <mark>人机协作工作流</mark></h2>
+        <div class="sub">AI 最擅长的不是"做某一件事"，<br>而是"持续地、不偏航地做对的事"。</div>
       </div>
 
       <div class="node n1">
-        <div class="n" contenteditable="true" spellcheck="false">① · 每日 08:30</div>
-        <h3 contenteditable="true" spellcheck="false">晨间规划 · <mark>优先级聚焦</mark></h3>
-        <p contenteditable="true" spellcheck="false">扫描 todo + 已有进展，提示当天需要核心聚焦的优先级事项——区分火情 vs OKR 推进</p>
+        <div class="n">① · 每日 08:30</div>
+        <h3>晨间规划 · <mark>优先级聚焦</mark></h3>
+        <p>扫描 todo + 已有进展，提示当天需要核心聚焦的优先级事项——区分火情 vs OKR 推进</p>
       </div>
 
       <div class="node n2">
-        <div class="n" contenteditable="true" spellcheck="false">② · 每日 21:00</div>
-        <h3 contenteditable="true" spellcheck="false">晚间归档 · <mark>日志沉淀</mark></h3>
-        <p contenteditable="true" spellcheck="false">帮助当日日志写入总结，回顾完成情况，提前排布第二天的优先级</p>
+        <div class="n">② · 每日 21:00</div>
+        <h3>晚间归档 · <mark>日志沉淀</mark></h3>
+        <p>帮助当日日志写入总结，回顾完成情况，提前排布第二天的优先级</p>
       </div>
 
       <div class="center">
-        <div class="label" contenteditable="true" spellcheck="false">CORE / 圆心</div>
-        <div class="big" contenteditable="true" spellcheck="false">OKR</div>
-        <p contenteditable="true" spellcheck="false">所有协作动作都对齐到 OKR 上——<br>让 AI 知道"对的事"是什么</p>
+        <div class="label">CORE / 圆心</div>
+        <div class="big">OKR</div>
+        <p>所有协作动作都对齐到 OKR 上——<br>让 AI 知道"对的事"是什么</p>
       </div>
 
       <div class="node n3">
-        <div class="n" contenteditable="true" spellcheck="false">③ · 每周</div>
-        <h3 contenteditable="true" spellcheck="false">每周复盘 · <mark>精力可视化</mark></h3>
-        <p contenteditable="true" spellcheck="false">输出个人工作周报 + AI 协作迭代建议——以周为维度看时间精力分配，发现"觉得忙但事情花在次要层"的情况</p>
+        <div class="n">③ · 每周</div>
+        <h3>每周复盘 · <mark>精力可视化</mark></h3>
+        <p>输出个人工作周报 + AI 协作迭代建议——以周为维度看时间精力分配，发现"觉得忙但事情花在次要层"的情况</p>
       </div>
 
       <div class="node n4">
-        <div class="n" contenteditable="true" spellcheck="false">④ · 每双周</div>
-        <h3 contenteditable="true" spellcheck="false">双周报 · <mark>OKR 提炼</mark></h3>
-        <p contenteditable="true" spellcheck="false">基于前三步 + OKR 锚定，提炼过去两周工作精华——与关注的赛道、客户、工作重点一致</p>
+        <div class="n">④ · 每双周</div>
+        <h3>双周报 · <mark>OKR 提炼</mark></h3>
+        <p>基于前三步 + OKR 锚定，提炼过去两周工作精华——与关注的赛道、客户、工作重点一致</p>
       </div>
 
       <div class="footstrip">
-        <div class="key" contenteditable="true" spellcheck="false">AI 除了帮我们 <em>做更多的事</em>，还帮我们 <em>看清在做的事对不对</em></div>
-        <div class="src" contenteditable="true" spellcheck="false">▸ 10 / 12 · OKR-Anchored AI Flow</div>
+        <div class="key">AI 除了帮我们 <em>做更多的事</em>，还帮我们 <em>看清在做的事对不对</em></div>
+        <div class="src">▸ 10 / 12 · OKR-Anchored AI Flow</div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">10 / 12</div>
+    <div class="pagenum">10 / 12</div>
   </section>
 
 
@@ -2815,10 +2626,10 @@
     <div class="frame">
       <div class="head">
         <div class="left">
-          <div class="pre" contenteditable="true" spellcheck="false">实操 · HOW TO BUILD</div>
-          <h2 contenteditable="true" spellcheck="false">从零搭建 <mark>人机协作工作流</mark></h2>
+          <div class="pre">实操 · HOW TO BUILD</div>
+          <h2>从零搭建 <mark>人机协作工作流</mark></h2>
         </div>
-        <div class="right" contenteditable="true" spellcheck="false">
+        <div class="right">
           不是一天一周搭好的<br>
           但没搭完也不影响用——<br>
           它会成为你越用越顺手的最强 Partner
@@ -2829,7 +2640,7 @@
       <div class="layer1">
         <div class="l1-left">
           <span class="l1-tag">关键 ① · 底层系统</span>
-          <h3 contenteditable="true" spellcheck="false">让 AI 越来越懂你</h3>
+          <h3>让 AI 越来越懂你</h3>
           <div class="l1-lead">花一些时间提炼一份<strong>"你是谁"的全貌文档</strong>——这些素材都是现成的，不需要额外写。AI 拥有了全貌，才能给出准确的判断。</div>
         </div>
         <div class="l1-grid">
@@ -2868,13 +2679,13 @@
       <div class="layer2">
         <div class="l2-head">
           <span class="l2-tag">关键 ② · 真实演进</span>
-          <h3 contenteditable="true" spellcheck="false">会经历什么过程</h3>
+          <h3>会经历什么过程</h3>
           <span class="l2-note">需要耐心 · 每一步积累都不会白费</span>
         </div>
         <div class="l2-timeline">
           <div class="l2-phase">
             <span class="l2-period">前 2-3 周</span>
-            <h5 contenteditable="true" spellcheck="false">磨合期</h5>
+            <h5>磨合期</h5>
             <div class="l2-desc">AI 经常犯错，你得反复改——<strong>这是正常的</strong>。每次修正都在教它你要什么。</div>
             <div class="l2-case">
               <span class="l2-icon">🔥</span>
@@ -2887,7 +2698,7 @@
           <div class="l2-arrow">→</div>
           <div class="l2-phase">
             <span class="l2-period">1-2 个月</span>
-            <h5 contenteditable="true" spellcheck="false">结构化期</h5>
+            <h5>结构化期</h5>
             <div class="l2-desc">重复工作不用再教，日志 / 复盘 / 报告有了<strong>固定流程</strong>。AI 使用时间占比明显上升。</div>
             <div class="l2-case">
               <span class="l2-icon">📊</span>
@@ -2900,7 +2711,7 @@
           <div class="l2-arrow">→</div>
           <div class="l2-phase">
             <span class="l2-period">2 个月+</span>
-            <h5 contenteditable="true" spellcheck="false">成熟期</h5>
+            <h5>成熟期</h5>
             <div class="l2-desc">新场景从零到可用只要 1-2 天——AI 已经对业务有了<strong>足够的理解</strong>。</div>
             <div class="l2-case">
               <span class="l2-icon">⚡</span>
@@ -2917,29 +2728,29 @@
       <div class="layer3">
         <div class="l3-head">
           <span class="l3-tag">关键 ③ · 实操经验</span>
-          <h3 contenteditable="true" spellcheck="false">用好 AI 的三件事</h3>
+          <h3>用好 AI 的三件事</h3>
           <span class="l3-note">核心前提：让 AI 拥有足够的上下文</span>
         </div>
         <div class="l3-cards">
           <div class="l3-card">
             <div class="l3-num">1</div>
-            <h5 contenteditable="true" spellcheck="false">想清楚什么值得固化</h5>
-            <p contenteditable="true" spellcheck="false">不要把所有东西塞进一个模块——AI 的注意力会被稀释，效果反而更差。先问自己：这件事我会重复做 3 次以上吗？</p>
+            <h5>想清楚什么值得固化</h5>
+            <p>不要把所有东西塞进一个模块——AI 的注意力会被稀释，效果反而更差。先问自己：这件事我会重复做 3 次以上吗？</p>
           </div>
           <div class="l3-card">
             <div class="l3-num">2</div>
-            <h5 contenteditable="true" spellcheck="false">用独立的 AI 检查 AI</h5>
-            <p contenteditable="true" spellcheck="false">AI 有短板，有些错即便约束了也会犯。借鉴 Harness 工程思路：用独立的 Agent 专门做校验——自己不检查自己的作业。</p>
+            <h5>用独立的 AI 检查 AI</h5>
+            <p>AI 有短板，有些错即便约束了也会犯。借鉴 Harness 工程思路：用独立的 Agent 专门做校验——自己不检查自己的作业。</p>
           </div>
           <div class="l3-card">
             <div class="l3-num">3</div>
-            <h5 contenteditable="true" spellcheck="false">给 AI 喂足够多的材料</h5>
-            <p contenteditable="true" spellcheck="false">把会议纪要、会议内容放在本地文件夹，让 AI 定期学习。信息越完整，AI 给到的判断越准确。</p>
+            <h5>给 AI 喂足够多的材料</h5>
+            <p>把会议纪要、会议内容放在本地文件夹，让 AI 定期学习。信息越完整，AI 给到的判断越准确。</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="pagenum" contenteditable="true" spellcheck="false">11 / 12</div>
+    <div class="pagenum">11 / 12</div>
   </section>
 
 
@@ -2948,18 +2759,18 @@
     <div class="frame">
       <div class="photo">
         <div class="ph"></div>
-        <div class="pic-text" contenteditable="true" spellcheck="false">
+        <div class="pic-text">
           GOING ·<br>
           12 WEEKS ·<br>
           WITH AI ·<br>
           TOWNHALL 0518
         </div>
-        <div class="tag" contenteditable="true" spellcheck="false">— END / 谢谢大家 —</div>
+        <div class="tag">— END / 谢谢大家 —</div>
       </div>
 
       <div class="copy">
-        <div class="qmark" contenteditable="true" spellcheck="false">"</div>
-        <blockquote contenteditable="true" spellcheck="false">
+        <div class="qmark">"</div>
+        <blockquote>
           每个人的业务经验，<br>
           都值得被 AI <em>放大一百倍</em>。<br><br>
           当 AI 越来越懂你，<br>
@@ -2969,9 +2780,9 @@
       </div>
 
       <div class="attr">
-        <div class="who" contenteditable="true" spellcheck="false">Going · 林丽莹</div>
-        <div class="role" contenteditable="true" spellcheck="false">食品饮料一中心 · 行业运营</div>
-        <div class="role" style="opacity:.65; margin-top:4px;" contenteditable="true" spellcheck="false">2026.05.18 · 商消 TOWNHALL</div>
+        <div class="who">Going · 林丽莹</div>
+        <div class="role">食品饮料一中心 · 行业运营</div>
+        <div class="role" style="opacity:.65; margin-top:4px;">2026.05.18 · 商消 TOWNHALL</div>
       </div>
 
       <div class="mark">
@@ -2980,181 +2791,19 @@
         </div>
       </div>
     </div>
-    <div class="pagenum lemon" contenteditable="true" spellcheck="false">12 / 12</div>
+    <div class="pagenum lemon">12 / 12</div>
   </section>
 
 </div>
 
 
-<!-- ============== 浮动编辑工具栏 ============== -->
-<div class="edit-toolbar" id="editToolbar" style="display: none;">
-  <div class="tb-title">✏️ 编辑模式</div>
-  <div class="tb-status saved" id="tbStatus">✓ 已自动保存到本地</div>
+<div class="tb-status saved" id="tbStatus">✓ 已自动保存到本地</div>
   <button onclick="exportHTML()">💾 导出当前 HTML</button>
   <button class="btn-reset" onclick="resetContent()">↩️ 清除本地改动</button>
 </div>
 
 <script>
-(function(){
-  const STORAGE_KEY = 'onepage-edit:townhall_0518_当AI能跑数据之后';
-  const status = document.getElementById('tbStatus');
 
-  // 1. 给所有承载文案的元素打 contenteditable
-  // 这里采用"宽口径选择器"——所有标题/段落/列表项/统计数字/标签都加，但不给 <a>（链接） 加
-  const editableSelectors = [
-    'h1', 'h2', 'h3', 'h4', 'h5',
-    'p', 'li', 'blockquote',
-    '.lab', '.label', '.meta-row', '.top-label', '.cap-label', '.cap-list',
-    '.cap-foot', '.ph-text', '.stat-num', '.stat-lab',
-    '.head .pre', '.head .credit', '.head .sub', '.head .right',
-    '.row .num', '.row .credit',
-    '.case-tag', '.case-body',
-    '.stat-row .stat .v', '.stat-row .stat .k',
-    '.compare .col h4', '.compare .col .meta', '.compare .col ul li',
-    '.pain-row .pain .num', '.pain-row .pain h5',
-    '.pane-l .lab', '.pane-l h2', '.pane-l h3', '.pane-l p', '.pane-l .footnote', '.pane-l .arrow',
-    '.pane-r .head h3', '.pane-r .head .tag',
-    '.head .tag',
-    '.pane-num .lab', '.pane-num .n',
-    '.pane-title h2', '.pane-title p', '.pane-title .credit',
-    '.center .label', '.center .big', '.center p',
-    '.node h3', '.node p', '.node .n',
-    '.footstrip .key', '.footstrip .src',
-    '.footrow .quote', '.footrow .src',
-    '.head .lead',
-    '.qr .qr-quote', '.qr .qr-cite',
-    '.step h3', '.step p', '.step .num',
-    '.copy blockquote', '.copy .qmark',
-    '.attr .who', '.attr .role',
-    '.photo .pic-text', '.photo .tag',
-    '.table .cell',
-    '.links a',
-    '.pagenum',
-    /* —— P01/P02 V2 新增 —— */
-    '.who-block .who-name', '.who-block .who-meta',
-    '.v2-head h3', '.v2-head .tag',
-    '.mod .mod-feat .mod-tag', '.mod .mod-feat h4', '.mod .mod-feat ul li',
-    '.mod .mod-pain .pain-arrow', '.mod .mod-pain h5', '.mod .mod-pain .pain-foot',
-    /* —— P03 V2 新增 —— */
-    '.s-toc.v2 .group-tag .lbl', '.s-toc.v2 .group-tag .meta',
-    '.s-toc.v2 .force-card .num', '.s-toc.v2 .force-card h3', '.s-toc.v2 .force-card p', '.s-toc.v2 .force-card .credit',
-    '.s-toc.v2 .force-card .force-head .idx', '.s-toc.v2 .force-card .force-head .name',
-    '.s-toc.v2 .force-card .hook',
-    '.s-toc.v2 .right-card .num', '.s-toc.v2 .right-card h3', '.s-toc.v2 .right-card p', '.s-toc.v2 .right-card .credit',
-    /* —— P04-P07 四力 V2 新增 —— */
-    '.s-force.v2 .head .force-pill .force-idx', '.s-force.v2 .head .force-pill .force-name',
-    '.s-force.v2 .head .force-title h2', '.s-force.v2 .head .force-credit',
-    '.s-force.v2 .seg .seg-label', '.s-force.v2 .seg .seg-title', '.s-force.v2 .seg .seg-body',
-    '.s-force.v2 .value-pills .vp', '.s-force.v2 .value-pills .vp .vp-emoji',
-    '.s-force.v2 .pane-r .pr-label', '.s-force.v2 .pane-r .pr-title',
-    '.s-force.v2 .roadmap .step .step-tag', '.s-force.v2 .roadmap .step h5', '.s-force.v2 .roadmap .step p',
-    '.s-force.v2 .desc',
-    '.s-force.v2 .kpi-row .kpi .v', '.s-force.v2 .kpi-row .kpi .k',
-    '.s-force.v2 .twin .twin-card .twin-tag', '.s-force.v2 .twin .twin-card h5', '.s-force.v2 .twin .twin-card p',
-    '.s-force.v2 .timeline .tl-node .tl-time', '.s-force.v2 .timeline .tl-node h6', '.s-force.v2 .timeline .tl-node p',
-    '.s-force.v2 .links-bar .lb-label',
-    /* —— P04 上下布局 layout-stack 新增 —— */
-    '.s-force.v2.layout-stack .pane-top .pt-label', '.s-force.v2.layout-stack .pane-top .pt-title',
-    '.s-force.v2.layout-stack .pane-top .pt-route', '.s-force.v2.layout-stack .pane-top .pt-route .pt-route-tag',
-    '.s-force.v2.layout-stack .pane-top .pt-kpi .v', '.s-force.v2.layout-stack .pane-top .pt-kpi .k',
-    '.s-force.v2.layout-stack .pane-bottom .pb-label', '.s-force.v2.layout-stack .pane-bottom .pb-title',
-    '.s-force.v2.layout-stack .roadmap-stack .step .step-tag',
-    '.s-force.v2.layout-stack .roadmap-stack .step h5', '.s-force.v2.layout-stack .roadmap-stack .step p',
-    '.s-force.v2.layout-stack .roadmap-stack .step .step-links .sl-label',
-    '.s-force.v2.layout-stack .roadmap-stack .step .level-list .level .level-title',
-    '.s-force.v2.layout-stack .roadmap-stack .step .level-list .level .level-desc',
-    '.app-item .ai-tag', '.app-item .ai-title', '.app-item .ai-desc'
-  ];
-  const editableSet = new Set();
-  editableSelectors.forEach(sel => {
-    document.querySelectorAll(sel).forEach(el => {
-      if (!editableSet.has(el)) {
-        el.setAttribute('contenteditable', 'true');
-        el.setAttribute('spellcheck', 'false');
-        editableSet.add(el);
-      }
-    });
-  });
-
-  // 2. 从 localStorage 恢复（按"文本节点序列化顺序"映射）
-  const editables = Array.from(document.querySelectorAll('[contenteditable="true"]'));
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const data = JSON.parse(saved);
-      if (Array.isArray(data) && data.length === editables.length) {
-        editables.forEach((el, i) => {
-          if (data[i] !== undefined) el.innerHTML = data[i];
-        });
-        status.innerHTML = '✓ 已加载本地改动<br /><span style="opacity:.65">改动后会自动保存</span>';
-        status.classList.add('saved');
-      } else {
-        // 元素数量发生变化时，提示用户重置
-        status.innerHTML = '⚠️ 本地改动与新版本不匹配<br /><span style="opacity:.65">建议先点"清除本地改动"</span>';
-      }
-    }
-  } catch (err) {
-    console.warn('本地改动恢复失败：', err);
-  }
-
-  // 3. 防抖自动保存
-  let saveTimer = null;
-  function autoSave() {
-    document.body.classList.add('editing');
-    status.textContent = '⏳ 编辑中…';
-    status.classList.remove('saved');
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-      const data = editables.map(el => el.innerHTML);
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        status.textContent = '✓ 已自动保存到本地';
-        status.classList.add('saved');
-      } catch (err) {
-        status.textContent = '⚠️ 保存失败（容量超限）';
-      }
-    }, 500);
-  }
-  document.addEventListener('input', e => {
-    if (e.target.closest('[contenteditable="true"]')) autoSave();
-  });
-
-  // 4. 导出当前 HTML 文件
-  window.exportHTML = function () {
-    // 关闭编辑高亮 + 工具栏，让导出文件保持干净
-    const toolbar = document.getElementById('editToolbar');
-    const wasDisplay = toolbar.style.display;
-    toolbar.style.display = 'none';
-
-    const ts = new Date().toISOString().slice(0,16).replace(/[-T:]/g, '').slice(0,12);
-    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `townhall_0518_当AI能跑数据之后_edited_${ts}.html`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-
-    toolbar.style.display = wasDisplay;
-    status.textContent = '✓ 已导出 HTML 到 Downloads';
-    status.classList.add('saved');
-  };
-
-  // 5. 快捷键 Cmd/Ctrl + S → 导出 HTML
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 's') {
-      e.preventDefault();
-      window.exportHTML();
-    }
-  });
-
-  // 6. 清除本地改动
-  window.resetContent = function () {
-    if (!confirm('确定要清除本地所有改动并恢复到原始版本吗？\n此操作不可撤销。')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    location.reload();
-  };
-})();
 
 // ============== Lightbox 全局功能（图片/HTML 放大查看）==============
 (function () {
@@ -3166,7 +2815,7 @@
   document.querySelectorAll('.app-item[data-lb-src]').forEach(thumb => {
     thumb.addEventListener('click', (e) => {
       // 编辑文本时不触发；点击真实链接时不触发
-      if (e.target.closest('[contenteditable="true"]')) return;
+      if (e.target.closest('[]')) return;
       if (e.target.closest('a[href]:not([href="javascript:void(0)"])')) return;
       const type = thumb.dataset.lbType || 'image';
       const src = thumb.dataset.lbSrc;
